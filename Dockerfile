@@ -224,6 +224,7 @@ RUN export http_proxy=$APT_PROXY && \
     bash-completion \
     tmux \
     byobu \
+    exuberant-ctags \
     virt-manager \
     xclip \
     snmp \
@@ -253,9 +254,10 @@ RUN export http_proxy=$APT_PROXY && \
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
 USER $USERNAME
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
+    byobu-enable
 
 #ohmyzsh stomps over .zshrc so do this last
 COPY --chown=$USERNAME:$USERNAME dotfiles /home/$USERNAME
 
-ENTRYPOINT ["/usr/bin/zsh"]
+ENTRYPOINT ["/usr/bin/byobu"]
