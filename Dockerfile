@@ -1,15 +1,5 @@
 FROM ubuntu:focal
 
-ENV RADARE2_URL=https://github.com/radareorg/radare2/releases/download/5.6.6/radare2_5.6.6_amd64.deb
-ENV RADARE2_DEV_URL=https://github.com/radareorg/radare2/releases/download/5.6.6/radare2-dev_5.6.6_amd64.deb
-ENV IAITO_URL=https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb
-ENV PWNDBG_TAG=2022.01.05
-ENV RETDEC_URL=https://github.com/avast/retdec/releases/download/v4.0/retdec-v4.0-ubuntu-64b.tar.xz
-ENV NEOVIM_URL=https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb
-ENV GHIDRA_RELEASE_URL=https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.1.2_build/ghidra_10.1.2_PUBLIC_20220125.zip 
-
-ENV USERNAME=nonroot
-
 ENV LANG C.UTF-8
 ENV LANGUAGE C.UTF-8
 ENV LC_ALL C.UTF-8
@@ -118,6 +108,7 @@ RUN export http_proxy=$APT_PROXY && \
     unset http_proxy
 
 
+ENV USERNAME=nonroot
 RUN useradd -m $USERNAME && \
     usermod -a -G sudo $USERNAME && \
     echo "$USERNAME       ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME && \
@@ -125,7 +116,7 @@ RUN useradd -m $USERNAME && \
 
 RUN mkdir -p /usr/local/src/retdec && \
     cd /usr/local/src/retdec && \
-    wget -O retdec.tar.xz $RETDEC_URL && \
+    wget -O retdec.tar.xz https://github.com/avast/retdec/releases/download/v4.0/retdec-v4.0-ubuntu-64b.tar.xz && \
     tar -I pixz -xvf retdec.tar.xz && \
     cp -r ./retdec/* /usr/local && \
     cd / && \
@@ -133,7 +124,7 @@ RUN mkdir -p /usr/local/src/retdec && \
 
 RUN mkdir -p /usr/local/src/pwndbg && \
     chown $USERNAME:$USERNAME /usr/local/src/pwndbg && \
-    sudo -u $USERNAME git clone -b $PWNDBG_TAG --recurse-submodules --depth 1 --shallow-submodules https://github.com/pwndbg/pwndbg.git /usr/local/src/pwndbg && \
+    sudo -u $USERNAME git clone -b 2022.01.05 --recurse-submodules --depth 1 --shallow-submodules https://github.com/pwndbg/pwndbg.git /usr/local/src/pwndbg && \
     cd /usr/local/src/pwndbg && \
     sudo -u $USERNAME ./setup.sh && \
     apt-get clean && \
@@ -141,7 +132,7 @@ RUN mkdir -p /usr/local/src/pwndbg && \
 
 RUN mkdir -p /usr/local/src/neovim && \
     cd /usr/local/src/neovim && \
-    wget -O neovim.deb $NEOVIM_URL && \
+    wget -O neovim.deb https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb && \
     dpkg -i neovim.deb && \
     pip3 install neovim && \
     npm install -g neovim && \
@@ -151,7 +142,7 @@ RUN mkdir -p /usr/local/src/neovim && \
 
 RUN mkdir -p /usr/local/src/ghidra && \
     cd /usr/local/src/ghidra && \
-    wget -O ghidra.zip $GHIDRA_RELEASE_URL && \
+    wget -O ghidra.zip https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.1.2_build/ghidra_10.1.2_PUBLIC_20220125.zip && \
     unzip ./ghidra.zip && \
     rm ./ghidra.zip && \
     mv ghidra_*/** ./  && \
@@ -171,13 +162,15 @@ RUN mkdir -p /usr/local/src/AFLplusplus && \
     make install
 
 RUN mkdir -p /usr/local/src/radare2 && \
+    git clone -b 5.6.6 --recurse-submodules --depth 1 --shallow-submodules https://github.com/radareorg/radare2.git /usr/local/src/radare2 && \
     cd /usr/local/src/radare2 && \
-    wget -O radare2.deb $RADARE2_URL && \
-    dpkg -i ./radare2.deb && \
-    wget -O radare2-dev.deb $RADARE2_DEV_URL && \
-    dpkg -i ./radare2-dev.deb && \
+    sys/install.sh && \
+    #wget -O radare2.deb https://github.com/radareorg/radare2/releases/download/5.6.6/radare2_5.6.6_amd64.deb && \
+    #dpkg -i ./radare2.deb && \
+    #wget -O radare2-dev.deb https://github.com/radareorg/radare2/releases/download/5.6.6/radare2-dev_5.6.6_amd64.deb && \
+    #dpkg -i ./radare2-dev.deb && \
     cd / && \
-    rm -r /usr/local/src/radare2 && \
+    #rm -r /usr/local/src/radare2 && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 20 && \
     sudo -u $USERNAME r2pm init && \
     sudo -u $USERNAME r2pm update && \
@@ -186,7 +179,7 @@ RUN mkdir -p /usr/local/src/radare2 && \
 
 RUN mkdir -p /usr/local/src/iaito && \
     cd /usr/local/src/iaito && \
-    wget -O iaito.deb $IAITO_URL && \
+    wget -O iaito.deb https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb && \
     dpkg -i iaito.deb && \
     rm -r /usr/local/src/iaito
 
@@ -228,10 +221,8 @@ RUN export http_proxy=$APT_PROXY && \
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
 USER $USERNAME
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 #ohmyzsh stomps over .zshrc so do this last
-COPY --chown=$USERNAME:$USERNAME dotfiles /home/$USERNAME
 RUN nvim --headless +UpdateRemotePlugins +qa
 
 ENTRYPOINT ["/usr/bin/byobu"]

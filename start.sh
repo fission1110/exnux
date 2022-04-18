@@ -8,6 +8,7 @@
 
 docker run -it --rm --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
 	-v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+    -v $PWD/dotfiles:/home/nonroot \
 	-v $HOME/.Xauthority:/home/nonroot/.Xauthority \
 	-e "XAUTHORITY=/home/nonroot/.Xauthority" \
 	-h "$(hostname)" \
