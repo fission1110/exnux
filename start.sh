@@ -6,7 +6,8 @@
 
 # echo "/tmp/cores/core.%e.%p.%h.%t" > /proc/sys/kernel/core_pattern
 
-docker run -it --rm --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
+docker run --rm -it -d --name exnux \
+	--cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
 	-v /tmp/.X11-unix:/tmp/.X11-unix:rw \
     -v $PWD/dotfiles:/home/nonroot \
 	-v $HOME/.Xauthority:/home/nonroot/.Xauthority \
@@ -15,4 +16,6 @@ docker run -it --rm --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
 	-e "DISPLAY=$DISPLAY" \
 	--device /dev/dri \
 	-v $HOME:/home/nonroot/home-host \
-	exnux:v0.1
+	exnux:v0.1 /bin/bash
+
+docker exec -it exnux /usr/bin/byobu

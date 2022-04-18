@@ -226,4 +226,4 @@ USER $USERNAME
 #ohmyzsh stomps over .zshrc so do this last
 RUN nvim --headless +UpdateRemotePlugins +qa
 
-ENTRYPOINT ["/usr/bin/byobu"]
+CMD ["/usr/bin/byobu"]
