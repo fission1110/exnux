@@ -1,10 +1,11 @@
 FROM ubuntu:focal
 
-ENV RADARE2_TAG=5.6.2
+ENV RADARE2_URL=https://github.com/radareorg/radare2/releases/download/5.6.6/radare2_5.6.6_amd64.deb
+ENV RADARE2_DEV_URL=https://github.com/radareorg/radare2/releases/download/5.6.6/radare2-dev_5.6.6_amd64.deb
+ENV IAITO_URL=https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb
 ENV PWNDBG_TAG=2022.01.05
-ENV RETDEC_TAG=v4.0
-ENV NEOVIM_TAG=v0.6.1
-ENV IAITO_TAG=master
+ENV RETDEC_URL=https://github.com/avast/retdec/releases/download/v4.0/retdec-v4.0-ubuntu-64b.tar.xz
+ENV NEOVIM_URL=https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb
 ENV GHIDRA_RELEASE_URL=https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.1.2_build/ghidra_10.1.2_PUBLIC_20220125.zip 
 
 ENV USERNAME=nonroot
@@ -26,96 +27,92 @@ ARG APT_PROXY
 RUN export http_proxy=$APT_PROXY && \
     apt-get update -y && \
     apt-get upgrade -y && \
-    apt-get update -y && \
     apt-get install -y \
         apt-utils && \
+    dpkg --add-architecture i386 && \
+    apt-get update -y && \
     apt-get install -y \
-        sudo \
-        pigz \
         gdb \
+        pigz \
+        pixz \
+        sudo \
       # radare2
         build-essential \
+        ccache \
         cmake \
         git \
         wget \
-        ccache \
       # iaito
-        qttools5-dev-tools \
-        qtbase5-dev \
-        qtchooser \
-        qt5-qmake \
-        qtbase5-dev-tools \
+        libgvc6 \
         libqt5svg5 \
         libqt5svg5-dev \
-        qt5-default \
-        zip \
-        libgvc6 \
-        qttools5-dev \
-        make \
-        linux-headers-generic \
         libuuid1 \
+        linux-headers-generic \
+        make \
+        qt5-default \
+        qt5-qmake \
+        qtbase5-dev \
+        qtbase5-dev-tools \
+        qtchooser \
+        qttools5-dev \
+        qttools5-dev-tools \
+        zip \
       # neovim
-        ninja-build \
+        autoconf \
+        automake \
+        curl \
+        doxygen \
         gettext \
         libtool \
         libtool-bin \
-        autoconf \
-        automake \
-        unzip \
-        curl \
+        ninja-build \
         nodejs \
         npm \
-        doxygen \
+        unzip \
       # retdec
-        cmake \
-        git \
-        python3 \
-        doxygen \
-        graphviz \
-        upx \
-        openssl \
-        libssl-dev \
-        zlib1g-dev \
         autoconf \
         automake \
-        pkg-config \
-        m4 \
+        cmake \
+        doxygen \
+        git \
+        graphviz \
+        libssl-dev \
         libtool \
+        m4 \
+        openssl \
+        pkg-config \
+        python3 \
+        upx \
+        zlib1g-dev \
       # ghidra
-        openjdk-11-jre \
-        openjdk-11-jdk \
         fontconfig \
+        gdb \
+        git \
+        libc6-dbg \
+        libc-dbg:i386 \
+        libglib2.0-dev \
+        libxi6 \
         libxrender1 \
         libxtst6 \
-        libxi6 \
-        python3-requests \
-        gdb \
+        openjdk-11-jdk \
+        openjdk-11-jre \
         python3-dev \
         python3-pip \
+        python3-requests \
         python3-setuptools \
-        libglib2.0-dev \
-        libc6-dbg \
-        git \
       # afl++
-        flex \
         bison \
-        libglib2.0-dev \
-        libpixman-1-dev \
-        python3-setuptools \
-        lld-11 \
-        llvm-11 \
-        llvm-11-tools \
-        llvm-11-dev \
         clang-11 \
-        gcc-10 \
+        flex \
         g++-10 \
+        gcc-10 \
         gcc-10-plugin-dev \
-        libstdc++-10-dev && \
-      # pwndbg
-    dpkg --add-architecture i386 && \
-    apt-get update -y && \
-    apt-get -y install \
-        libc-dbg:i386 && \
+        libpixman-1-dev \
+        libstdc++-10-dev \
+        llvm-11 \
+        llvm-11-dev \
+        llvm-11-tools \
+        python3-setuptools && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     unset http_proxy
@@ -127,34 +124,30 @@ RUN useradd -m $USERNAME && \
     chmod 0400 /etc/sudoers.d/$USERNAME
 
 RUN mkdir -p /usr/local/src/retdec && \
-    git clone -b $RETDEC_TAG --depth 1 --shallow-submodules https://github.com/avast/retdec.git /usr/local/src/retdec && \
     cd /usr/local/src/retdec && \
-    mkdir build && \
-    cd build && \
-    cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/ && \
-    make -j$(nproc) && \
-    make install && \
+    wget -O retdec.tar.xz $RETDEC_URL && \
+    tar -I pixz -xvf retdec.tar.xz && \
+    cp -r ./retdec/* /usr/local && \
     cd / && \
     rm -r /usr/local/src/retdec
 
 RUN mkdir -p /usr/local/src/pwndbg && \
-    git clone -b $PWNDBG_TAG --recurse-submodules --depth 1 --shallow-submodules https://github.com/pwndbg/pwndbg.git /usr/local/src/pwndbg && \
+    chown $USERNAME:$USERNAME /usr/local/src/pwndbg && \
+    sudo -u $USERNAME git clone -b $PWNDBG_TAG --recurse-submodules --depth 1 --shallow-submodules https://github.com/pwndbg/pwndbg.git /usr/local/src/pwndbg && \
     cd /usr/local/src/pwndbg && \
-    ./setup.sh && \
+    sudo -u $USERNAME ./setup.sh && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /usr/local/src/neovim && \
-    git clone -b $NEOVIM_TAG --recurse-submodules --depth 1 --shallow-submodules https://github.com/neovim/neovim.git /usr/local/src/neovim && \
     cd /usr/local/src/neovim && \
-    make CMAKE_BUILD_TYPE=Release && \
-    make install && \
-    cd / && \
-    rm -r /usr/local/src/neovim && \
+    wget -O neovim.deb $NEOVIM_URL && \
+    dpkg -i neovim.deb && \
     pip3 install neovim && \
     npm install -g neovim && \
     npm install -g typescript && \
-    pip3 install libclang
+    pip3 install libclang && \
+    rm -r /usr/local/src/neovim
 
 RUN mkdir -p /usr/local/src/ghidra && \
     cd /usr/local/src/ghidra && \
@@ -165,99 +158,80 @@ RUN mkdir -p /usr/local/src/ghidra && \
     chmod +x ghidraRun && \
     ln -s /usr/local/src/ghidra/ghidraRun /usr/local/bin/ghidraRun
 
-# build environment should be the newest the distro offers for ifl
+# build environment should be the newest the distro offers for afl
 RUN mkdir -p /usr/local/src/AFLplusplus && \
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 20 && \
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 20 && \
     update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 20 && \
     update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 20 && \
+    update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-11 20 && \
     git clone https://github.com/AFLplusplus/AFLplusplus /usr/local/src/AFLplusplus && \
     cd /usr/local/src/AFLplusplus && \
     make distrib && \
     make install
 
 RUN mkdir -p /usr/local/src/radare2 && \
-    git clone -b $RADARE2_TAG --depth 1 --shallow-submodules https://github.com/radareorg/radare2.git /usr/local/src/radare2 && \
     cd /usr/local/src/radare2 && \
-    ./sys/install.sh && \
+    wget -O radare2.deb $RADARE2_URL && \
+    dpkg -i ./radare2.deb && \
+    wget -O radare2-dev.deb $RADARE2_DEV_URL && \
+    dpkg -i ./radare2-dev.deb && \
+    cd / && \
+    rm -r /usr/local/src/radare2 && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 20 && \
     sudo -u $USERNAME r2pm init && \
     sudo -u $USERNAME r2pm update && \
     sudo -u $USERNAME r2pm install r2ghidra && \
     sudo -u $USERNAME r2pm install r2dec
 
-# iaito needs google breakpad to compile
-# iaito needs specific r2 version so build r2 in the submodule it's linked to.
-RUN mkdir -p /usr/local/src/depot_tools && \
-    git clone --recurse-submodules --depth 1 --shallow-submodules https://chromium.googlesource.com/chromium/tools/depot_tools.git /usr/local/src/depot_tools && \
-    mkdir -p /usr/local/src/breakpad && \
-    cd /usr/local/src/breakpad && \
-    PATH=/usr/local/src/depot_tools:$PATH fetch breakpad && \
-    cd src && \
-    ./configure && \
-    make && \
-    make install && \
-
-    mkdir -p /usr/local/src/iaito && \
-    git clone -b $IAITO_TAG --depth 1 --recurse-submodules --shallow-submodules https://github.com/radareorg/iaito.git /usr/local/src/iaito && \
-
-    #cd /usr/local/src/iaito/radare2 && \
-    #./sys/install.sh --disable-thread && \
-    #update-alternatives --install /usr/bin/python python /usr/bin/python3 20 && \
-    #r2pm init && \
-    #r2pm update && \
-    #r2pm install r2ghidra && \
-    #r2pm install r2dec && \
-
+RUN mkdir -p /usr/local/src/iaito && \
     cd /usr/local/src/iaito && \
-    ./configure && \
-    CMAKE_FLAGS="-j$(nproc) " make && \
-    make install && \
-    rm -r /usr/local/src/depot_tools
-
-
+    wget -O iaito.deb $IAITO_URL && \
+    dpkg -i iaito.deb && \
+    rm -r /usr/local/src/iaito
 
 # install random tools to make the image a full dev environment
 RUN export http_proxy=$APT_PROXY && \
     apt-get update -y && \
     apt-get install -y \
-    bash-completion \
-    tmux \
-    byobu \
-    exuberant-ctags \
-    virt-manager \
-    xclip \
-    snmp \
-    wireshark \
-    tcpdump \
-    nmap \
-    dnsutils \
-    p0f \
-    php \
-    php-cli \
-    x2goclient \
-    openssh-client \
-    clang \
-    binutils \
-    apktool \
-    strace \
-    ltrace \
-    binwalk \
-    zsh && \
+        apktool \
+        bash-completion \
+        binutils \
+        binwalk \
+        byobu \
+        clang \
+        dnsutils \
+        exuberant-ctags \
+        htop \
+        ltrace \
+        nmap \
+        openssh-client \
+        p0f \
+        php \
+        php-cli \
+        snmp \
+        strace \
+        tcpdump \
+        tmux \
+        virt-manager \
+        wireshark \
+        x2goclient \
+        xclip \
+        zsh && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     chsh -s $(which zsh) $USERNAME && \
+    pip3 install pwntools && \
     unset http_proxy
-
 
 # Set home and change user before zsh configuration to keep correct permissions in the $USERNAME home dir
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
 USER $USERNAME
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
-    byobu-enable
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 #ohmyzsh stomps over .zshrc so do this last
 COPY --chown=$USERNAME:$USERNAME dotfiles /home/$USERNAME
+RUN nvim --headless +UpdateRemotePlugins +qa
 
 ENTRYPOINT ["/usr/bin/byobu"]

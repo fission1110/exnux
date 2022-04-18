@@ -56,12 +56,12 @@ source $ZSH/oh-my-zsh.sh
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
-# # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+ # Preferred editor for local and remote sessions
+ if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='vim'
+ else
+   export EDITOR='nvim'
+ fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -73,5 +73,5 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 bindkey -v
 
 alias vvim=/usr/bin/vim
-alias vim=/usr/local/bin/nvim
+alias vim=/usr/bin/nvim
 PATH=$PATH:$HOME/.composer/vendor/bin

@@ -4,7 +4,9 @@
 # SYS_PTRACE for GDB and r2. seccom=unconfined for C++ debugging
 # /dev/dri for amd/ati gpu acceleration
 
-docker run -it --rm --privileged --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
+# echo "/tmp/cores/core.%e.%p.%h.%t" > /proc/sys/kernel/core_pattern
+
+docker run -it --rm --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
 	-v /tmp/.X11-unix:/tmp/.X11-unix:rw \
 	-v $HOME/.Xauthority:/home/nonroot/.Xauthority \
 	-e "XAUTHORITY=/home/nonroot/.Xauthority" \
