@@ -162,21 +162,22 @@ RUN mkdir -p /usr/local/src/AFLplusplus && \
     make install
 
 # Don't put plugins in the home directory
-ENV R2PM_PLUGDIR /usr/local/src/radare2/plugins
-ENV R2PM_BINDIR /usr/local/src/radare2/prefix/bin
+ENV R2PM_PLUGDIR /usr/local/src/radare2/r2pm/plugins
+ENV R2PM_BINDIR /usr/local/src/radare2/r2pm/prefix/bin
 ENV R2PM_DBDIR /usr/local/src/radare2/r2pm/db
 ENV R2PM_GITDIR /usr/local/src/radare2/r2pm/git
+ENV SLEIGHHOME /usr/local/src/radare2/r2pm/plugins/r2ghidra_sleigh
 # build r2 because for some reason all packaged versions segfault when debugging
 RUN mkdir -p /usr/local/src/radare2 && \
     git clone -b 5.5.4 --recurse-submodules --depth 1 --shallow-submodules https://github.com/radareorg/radare2.git /usr/local/src/radare2 && \
     cd /usr/local/src/radare2 && \
     sys/install.sh && \
-    cd / && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 20 && \
     sudo -u $USERNAME r2pm init && \
     sudo -u $USERNAME r2pm update && \
-    r2pm -gi r2ghidra && \
-    r2pm -gi r2dec
+    r2pm -gi r2dec && \
+	r2pm -gi r2ghidra && \
+	mv ~/.local/share/radare2/plugins/r2ghidra_sleigh /usr/local/src/radare2/r2pm/plugins/r2ghidra_sleigh
 
 RUN mkdir -p /usr/local/src/iaito && \
     cd /usr/local/src/iaito && \
