@@ -161,21 +161,22 @@ RUN mkdir -p /usr/local/src/AFLplusplus && \
     make distrib && \
     make install
 
+# Don't put plugins in the home directory
+ENV R2PM_PLUGDIR /usr/local/src/radare2/plugins
+ENV R2PM_BINDIR /usr/local/src/radare2/prefix/bin
+ENV R2PM_DBDIR /usr/local/src/radare2/r2pm/db
+ENV R2PM_GITDIR /usr/local/src/radare2/r2pm/git
+# build r2 because for some reason all packaged versions segfault when debugging
 RUN mkdir -p /usr/local/src/radare2 && \
-    git clone -b 5.6.6 --recurse-submodules --depth 1 --shallow-submodules https://github.com/radareorg/radare2.git /usr/local/src/radare2 && \
+    git clone -b 5.5.4 --recurse-submodules --depth 1 --shallow-submodules https://github.com/radareorg/radare2.git /usr/local/src/radare2 && \
     cd /usr/local/src/radare2 && \
     sys/install.sh && \
-    #wget -O radare2.deb https://github.com/radareorg/radare2/releases/download/5.6.6/radare2_5.6.6_amd64.deb && \
-    #dpkg -i ./radare2.deb && \
-    #wget -O radare2-dev.deb https://github.com/radareorg/radare2/releases/download/5.6.6/radare2-dev_5.6.6_amd64.deb && \
-    #dpkg -i ./radare2-dev.deb && \
     cd / && \
-    #rm -r /usr/local/src/radare2 && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 20 && \
     sudo -u $USERNAME r2pm init && \
     sudo -u $USERNAME r2pm update && \
-    sudo -u $USERNAME r2pm install r2ghidra && \
-    sudo -u $USERNAME r2pm install r2dec
+    r2pm -gi r2ghidra && \
+    r2pm -gi r2dec
 
 RUN mkdir -p /usr/local/src/iaito && \
     cd /usr/local/src/iaito && \
