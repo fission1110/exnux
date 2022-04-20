@@ -14,14 +14,14 @@ ENV DEBIAN_FRONTEND noninteractive
 ARG APT_PROXY
 
 # general
-RUN export http_proxy=$APT_PROXY && \
-    apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install -y \
-        apt-utils && \
-    dpkg --add-architecture i386 && \
-    apt-get update -y && \
-    apt-get install -y \
+RUN export http_proxy=$APT_PROXY \
+    && apt-get update -y \
+    && apt-get upgrade -y \
+    && apt-get install -y \
+        apt-utils \
+    && dpkg --add-architecture i386 \
+    && apt-get update -y \
+    && apt-get install -y \
         gdb \
         pigz \
         pixz \
@@ -103,76 +103,77 @@ RUN export http_proxy=$APT_PROXY && \
         llvm-11-dev \
         llvm-11-tools \
         python3-setuptools \
-		# metasploit
-		autoconf \
-		build-essential \
-		git \
-		libncurses-dev \
-		libpcap-dev \
-		libpq-dev \
-		libsqlite3-dev \
-		libxml2-dev \
-		libyaml-dev \
-		sqlite3 \
-		libsqlite3-dev \
-		zlib1g-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    unset http_proxy
+        # metasploit
+        autoconf \
+        build-essential \
+        git \
+        libncurses-dev \
+        libpcap-dev \
+        libpq-dev \
+        libsqlite3-dev \
+        libxml2-dev \
+        libyaml-dev \
+        sqlite3 \
+        libsqlite3-dev \
+        zlib1g-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && unset http_proxy
 
 
 ENV USERNAME=nonroot
-RUN useradd -m $USERNAME && \
-    usermod -a -G sudo $USERNAME && \
-    echo "$USERNAME       ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME && \
-    chmod 0400 /etc/sudoers.d/$USERNAME
+RUN useradd -m $USERNAME \
+    && usermod -a -G sudo $USERNAME \
+    && echo "$USERNAME       ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
+    && chmod 0400 /etc/sudoers.d/$USERNAME
 
-RUN mkdir -p /usr/local/src/retdec && \
-    cd /usr/local/src/retdec && \
-    wget -O retdec.tar.xz https://github.com/avast/retdec/releases/download/v4.0/retdec-v4.0-ubuntu-64b.tar.xz && \
-    tar -I pixz -xvf retdec.tar.xz && \
-    cp -r ./retdec/* /usr/local && \
-    cd / && \
-    rm -r /usr/local/src/retdec
+#RUN mkdir -p /usr/local/src/retdec \
+#    && cd /usr/local/src/retdec \
+#    && wget -O retdec.tar.xz https://github.com/avast/retdec/releases/download/v4.0/retdec-v4.0-ubuntu-64b.tar.xz \
+#    && tar -I pixz -xvf retdec.tar.xz \
+#    && cp -r ./retdec/* /usr/local \
+#    && cd / \
+#    && rm -r /usr/local/src/retdec
 
-RUN mkdir -p /usr/local/src/pwndbg && \
-    chown $USERNAME:$USERNAME /usr/local/src/pwndbg && \
-    sudo -u $USERNAME git clone -b 2022.01.05 --recurse-submodules --depth 1 --shallow-submodules https://github.com/pwndbg/pwndbg.git /usr/local/src/pwndbg && \
-    cd /usr/local/src/pwndbg && \
-    sudo -u $USERNAME ./setup.sh && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /usr/local/src/pwndbg \
+    && chown $USERNAME:$USERNAME /usr/local/src/pwndbg \
+    && sudo -u $USERNAME git clone -b 2022.01.05 --recurse-submodules --depth 1 --shallow-submodules https://github.com/pwndbg/pwndbg.git /usr/local/src/pwndbg \
+    && cd /usr/local/src/pwndbg \
+    && sudo -u $USERNAME ./setup.sh \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /usr/local/src/neovim && \
-    cd /usr/local/src/neovim && \
-    wget -O neovim.deb https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb && \
-    dpkg -i neovim.deb && \
-    pip3 install neovim && \
-    npm install -g neovim && \
-    npm install -g typescript && \
-    pip3 install libclang && \
-    rm -r /usr/local/src/neovim
+RUN mkdir -p /usr/local/src/neovim \
+    && cd /usr/local/src/neovim \
+    && wget -O neovim.deb https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb \
+    && dpkg -i neovim.deb \
+    && pip3 install neovim \
+    && npm install -g neovim \
+    && npm install -g typescript \
+    && pip3 install libclang \
+    && rm -r /usr/local/src/neovim
 
-RUN mkdir -p /usr/local/src/ghidra && \
-    cd /usr/local/src/ghidra && \
-    wget -O ghidra.zip https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.1.2_build/ghidra_10.1.2_PUBLIC_20220125.zip && \
-    unzip ./ghidra.zip && \
-    rm ./ghidra.zip && \
-    mv ghidra_*/** ./  && \
-    chmod +x ghidraRun && \
-    ln -s /usr/local/src/ghidra/ghidraRun /usr/local/bin/ghidraRun
+RUN mkdir -p /usr/local/src/ghidra \
+    && cd /usr/local/src/ghidra \
+    && wget -O ghidra.zip https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.1.2_build/ghidra_10.1.2_PUBLIC_20220125.zip \
+    && unzip ./ghidra.zip \
+    && rm ./ghidra.zip \
+    && mv ghidra_*/** ./  \
+    && chmod +x ghidraRun \
+    && ln -s /usr/local/src/ghidra/ghidraRun /usr/local/bin/ghidraRun
 
 # build environment should be the newest the distro offers for afl
-RUN mkdir -p /usr/local/src/AFLplusplus && \
-    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 20 && \
-    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 20 && \
-    update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 20 && \
-    update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 20 && \
-    update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-11 20 && \
-    git clone https://github.com/AFLplusplus/AFLplusplus /usr/local/src/AFLplusplus && \
-    cd /usr/local/src/AFLplusplus && \
-    make distrib && \
-    make install
+RUN mkdir -p /usr/local/src/AFLplusplus \
+    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 20 \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 20 \
+    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 20 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 20 \
+    && update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-11 20 \
+    && git clone -b stable --depth 1 https://github.com/AFLplusplus/AFLplusplus /usr/local/src/AFLplusplus \
+    && cd /usr/local/src/AFLplusplus \
+    && make distrib \
+    && make install \
+    && cd / && rm -r /usr/local/src/AFLplusplus
 
 # Don't put plugins in the home directory
 ENV R2PM_PLUGDIR /usr/local/src/radare2/r2pm/plugins
@@ -181,53 +182,51 @@ ENV R2PM_DBDIR /usr/local/src/radare2/r2pm/db
 ENV R2PM_GITDIR /usr/local/src/radare2/r2pm/git
 ENV SLEIGHHOME /usr/local/src/radare2/r2pm/plugins/r2ghidra_sleigh
 # build r2 because for some reason all packaged versions segfault when debugging
-RUN mkdir -p /usr/local/src/radare2 && \
-    git clone -b 5.5.4 --recurse-submodules --depth 1 --shallow-submodules https://github.com/radareorg/radare2.git /usr/local/src/radare2 && \
-    cd /usr/local/src/radare2 && \
-    sys/install.sh && \
-    update-alternatives --install /usr/bin/python python /usr/bin/python3 20 && \
-    sudo -u $USERNAME r2pm init && \
-    sudo -u $USERNAME r2pm update && \
-    r2pm -gi r2dec && \
-	r2pm -gi r2ghidra && \
-	mv ~/.local/share/radare2/plugins/r2ghidra_sleigh /usr/local/src/radare2/r2pm/plugins/r2ghidra_sleigh
+RUN mkdir -p /usr/local/src/radare2 \
+    && git clone -b 5.5.4 --recurse-submodules --depth 1 --shallow-submodules https://github.com/radareorg/radare2.git /usr/local/src/radare2 \
+    && cd /usr/local/src/radare2 \
+    && sys/install.sh \
+    && update-alternatives --install /usr/bin/python python /usr/bin/python3 20 \
+    && sudo -u $USERNAME r2pm init \
+    && sudo -u $USERNAME r2pm update \
+#    && r2pm -gi r2dec \
+    && r2pm -gi r2ghidra \
+    && mv ~/.local/share/radare2/plugins/r2ghidra_sleigh /usr/local/src/radare2/r2pm/plugins/r2ghidra_sleigh
 
-RUN mkdir -p /usr/local/src/iaito && \
-    cd /usr/local/src/iaito && \
-    wget -O iaito.deb https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb && \
-    dpkg -i iaito.deb && \
-    rm -r /usr/local/src/iaito
+RUN mkdir -p /usr/local/src/iaito \
+    && cd /usr/local/src/iaito \
+    && wget -O iaito.deb https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb \
+    && dpkg -i iaito.deb \
+    && rm -r /usr/local/src/iaito
 
 # Do some weird things with rbenv to get it to install to the /usr/local/src directory so it won't get
 # overwritten by the home directory mount
 ENV RBENV_ROOT /usr/local/src/rbenv/.rbenv
 ENV RBENV_DIR $RBENV_ROOT
 ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:/usr/local/src/metasploit-framework:$PATH
-RUN mkdir -p /usr/local/src/rbenv && \
-	chown $USERNAME:$USERNAME /usr/local/src/rbenv && \
-	wget -O /usr/local/src/rbenv/rbenv-installer https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer && \
-	chmod +x /usr/local/src/rbenv/rbenv-installer && \
-	# change home directory to /usr/local/src/rbenv to get rbenv installer to write to a global directory
-	sudo -u $USERNAME "HOME=/usr/local/src/rbenv" /usr/local/src/rbenv/rbenv-installer && \
-
-	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv install 3.0.2 && \
-	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv global 3.0.2 && \
-
-	mkdir -p /usr/local/src/metasploit-framework && \
-	chown $USERNAME:$USERNAME /usr/local/src/metasploit-framework && \
-	sudo -u $USERNAME git clone -b 6.1.38 --recurse-submodules --depth 1 --shallow-submodules https://github.com/rapid7/metasploit-framework.git /usr/local/src/metasploit-framework && \
-
-	cd /usr/local/src/metasploit-framework && \
-
-	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem update --system && \
-	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem install --no-user-install bundler && \
-	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" bundle install --jobs=$(nproc)
+RUN mkdir -p /usr/local/src/rbenv \
+    && chown $USERNAME:$USERNAME /usr/local/src/rbenv \
+    && wget -O /usr/local/src/rbenv/rbenv-installer https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer \
+    && chmod +x /usr/local/src/rbenv/rbenv-installer \
+    # change home directory to /usr/local/src/rbenv to get rbenv installer to write to a global directory
+    && sudo -u $USERNAME "HOME=/usr/local/src/rbenv" /usr/local/src/rbenv/rbenv-installer \
+    sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv install 3.0.2 \
+    && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv global 3.0.2 \
+    # download msf
+    && mkdir -p /usr/local/src/metasploit-framework \
+    && chown $USERNAME:$USERNAME /usr/local/src/metasploit-framework \
+    && sudo -u $USERNAME git clone -b 6.1.38 --recurse-submodules --depth 1 --shallow-submodules https://github.com/rapid7/metasploit-framework.git /usr/local/src/metasploit-framework && \
+    # gem install and bundle install
+    cd /usr/local/src/metasploit-framework \
+    && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem update --system \
+    && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem install --no-user-install bundler \
+    && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" bundle install --jobs=$(nproc)
 
 
 # install random tools to make the image a full dev environment
-RUN export http_proxy=$APT_PROXY && \
-    apt-get update -y && \
-    apt-get install -y \
+RUN export http_proxy=$APT_PROXY \
+    && apt-get update -y \
+    && apt-get install -y \
         apktool \
         bash-completion \
         binutils \
@@ -237,9 +236,9 @@ RUN export http_proxy=$APT_PROXY && \
         dc \
         dnsutils \
         exuberant-ctags \
-		fzf \
+        fzf \
         htop \
-		iputils-ping \
+        iputils-ping \
         ltrace \
         nmap \
         openssh-client \
@@ -255,12 +254,13 @@ RUN export http_proxy=$APT_PROXY && \
         x2goclient \
         xclip \
         xxd \
-        zsh && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    chsh -s $(which zsh) $USERNAME && \
-    pip3 install pwntools && \
-    unset http_proxy
+        zsh \
+    && echo 'y' | unminimize \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && chsh -s $(which zsh) $USERNAME \
+    && pip3 install pwntools \
+    && unset http_proxy
 
 # Set home and change user before zsh configuration to keep correct permissions in the $USERNAME home dir
 WORKDIR /home/$USERNAME
