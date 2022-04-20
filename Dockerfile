@@ -238,7 +238,7 @@ RUN export http_proxy=$APT_PROXY \
         docker.io \
         expect \
         exuberant-ctags \
-        flake-8 \
+        flake8 \
         fzf \
         git-gui \
         gitk \
