@@ -28,16 +28,18 @@ case "$CMD" in
     ;;
     start-headless)
         "$0" net
+		xauthority=${XAUTHORITY:-"/home/$USER/.Xauthority"}
         docker run --rm -it -d --name "$NAME" --network "$NAME-net" \
             --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
             -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
             -v "$SCRIPT_DIR/dotfiles:/home/$USERNAME" \
-            -v "$HOME/.Xauthority:/home/$USERNAME/.Xauthority" \
+            -v "$xauthority:/home/$USERNAME/.Xauthority" \
             -e "XAUTHORITY=/home/$USERNAME/.Xauthority" \
             -h "$(hostname)" \
             -e "DISPLAY=$DISPLAY" \
             --device /dev/dri \
             -v "/:/home/$USERNAME/root" \
+            -v "$HOME/.ssh:/home/$USERNAME/.ssh" \
             "$NAME:$TAG" /bin/bash
     ;;
     start)
