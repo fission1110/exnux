@@ -47,7 +47,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(gitfast fzf dirhistory pip nmap vi-mode)
+plugins=(gitfast vi-mode fzf dirhistory pip nmap)
 
 source $ZSH/oh-my-zsh.sh
 
