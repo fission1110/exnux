@@ -65,7 +65,7 @@ case $CMD in
 		docker volume msf-postgres-pgdata 2>/dev/null
 		
 		cd $SCRIPT_DIR
-		git checkout HEAD -- dotfiles
+		git clean -fdx :dotfiles
 	;;
 	*)
 		echo "$0 build|start|clean|dist-clean|build-apt-cache|msf-postgres"
