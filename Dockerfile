@@ -102,7 +102,20 @@ RUN export http_proxy=$APT_PROXY && \
         llvm-11 \
         llvm-11-dev \
         llvm-11-tools \
-        python3-setuptools && \
+        python3-setuptools \
+		# metasploit
+		autoconf \
+		build-essential \
+		git \
+		libncurses-dev \
+		libpcap-dev \
+		libpq-dev \
+		libsqlite3-dev \
+		libxml2-dev \
+		libyaml-dev \
+		sqlite3 \
+		libsqlite3-dev \
+		zlib1g-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     unset http_proxy
@@ -184,6 +197,27 @@ RUN mkdir -p /usr/local/src/iaito && \
     wget -O iaito.deb https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb && \
     dpkg -i iaito.deb && \
     rm -r /usr/local/src/iaito
+
+ENV RBENV_ROOT /usr/local/src/rbenv/.rbenv
+ENV RBENV_DIR $RBENV_ROOT
+ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:/usr/local/src/metasploit-framework:$PATH
+RUN mkdir -p /usr/local/src/rbenv && \
+	chown $USERNAME:$USERNAME /usr/local/src/rbenv && \
+	wget -O /usr/local/src/rbenv-installer https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer && \
+	chmod +x /usr/local/src/rbenv-installer && \
+	sudo -u $USERNAME "HOME=/usr/local/src/rbenv" /usr/local/src/rbenv-installer && \
+
+	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv install 3.0.2 && \
+	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv global 3.0.2 && \
+
+	mkdir -p /usr/local/src/metasploit-framework && \
+	chown $USERNAME:$USERNAME /usr/local/src/metasploit-framework && \
+	sudo -u $USERNAME git clone -b 6.1.38 --recurse-submodules --depth 1 --shallow-submodules https://github.com/rapid7/metasploit-framework.git /usr/local/src/metasploit-framework && \
+
+	cd /usr/local/src/metasploit-framework && \
+	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem update --system && \
+	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem install --no-user-install bundler && \
+	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" bundle install --jobs=$(nproc)
 
 # install random tools to make the image a full dev environment
 RUN export http_proxy=$APT_PROXY && \

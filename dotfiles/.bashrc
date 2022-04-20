@@ -132,3 +132,5 @@ PATH=$PATH:$HOME/.composer/vendor/bin
 #source <(kubectl completion bash)
 #alias k=kubectl
 #complete -F __start_kubectl k
+PATH=/usr/local/src/rbenv/.rbenv/bin:/usr/local/src/rbenv/.rbenv/shims:$PATH
+eval "$(rbenv init -)"

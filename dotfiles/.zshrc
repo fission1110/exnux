@@ -75,3 +75,5 @@ bindkey -v
 alias vvim=/usr/bin/vim
 alias vim=/usr/bin/nvim
 PATH=$PATH:$HOME/.composer/vendor/bin
+PATH=/usr/local/src/rbenv/.rbenv/bin:/usr/local/src/rbenv/.rbenv/shims:$PATH
+eval "$(rbenv init - zsh)"

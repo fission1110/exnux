@@ -132,7 +132,7 @@ function! NERDTreeQuit()
     quitall
   endif
 endfunction
-autocmd WinEnter * call NERDTreeQuit()
+"autocmd WinEnter * call NERDTreeQuit()
 
 
 " HEX MODE!!
