@@ -208,7 +208,7 @@ RUN mkdir -p /usr/local/src/rbenv && \
 	wget -O /usr/local/src/rbenv/rbenv-installer https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer && \
 	chmod +x /usr/local/src/rbenv/rbenv-installer && \
 	# change home directory to /usr/local/src/rbenv to get rbenv installer to write to a global directory
-	sudo -u $USERNAME "HOME=/usr/local/src/rbenv" /usr/local/src/rbenv-installer && \
+	sudo -u $USERNAME "HOME=/usr/local/src/rbenv" /usr/local/src/rbenv/rbenv-installer && \
 
 	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv install 3.0.2 && \
 	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv global 3.0.2 && \
@@ -223,6 +223,7 @@ RUN mkdir -p /usr/local/src/rbenv && \
 	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem install --no-user-install bundler && \
 	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" bundle install --jobs=$(nproc)
 
+
 # install random tools to make the image a full dev environment
 RUN export http_proxy=$APT_PROXY && \
     apt-get update -y && \
@@ -236,14 +237,15 @@ RUN export http_proxy=$APT_PROXY && \
         dc \
         dnsutils \
         exuberant-ctags \
+		fzf \
         htop \
+		iputils-ping \
         ltrace \
         nmap \
         openssh-client \
         p0f \
         php \
         php-cli \
-		iputils-ping \
         snmp \
         strace \
         tcpdump \
