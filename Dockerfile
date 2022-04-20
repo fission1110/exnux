@@ -238,12 +238,14 @@ RUN export http_proxy=$APT_PROXY \
         docker.io \
         expect \
         exuberant-ctags \
+        flake-8 \
         fzf \
         git-gui \
         gitk \
         htop \
         iputils-ping \
         ltrace \
+        netcat-traditional \
         nmap \
         openssh-client \
         p0f \
