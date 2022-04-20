@@ -202,3 +202,6 @@
 [submodule "dotfiles/.oh-my-zsh"]
 	path = dotfiles/.oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
+[submodule "dotfiles/.config/nvim/bundle/vim-yadi"]
+	path = dotfiles/.config/nvim/bundle/vim-yadi
+	url = https://github.com/timakro/vim-yadi.git
