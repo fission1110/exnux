@@ -210,7 +210,7 @@ RUN mkdir -p /usr/local/src/rbenv \
     && chmod +x /usr/local/src/rbenv/rbenv-installer \
     # change home directory to /usr/local/src/rbenv to get rbenv installer to write to a global directory
     && sudo -u $USERNAME "HOME=/usr/local/src/rbenv" /usr/local/src/rbenv/rbenv-installer \
-    sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv install 3.0.2 \
+    && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv install 3.0.2 \
     && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv global 3.0.2 \
     # download msf
     && mkdir -p /usr/local/src/metasploit-framework \
