@@ -239,7 +239,7 @@ RUN export http_proxy=$APT_PROXY && \
         p0f \
         php \
         php-cli \
-        ping \
+		iputils-ping \
         snmp \
         strace \
         tcpdump \
