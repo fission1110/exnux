@@ -40,6 +40,7 @@ case "$CMD" in
             --device /dev/dri \
             -v "/:/home/$USERNAME/root" \
             -v "$HOME/.ssh:/home/$USERNAME/.ssh" \
+            -v "/var/run/docker.sock:/var/run/docker.sock" \
             "$NAME:$TAG" /bin/bash
     ;;
     start)
