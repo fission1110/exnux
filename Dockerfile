@@ -237,6 +237,7 @@ RUN export http_proxy=$APT_PROXY \
         dnsutils \
         exuberant-ctags \
         fzf \
+        git-gui \
         htop \
         iputils-ping \
         ltrace \
