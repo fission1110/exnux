@@ -60,7 +60,7 @@ case $CMD in
         docker stop msf-postgres
         docker stop $NAME
     ;;
-    dist-clean)
+    distclean)
         $0 clean
         docker volume msf-postgres-pgdata 2>/dev/null
 
@@ -68,6 +68,6 @@ case $CMD in
         git clean -fdx :dotfiles
     ;;
     *)
-        echo "$0 build|start|clean|dist-clean|build-apt-cache|msf-postgres"
+        echo "$0 build|start|clean|distclean|build-apt-cache|msf-postgres"
     ;;
 esac
