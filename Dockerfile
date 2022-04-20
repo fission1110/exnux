@@ -235,13 +235,13 @@ RUN export http_proxy=$APT_PROXY \
         clang \
         dc \
         dnsutils \
+        docker.io \
+        expect \
         exuberant-ctags \
         fzf \
         git-gui \
         gitk \
         htop \
-        openssh-client \
-        docker.io \
         iputils-ping \
         ltrace \
         nmap \
@@ -259,7 +259,7 @@ RUN export http_proxy=$APT_PROXY \
         xclip \
         xxd \
         zsh \
-    && echo 'y' | unminimize \
+    && echo 'y\ny' | unminimize \
     && usermod -aG docker $USERNAME \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
