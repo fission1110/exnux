@@ -16,8 +16,6 @@ case $CMD in
 		cd $SCRIPT_DIR
 		docker build -t exnux:v0.1 .
 		cd $saved_dir
-		
-		
 	;;
 	build-apt-cache)
 		saved_dir=$PWD
@@ -50,7 +48,7 @@ case $CMD in
 			-e POSTGRES_USER=msf \
 			-e POSTGRES_DB=msf \
 			-v $SCRIPT_DIR/pgdata:/var/lib/postgresql/data \
-			-d postgres:14.2 
+			-d postgres:14.2
 
 		docker exec -it exnux /usr/local/src/metasploit-framework/msfdb init --connect-string=postgresql://msf:msf@msf-postgres:5432/msf
 	;;

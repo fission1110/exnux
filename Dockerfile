@@ -229,6 +229,7 @@ RUN export http_proxy=$APT_PROXY && \
         binwalk \
         byobu \
         clang \
+        dc \
         dnsutils \
         exuberant-ctags \
         htop \
@@ -238,6 +239,7 @@ RUN export http_proxy=$APT_PROXY && \
         p0f \
         php \
         php-cli \
+        ping \
         snmp \
         strace \
         tcpdump \
@@ -246,6 +248,7 @@ RUN export http_proxy=$APT_PROXY && \
         wireshark \
         x2goclient \
         xclip \
+        xxd \
         zsh && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
