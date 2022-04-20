@@ -198,13 +198,16 @@ RUN mkdir -p /usr/local/src/iaito && \
     dpkg -i iaito.deb && \
     rm -r /usr/local/src/iaito
 
+# Do some weird things with rbenv to get it to install to the /usr/local/src directory so it won't get
+# overwritten by the home directory mount
 ENV RBENV_ROOT /usr/local/src/rbenv/.rbenv
 ENV RBENV_DIR $RBENV_ROOT
 ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:/usr/local/src/metasploit-framework:$PATH
 RUN mkdir -p /usr/local/src/rbenv && \
 	chown $USERNAME:$USERNAME /usr/local/src/rbenv && \
-	wget -O /usr/local/src/rbenv-installer https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer && \
-	chmod +x /usr/local/src/rbenv-installer && \
+	wget -O /usr/local/src/rbenv/rbenv-installer https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer && \
+	chmod +x /usr/local/src/rbenv/rbenv-installer && \
+	# change home directory to /usr/local/src/rbenv to get rbenv installer to write to a global directory
 	sudo -u $USERNAME "HOME=/usr/local/src/rbenv" /usr/local/src/rbenv-installer && \
 
 	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv install 3.0.2 && \
@@ -215,6 +218,7 @@ RUN mkdir -p /usr/local/src/rbenv && \
 	sudo -u $USERNAME git clone -b 6.1.38 --recurse-submodules --depth 1 --shallow-submodules https://github.com/rapid7/metasploit-framework.git /usr/local/src/metasploit-framework && \
 
 	cd /usr/local/src/metasploit-framework && \
+
 	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem update --system && \
 	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem install --no-user-install bundler && \
 	sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" bundle install --jobs=$(nproc)

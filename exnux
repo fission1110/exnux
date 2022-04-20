@@ -12,22 +12,18 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 USERNAME=nonroot
 case $CMD in
 	build)
-		saved_dir=$PWD
 		cd $SCRIPT_DIR
 		docker build -t exnux:v0.1 .
-		cd $saved_dir
 	;;
 	build-apt-cache)
-		saved_dir=$PWD
 		cd $SCRIPT_DIR
 		docker run --name apt-cacher-ng --init -d --restart=always \
 			-p 172.17.0.1:3142:3142 \
 			--volume /srv/docker/apt-cacher-ng:/var/cache/apt-cacher-ng \
 			sameersbn/apt-cacher-ng:3.3-20200524
 			docker build -t exnux:v0.1 --add-host host.docker.internal:172.17.0.1 --build-arg=APT_PROXY="http://host.docker.internal:3142" .
-		cd $saved_dir
 	;;
-	start)
+	start-headless)
 		$0 net
 		docker run --rm -it -d --name exnux --network exnux-net \
 			--cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
@@ -40,17 +36,19 @@ case $CMD in
 			--device /dev/dri \
 			-v $HOME:/home/$USERNAME/home-host \
 			exnux:v0.1 /bin/bash
-			docker exec -it exnux /usr/bin/byobu
+	;;
+	start)
+		$0 start-headless
+		docker exec -it exnux /usr/bin/byobu
 	;;
 	msf-postgres)
+		$0 start-headless
+		docker volume create msf-postgres-pgdata
 		docker run --name msf-postgres --network exnux-net \
 			-e POSTGRES_PASSWORD=msf \
 			-e POSTGRES_USER=msf \
-			-e POSTGRES_DB=msf \
-			-v $SCRIPT_DIR/pgdata:/var/lib/postgresql/data \
+			-v msf-postgres-pgdata:/var/lib/postgresql/data \
 			-d postgres:14.2
-
-		docker exec -it exnux /usr/local/src/metasploit-framework/msfdb init --connect-string=postgresql://msf:msf@msf-postgres:5432/msf
 	;;
 	net)
 		docker network create exnux-net 2> /dev/null
@@ -62,7 +60,14 @@ case $CMD in
 		docker stop apt-cacher-ng
 		docker rm apt-cacher-ng
 	;;
+	dist-clean)
+		$0 clean
+		docker volume msf-postgres-pgdata 2>/dev/null
+		
+		cd $SCRIPT_DIR
+		git checkout HEAD -- dotfiles
+	;;
 	*)
-		echo "$0 build|start|clean|net|build-apt-cache"
+		echo "$0 build|start|clean|dist-clean|build-apt-cache|msf-postgres"
 	;;
 esac
