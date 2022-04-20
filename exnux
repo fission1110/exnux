@@ -10,10 +10,12 @@ CMD=$1
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 USERNAME=nonroot
+NAME=exnux
+TAG=v0.1
 case $CMD in
     build)
         cd $SCRIPT_DIR
-        docker build -t exnux:v0.1 .
+        docker build -t $NAME:$TAG .
     ;;
     build-apt-cache)
         cd $SCRIPT_DIR
@@ -21,12 +23,12 @@ case $CMD in
             -p 172.17.0.1:3142:3142 \
             --volume /srv/docker/apt-cacher-ng:/var/cache/apt-cacher-ng \
             sameersbn/apt-cacher-ng:3.3-20200524
-        docker build -t exnux:v0.1 --add-host host.docker.internal:172.17.0.1 --build-arg=APT_PROXY="http://host.docker.internal:3142" .
+        docker build -t $NAME:$TAG --add-host host.docker.internal:172.17.0.1 --build-arg=APT_PROXY="http://host.docker.internal:3142" .
         docker stop apt-cacher-ng
     ;;
     start-headless)
         $0 net
-        docker run --rm -it -d --name exnux --network exnux-net \
+        docker run --rm -it -d --name $NAME --network $NAME-net \
             --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
             -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
             -v $SCRIPT_DIR/dotfiles:/home/$USERNAME \
@@ -35,34 +37,33 @@ case $CMD in
             -h "$(hostname)" \
             -e "DISPLAY=$DISPLAY" \
             --device /dev/dri \
-            -v $HOME:/home/$USERNAME/home-host \
-            exnux:v0.1 /bin/bash
+            -v /:/home/$USERNAME/root \
+            $NAME:$TAG /bin/bash
     ;;
     start)
         $0 start-headless
-        docker exec -it exnux /usr/bin/byobu
+        docker exec -it -w /home/$USERNAME/root/$PWD $NAME /usr/bin/byobu
     ;;
     msf-postgres)
         $0 start-headless
         docker volume create msf-postgres-pgdata
-        docker run --rm --name msf-postgres --network exnux-net \
+        docker run --rm --name msf-postgres --network $NAME-net \
             -e POSTGRES_PASSWORD=msf \
             -e POSTGRES_USER=msf \
             -v msf-postgres-pgdata:/var/lib/postgresql/data \
             -d postgres:14.2
     ;;
     net)
-        docker network create exnux-net 2> /dev/null
+        docker network create $NAME-net 2> /dev/null
     ;;
     clean)
         docker stop msf-postgres
-        docker stop exnux
-        docker stop apt-cacher-ng
+        docker stop $NAME
     ;;
     dist-clean)
         $0 clean
         docker volume msf-postgres-pgdata 2>/dev/null
-        
+
         cd $SCRIPT_DIR
         git clean -fdx :dotfiles
     ;;
