@@ -191,17 +191,6 @@ RUN mkdir -p /usr/local/src/fzf \
     && chown $USERNAME:$USERNAME /usr/local/src/fzf \
     && sudo -u $USERNAME git clone -b 0.30.0 --recurse-submodules --depth 1 --shallow-submodules https://github.com/junegunn/fzf.git /usr/local/src/fzf
 
-################################################
-#
-#    neovim-build
-#
-################################################
-FROM base AS neovim-build
-
-RUN pip3 install neovim \
-    && npm install -g neovim \
-    && npm install -g typescript \
-    && pip3 install libclang
 
 ################################################
 #
@@ -303,13 +292,19 @@ RUN export http_proxy=$APT_PROXY \
     && usermod -aG docker $USERNAME \
     && chsh -s $(which zsh) $USERNAME \
     && pip3 install pwntools \
-    && unset http_proxy \
+    && unset http_proxy
+
     # afl++
-    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 20 \
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 20 \
     && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 20 \
     && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 20 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 20 \
     && update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-11 20
+
+RUN pip3 install neovim \
+    && npm install -g neovim \
+    && npm install -g typescript \
+    && pip3 install libclang
 
 FROM base-extended AS base-final
 # general
