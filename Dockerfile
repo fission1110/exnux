@@ -222,10 +222,11 @@ RUN mkdir -p /usr/local/src/rbenv \
     && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem install --no-user-install bundler \
     && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" bundle install --jobs=$(nproc)
 
-RUN wget -O /usr/local/bin/fzf.tgz https://github.com/junegunn/fzf/releases/download/0.30.0/fzf-0.30.0-linux_amd64.tar.gz \
-    && cd /usr/local/bin/ \
-    && tar -I pigz -xf ./fzf.tgz \
-    && rm /usr/local/bin/fzf.tgz
+RUN mkdir -p /usr/local/src/fzf \
+    && chown $USERNAME:$USERNAME /usr/local/src/fzf \
+    && sudo -u $USERNAME git clone -b 0.30.0 --recurse-submodules --depth 1 --shallow-submodules https://github.com/junegunn/fzf.git /usr/local/src/fzf \
+    && cd /usr/local/src/fzf \
+    && ./install --bin
 
 # install random tools to make the image a full dev environment
 RUN export http_proxy=$APT_PROXY \

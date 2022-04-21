@@ -44,10 +44,12 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # HIST_STAMPS="mm/dd/yyyy"
 
+export FZF_BASE=/usr/local/src/fzf
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(gitfast vi-mode fzf dirhistory pip nmap)
+COLORTERM=truecolor
 
 source $ZSH/oh-my-zsh.sh
 
