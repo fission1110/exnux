@@ -7,7 +7,7 @@ CMD="$1"
 # /dev/dri for amd/ati gpu acceleration
 
 # echo "/tmp/cores/core.%e.%p.%h.%t" > /proc/sys/kernel/core_pattern
-
+export DOCKER_BUILDKIT=1
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 USERNAME=nonroot
 NAME=exnux
