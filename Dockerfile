@@ -223,7 +223,9 @@ RUN mkdir -p /usr/local/src/rbenv \
     && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" bundle install --jobs=$(nproc)
 
 RUN wget -O /usr/local/bin/fzf.tgz https://github.com/junegunn/fzf/releases/download/0.30.0/fzf-0.30.0-linux_amd64.tar.gz \
-    && unpigz /usr/local/bin/fzf.tgz
+    && cd /usr/local/bin/ \
+    && tar -I pigz -xf ./fzf.tgz \
+    && rm /usr/local/bin/fzf.tgz
 
 # install random tools to make the image a full dev environment
 RUN export http_proxy=$APT_PROXY \
