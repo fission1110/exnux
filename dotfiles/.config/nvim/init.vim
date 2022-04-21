@@ -184,18 +184,8 @@ endfunction
 "#############Ctrlp#############
 let g:ctrlp_working_path_mode = ''
 
-function! GFilesFallback()
-  let output = system('git rev-parse --show-toplevel')
-  let prefix = get(g:, 'fzf_command_prefix', '')
-  if v:shell_error == 0
-    exec "normal :" . prefix . "GFiles\<CR>"
-  else
-    exec "normal :" . prefix . "Files\<CR>"
-  endif
-  return 0
-endfunction
-
-nnoremap <c-p> :call GFilesFallback()<CR>
+command! Ctrlp execute (exists("*fugitive#head") && len(fugitive#head())) ? 'GFiles' : 'Files'
+map <C-p> :Ctrlp<CR>
 
 " Use fzf instead of ctrlt
 nnoremap <c-t> :Tags<cr>
