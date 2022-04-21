@@ -205,3 +205,6 @@
 [submodule "dotfiles/.config/nvim/bundle/vim-yadi"]
 	path = dotfiles/.config/nvim/bundle/vim-yadi
 	url = https://github.com/timakro/vim-yadi.git
+[submodule "dotfiles/.config/nvim/bundle/fzf"]
+	path = dotfiles/.config/nvim/bundle/fzf
+	url = https://github.com/junegunn/fzf.git
