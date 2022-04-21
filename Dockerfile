@@ -266,6 +266,7 @@ RUN export http_proxy=$APT_PROXY \
         xxd \
         zsh \
     && echo 'y\ny' | unminimize \
+    && groupmod -g 999 docker \
     && usermod -aG docker $USERNAME \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
