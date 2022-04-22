@@ -1,3 +1,3 @@
 [submodule "dotfiles"]
 	path = dotfiles
-	url = https://github.com/fission1110/exnux
+	url = git@github.com:fission1110/dotfiles.git
