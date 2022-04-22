@@ -252,19 +252,30 @@ RUN export http_proxy=$APT_PROXY \
         binutils \
         binwalk \
         byobu \
-        clang \
         dc \
         dnsutils \
         docker.io \
         expect \
         exuberant-ctags \
+        hashcat \
+        hashcat-nvidia \
+        hydra \
+        john \
+        ophcrack \
+        audacity \
+        exiftool \
+        foremost \
+        sqlmap \
+        burp \
         flake8 \
         git-gui \
         gitk \
         htop \
         iputils-ping \
+        ldap-utils \
         ltrace \
-        netcat-traditional \
+        ncat \
+        netcat-openbsd \
         nmap \
         openssh-client \
         p0f \
