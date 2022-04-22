@@ -77,19 +77,46 @@ ENV SLEIGHHOME /usr/local/src/r2pm/plugins/r2ghidra_sleigh
 ################################################
 FROM base AS aflpp-build
 
+RUN export http_proxy=$APT_PROXY \
+    && apt-get install -y \
+      # afl++
+        bison \
+        clang-11 \
+        flex \
+        g++-10 \
+        gcc-10 \
+        gcc-10-plugin-dev \
+        libpixman-1-dev \
+        libstdc++-10-dev \
+        llvm-11 \
+        llvm-11-dev \
+        llvm-11-tools \
+        autoconf \
+        automake \
+        pkg-config \
+    && unset http_proxy
+
 # build environment should be the newest the distro offers for afl
 RUN mkdir -p /usr/local/src/AFLplusplus \
+    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 20 \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 20 \
+    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 20 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 20 \
+    && update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-11 20 \
     && git clone -b stable --depth 1 https://github.com/AFLplusplus/AFLplusplus /usr/local/src/AFLplusplus \
     && cd /usr/local/src/AFLplusplus \
-    && make distrib
+    && make distrib \
+    && mkdir ../build \
+    && make DESTDIR=../build install \
+    && rm -rf /usr/local/src/AFLplusplus
 
 
 ################################################
 #
-#    rbenv-build
+#    metasploit-build
 #
 ################################################
-FROM base AS rbenv-build
+FROM base AS metasploit-build
 
 RUN export http_proxy=$APT_PROXY \
     && apt-get install -y \
@@ -115,24 +142,18 @@ RUN mkdir -p /usr/local/src/rbenv \
     && wget -O /usr/local/src/rbenv/rbenv-installer https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer \
     && chmod +x /usr/local/src/rbenv/rbenv-installer \
     # change home directory to /usr/local/src/rbenv to get rbenv installer to write to a global directory
-    && sudo -u $USERNAME "HOME=/usr/local/src/rbenv" /usr/local/src/rbenv/rbenv-installer \
-    && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv install 3.0.2 \
-    && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv global 3.0.2
+    && sudo -E -u $USERNAME "HOME=/usr/local/src/rbenv" /usr/local/src/rbenv/rbenv-installer \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv install 3.0.2 \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv global 3.0.2
 
-################################################
-#
-#    metasploit-build
-#
-################################################
-FROM rbenv-build AS metasploit-build
 RUN mkdir -p /usr/local/src/metasploit-framework \
     && chown $USERNAME:$USERNAME /usr/local/src/metasploit-framework \
     && sudo -u $USERNAME git clone -b 6.1.38 --recurse-submodules --depth 1 --shallow-submodules https://github.com/rapid7/metasploit-framework.git /usr/local/src/metasploit-framework && \
     # gem install and bundle install
     cd /usr/local/src/metasploit-framework \
-    && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem update --system \
-    && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" gem install --no-user-install bundler \
-    && sudo -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" bundle install --jobs=$(nproc)
+    && sudo -E -u $USERNAME -s "PATH=$PATH" gem update --system \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" gem install --no-user-install bundler \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" bundle install --jobs=$(nproc)
 
 ################################################
 #
@@ -170,16 +191,13 @@ RUN export http_proxy=$APT_PROXY \
 
 # build r2 because for some reason all packaged versions segfault when debugging
 RUN mkdir -p /usr/local/src/radare2 \
-    && mkdir -p /usr/local/src/r2pm \
     && git clone -b 5.5.4 --recurse-submodules --depth 1 --shallow-submodules https://github.com/radareorg/radare2.git /usr/local/src/radare2 \
     && cd /usr/local/src/radare2 \
-    && sys/install.sh --without-pull \
-    && update-alternatives --install /usr/bin/python python /usr/bin/python3 20 \
-    && sudo -u $USERNAME r2pm init \
-    && sudo -u $USERNAME r2pm update \
-#    && r2pm -gi r2dec \
-    && r2pm -gi r2ghidra \
-    && mv ~/.local/share/radare2/plugins/r2ghidra_sleigh /usr/local/src/r2pm/plugins/r2ghidra_sleigh
+    && ./sys/debian.sh \
+    && mkdir ../build \
+    && cp ./*.deb ../build \
+    && MAKE_JOBS=$(nproc) sys/install.sh --without-pull \
+    && rm -r /usr/local/src/radare2
 
 ################################################
 #
@@ -272,34 +290,17 @@ RUN export http_proxy=$APT_PROXY \
         libxtst6 \
         openjdk-11-jdk \
         openjdk-11-jre \
-      # afl++
-        bison \
-        clang-11 \
-        flex \
-        g++-10 \
-        gcc-10 \
-        gcc-10-plugin-dev \
-        libpixman-1-dev \
-        libstdc++-10-dev \
-        llvm-11 \
-        llvm-11-dev \
-        llvm-11-tools \
-        autoconf \
-        automake \
-        pkg-config \
+        # iaito
+        libgvc6 \
+        libqt5svg5 \
+        libuuid1 \
+        qt5-default \
     && echo 'y\ny' | unminimize \
     && groupmod -g 999 docker \
     && usermod -aG docker $USERNAME \
     && chsh -s $(which zsh) $USERNAME \
     && pip3 install pwntools \
     && unset http_proxy
-
-    # afl++
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 20 \
-    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 20 \
-    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 20 \
-    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 20 \
-    && update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-11 20
 
 RUN pip3 install neovim \
     && npm install -g neovim \
@@ -343,19 +344,25 @@ FROM base-extended AS base-final
 COPY --from=metasploit-build --chown=$USERNAME /usr/local/src/rbenv /usr/local/src/rbenv
 COPY --from=metasploit-build --chown=$USERNAME /usr/local/src/metasploit-framework /usr/local/src/metasploit-framework
 
-COPY --from=radare2-build /usr/local/src/radare2 /usr/local/src/radare2
+COPY --from=radare2-build /usr/local/src/build/*.deb /usr/local/src/radare2/
 RUN cd /usr/local/src/radare2 \
-    && sys/install.sh --install --without-pull \
+    && dpkg -i ./radare2*.deb \
+    && rm -r /usr/local/src/radare2 \
+    && mkdir /usr/local/src/r2pm \
+    && chown $USERNAME:$USERNAME /usr/local/src/r2pm \
     && update-alternatives --install /usr/bin/python python /usr/bin/python3 20 \
-    && rm -r /usr/local/src/radare2
+    && sudo -E -u $USERNAME r2pm init \
+    && sudo -E -u $USERNAME r2pm update \
+#    && r2pm -gi r2dec \
+    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -gi r2ghidra \
+    && mv /home/$USERNAME/.local/share/radare2/plugins/r2ghidra_sleigh /usr/local/src/r2pm/plugins/r2ghidra_sleigh 
 
 RUN wget -O /iaito.deb https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb \
     && dpkg -i /iaito.deb \
     && rm /iaito.deb
 
-COPY --from=aflpp-build /usr/local/src/AFLplusplus /usr/local/src/AFLplusplus
-RUN cd /usr/local/src/AFLplusplus \
-    && make install \
+COPY --from=aflpp-build /usr/local/src/build /usr/local/src/AFLplusplus/build
+RUN cp -rf /usr/local/src/AFLplusplus/build/* / \
     && rm -r /usr/local/src/AFLplusplus
 
 COPY --from=fzf-build /usr/local/src/fzf /usr/local/src/fzf
