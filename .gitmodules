@@ -213,4 +213,4 @@
 	url = https://github.com/wfxr/minimap.vim.git
 [submodule "dotfiles"]
 	path = dotfiles
-	url = git@github.com:fission1110/dotfiles.git
+	url = https://github.com/fission1110/exnux
