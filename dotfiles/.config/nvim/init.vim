@@ -120,6 +120,7 @@ autocmd VimEnter * NERDTree | wincmd p
 let g:NERDTreeWinSize = 35
 let g:NERDTreeWinPos = "left"
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 2 && bufexists('-MINIMAP-') && exists('b:NERDTree') && (b:NERDTree.isTabTree() || bufname() == '-MINIMAP-') | quitall | endif
 
 
 " HEX MODE!!
@@ -369,3 +370,8 @@ let g:gutentags_cache_dir = '~/.config/nvim/ctags/mytags/'
 let g:gutentags_project_root = ['Makefile', '.git']
 " Causes hangs for some reason
 let g:gutentags_generate_on_write = 0
+
+" Terminal code minimap
+let g:minimap_width = 20
+let g:minimap_auto_start = 1
+let g:minimap_auto_start_win_enter = 1

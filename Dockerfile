@@ -384,6 +384,10 @@ RUN wget -O /neovim.deb https://github.com/neovim/neovim/releases/download/v0.7.
     && dpkg -i /neovim.deb \
     && rm /neovim.deb
 
+RUN wget -O /code-minimap.deb https://github.com/wfxr/code-minimap/releases/download/v0.6.4/code-minimap-musl_0.6.4_amd64.deb \
+    && dpkg -i /code-minimap.deb \
+    && rm /code-minimap.deb
+
 #RUN mkdir -p /usr/local/src/retdec \
 #    && cd /usr/local/src/retdec \
 #    && wget -O retdec.tar.xz https://github.com/avast/retdec/releases/download/v4.0/retdec-v4.0-ubuntu-64b.tar.xz \
