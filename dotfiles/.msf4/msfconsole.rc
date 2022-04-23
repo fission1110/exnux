@@ -1,0 +1,2 @@
+db_connect -y ~/.msf4/database.yaml
+workspace -a default

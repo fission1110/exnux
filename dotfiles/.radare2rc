@@ -1,0 +1,7 @@
+e search.in = dbg.maps
+e scr.layout = default
+e scr.slow = true
+e scr.pager = less -R
+e scr.prompt.vi = true
+e scr.prompt.popup = true
+e cmd.pdc = pdg

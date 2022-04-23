@@ -1,0 +1,213 @@
+[submodule ".config/nvim/bundle/codi.vim"]
+	path = .config/nvim/bundle/codi.vim
+	url = https://github.com/metakirby5/codi.vim.git
+[submodule ".config/nvim/bundle/deoplete-clang"]
+	path = .config/nvim/bundle/deoplete-clang
+	url = https://github.com/deoplete-plugins/deoplete-clang.git
+[submodule ".config/nvim/bundle/jellybeans.vim"]
+	path = .config/nvim/bundle/jellybeans.vim
+	url = https://github.com/nanotech/jellybeans.vim.git
+[submodule ".config/nvim/bundle/nerdtree"]
+	path = .config/nvim/bundle/nerdtree
+	url = https://github.com/preservim/nerdtree.git
+[submodule ".config/nvim/bundle/nvim-typescript"]
+	path = .config/nvim/bundle/nvim-typescript
+	url = https://github.com/mhartington/nvim-typescript.git
+[submodule ".config/nvim/bundle/plantuml-syntax"]
+	path = .config/nvim/bundle/plantuml-syntax
+	url = https://github.com/aklt/plantuml-syntax.git
+[submodule ".config/nvim/bundle/scratch.vim"]
+	path = .config/nvim/bundle/scratch.vim
+	url = https://github.com/mtth/scratch.vim.git
+[submodule ".config/nvim/bundle/syntastic"]
+	path = .config/nvim/bundle/syntastic
+	url = https://github.com/vim-syntastic/syntastic.git
+[submodule ".config/nvim/bundle/tlib_vim"]
+	path = .config/nvim/bundle/tlib_vim
+	url = https://github.com/tomtom/tlib_vim.git
+[submodule ".config/nvim/bundle/typescript-vim"]
+	path = .config/nvim/bundle/typescript-vim
+	url = https://github.com/leafgarland/typescript-vim.git
+[submodule ".config/nvim/bundle/vdebug"]
+	path = .config/nvim/bundle/vdebug
+	url = https://github.com/vim-vdebug/vdebug.git
+[submodule ".config/nvim/bundle/vim-autoformat"]
+	path = .config/nvim/bundle/vim-autoformat
+[submodule ".config/nvim/bundle/codi.vim"]
+	path = .config/nvim/bundle/codi.vim
+	url = https://github.com/metakirby5/codi.vim.git
+[submodule ".config/nvim/bundle/deoplete-clang"]
+	path = .config/nvim/bundle/deoplete-clang
+	url = https://github.com/deoplete-plugins/deoplete-clang.git
+[submodule ".config/nvim/bundle/jellybeans.vim"]
+	path = .config/nvim/bundle/jellybeans.vim
+	url = https://github.com/nanotech/jellybeans.vim.git
+[submodule ".config/nvim/bundle/nerdtree"]
+	path = .config/nvim/bundle/nerdtree
+	url = https://github.com/preservim/nerdtree.git
+[submodule ".config/nvim/bundle/nvim-typescript"]
+	path = .config/nvim/bundle/nvim-typescript
+	url = https://github.com/mhartington/nvim-typescript.git
+[submodule ".config/nvim/bundle/plantuml-syntax"]
+	path = .config/nvim/bundle/plantuml-syntax
+	url = https://github.com/aklt/plantuml-syntax.git
+[submodule ".config/nvim/bundle/scratch.vim"]
+	path = .config/nvim/bundle/scratch.vim
+	url = https://github.com/mtth/scratch.vim.git
+[submodule ".config/nvim/bundle/syntastic"]
+	path = .config/nvim/bundle/syntastic
+	url = https://github.com/vim-syntastic/syntastic.git
+[submodule ".config/nvim/bundle/tlib_vim"]
+	path = .config/nvim/bundle/tlib_vim
+	url = https://github.com/tomtom/tlib_vim.git
+[submodule ".config/nvim/bundle/typescript-vim"]
+	path = .config/nvim/bundle/typescript-vim
+	url = https://github.com/leafgarland/typescript-vim.git
+[submodule ".config/nvim/bundle/vdebug"]
+	path = .config/nvim/bundle/vdebug
+	url = https://github.com/vim-vdebug/vdebug.git
+[submodule ".config/nvim/bundle/vim-autoformat"]
+	path = .config/nvim/bundle/vim-autoformat
+	url = https://github.com/vim-autoformat/vim-autoformat.git
+[submodule ".config/nvim/bundle/vim-easygrep"]
+	path = .config/nvim/bundle/vim-easygrep
+	url = https://github.com/dkprice/vim-easygrep.git
+[submodule ".config/nvim/bundle/vim-foldsearch"]
+	path = .config/nvim/bundle/vim-foldsearch
+	url = https://github.com/embear/vim-foldsearch.git
+[submodule ".config/nvim/bundle/vim-fugitive"]
+	path = .config/nvim/bundle/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule ".config/nvim/bundle/vim-php-manual"]
+	path = .config/nvim/bundle/vim-php-manual
+	url = https://github.com/alvan/vim-php-manual.git
+[submodule ".config/nvim/bundle/vim-python-pep8-indent"]
+	path = .config/nvim/bundle/vim-python-pep8-indent
+	url = https://github.com/Vimjas/vim-python-pep8-indent.git
+[submodule ".config/nvim/bundle/vim-repeat"]
+	path = .config/nvim/bundle/vim-repeat
+	url = https://github.com/tpope/vim-repeat.git
+[submodule ".config/nvim/bundle/vim-slumlord"]
+	path = .config/nvim/bundle/vim-slumlord
+	url = https://github.com/scrooloose/vim-slumlord.git
+[submodule ".config/nvim/bundle/deoplete-jedi"]
+	path = .config/nvim/bundle/deoplete-jedi
+	url = https://github.com/deoplete-plugins/deoplete-jedi.git
+[submodule ".config/nvim/bundle/vim-gutentags"]
+	path = .config/nvim/bundle/vim-gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags.git
+[submodule ".config/nvim/bundle/deoplete.nvim"]
+	path = .config/nvim/bundle/deoplete.nvim
+	url = https://github.com/Shougo/deoplete.nvim.git
+[submodule ".config/nvim/bundle/deoplete-padawan"]
+	path = .config/nvim/bundle/deoplete-padawan
+	url = https://github.com/padawan-php/deoplete-padawan.git
+[submodule ".config/nvim/bundle/deoplete-ternjs"]
+	path = .config/nvim/bundle/deoplete-ternjs
+	url = https://github.com/carlitux/deoplete-ternjs.git
+[submodule ".config/nvim/bundle/fzf.vim"]
+	path = .config/nvim/bundle/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
+[submodule ".config/nvim/bundle/vim-javascript-syntax"]
+	path = .config/nvim/bundle/vim-javascript-syntax
+	url = https://github.com/jelera/vim-javascript-syntax.git
+[submodule ".config/nvim/bundle/neco-vim"]
+	path = .config/nvim/bundle/neco-vim
+	url = https://github.com/Shougo/neco-vim.git
+[submodule ".config/nvim/bundle/suda.vim"]
+	path = .config/nvim/bundle/suda.vim
+	url = https://github.com/lambdalisue/suda.vim.git
+[submodule ".config/nvim/bundle/vim-surround"]
+	path = .config/nvim/bundle/vim-surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule ".config/nvim/bundle/unite.vim"]
+	path = .config/nvim/bundle/unite.vim
+	url = https://github.com/Shougo/unite.vim.git
+[submodule ".config/nvim/bundle/vim-addon-mw-utils"]
+	path = .config/nvim/bundle/vim-addon-mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule ".config/nvim/bundle/vim-snipmate"]
+	path = .config/nvim/bundle/vim-snipmate
+	url = https://github.com/garbas/vim-snipmate.git
+[submodule ".config/nvim/bundle/vim-visual-star-search"]
+	path = .config/nvim/bundle/vim-visual-star-search
+	url = https://github.com/nelstrom/vim-visual-star-search.git
+	url = https://github.com/vim-autoformat/vim-autoformat.git
+[submodule ".config/nvim/bundle/vim-easygrep"]
+	path = .config/nvim/bundle/vim-easygrep
+	url = https://github.com/dkprice/vim-easygrep.git
+[submodule ".config/nvim/bundle/vim-foldsearch"]
+	path = .config/nvim/bundle/vim-foldsearch
+	url = https://github.com/embear/vim-foldsearch.git
+[submodule ".config/nvim/bundle/vim-fugitive"]
+	path = .config/nvim/bundle/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule ".config/nvim/bundle/vim-php-manual"]
+	path = .config/nvim/bundle/vim-php-manual
+	url = https://github.com/alvan/vim-php-manual.git
+[submodule ".config/nvim/bundle/vim-python-pep8-indent"]
+	path = .config/nvim/bundle/vim-python-pep8-indent
+	url = https://github.com/Vimjas/vim-python-pep8-indent.git
+[submodule ".config/nvim/bundle/vim-repeat"]
+	path = .config/nvim/bundle/vim-repeat
+	url = https://github.com/tpope/vim-repeat.git
+[submodule ".config/nvim/bundle/vim-slumlord"]
+	path = .config/nvim/bundle/vim-slumlord
+	url = https://github.com/scrooloose/vim-slumlord.git
+[submodule ".config/nvim/bundle/deoplete-jedi"]
+	path = .config/nvim/bundle/deoplete-jedi
+	url = https://github.com/deoplete-plugins/deoplete-jedi.git
+[submodule ".config/nvim/bundle/vim-gutentags"]
+	path = .config/nvim/bundle/vim-gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags.git
+[submodule ".config/nvim/bundle/deoplete.nvim"]
+	path = .config/nvim/bundle/deoplete.nvim
+	url = https://github.com/Shougo/deoplete.nvim.git
+[submodule ".config/nvim/bundle/deoplete-padawan"]
+	path = .config/nvim/bundle/deoplete-padawan
+	url = https://github.com/padawan-php/deoplete-padawan.git
+[submodule ".config/nvim/bundle/deoplete-ternjs"]
+	path = .config/nvim/bundle/deoplete-ternjs
+	url = https://github.com/carlitux/deoplete-ternjs.git
+[submodule ".config/nvim/bundle/fzf.vim"]
+	path = .config/nvim/bundle/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
+[submodule ".config/nvim/bundle/vim-javascript-syntax"]
+	path = .config/nvim/bundle/vim-javascript-syntax
+	url = https://github.com/jelera/vim-javascript-syntax.git
+[submodule ".config/nvim/bundle/neco-vim"]
+	path = .config/nvim/bundle/neco-vim
+	url = https://github.com/Shougo/neco-vim.git
+[submodule ".config/nvim/bundle/suda.vim"]
+	path = .config/nvim/bundle/suda.vim
+	url = https://github.com/lambdalisue/suda.vim.git
+[submodule ".config/nvim/bundle/vim-surround"]
+	path = .config/nvim/bundle/vim-surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule ".config/nvim/bundle/unite.vim"]
+	path = .config/nvim/bundle/unite.vim
+	url = https://github.com/Shougo/unite.vim.git
+[submodule ".config/nvim/bundle/vim-addon-mw-utils"]
+	path = .config/nvim/bundle/vim-addon-mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule ".config/nvim/bundle/vim-snipmate"]
+	path = .config/nvim/bundle/vim-snipmate
+	url = https://github.com/garbas/vim-snipmate.git
+[submodule ".config/nvim/bundle/vim-visual-star-search"]
+	path = .config/nvim/bundle/vim-visual-star-search
+	url = https://github.com/nelstrom/vim-visual-star-search.git
+[submodule ".config/nvim/bundle/vimproc.vim"]
+	path = .config/nvim/bundle/vimproc.vim
+	url = https://github.com/Shougo/vimproc.vim.git
+[submodule ".oh-my-zsh"]
+	path = .oh-my-zsh
+	url = https://github.com/ohmyzsh/ohmyzsh.git
+[submodule ".config/nvim/bundle/vim-yadi"]
+	path = .config/nvim/bundle/vim-yadi
+	url = https://github.com/timakro/vim-yadi.git
+[submodule ".config/nvim/bundle/fzf"]
+	path = .config/nvim/bundle/fzf
+	url = https://github.com/junegunn/fzf.git
+[submodule ".config/nvim/bundle/minimap.vim"]
+	path = .config/nvim/bundle/minimap.vim
+	url = https://github.com/wfxr/minimap.vim.git
