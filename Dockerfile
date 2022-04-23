@@ -248,40 +248,42 @@ RUN export http_proxy=$APT_PROXY \
     && apt-get update -y \
     && apt-get install -y \
         apktool \
+        audacity \
         bash-completion \
         binutils \
         binwalk \
+        burp \
         byobu \
         dc \
         dnsutils \
         docker.io \
+        elfutils \
+        exiftool \
         expect \
         exuberant-ctags \
-        hashcat \
-        hashcat-nvidia \
-        hydra \
-        john \
-        ophcrack \
-        audacity \
-        exiftool \
-        foremost \
-        sqlmap \
-        burp \
         flake8 \
+        foremost \
         git-gui \
         gitk \
+        hashcat \
+        hashcat-nvidia \
         htop \
+        hydra \
         iputils-ping \
+        john \
         ldap-utils \
         ltrace \
         ncat \
         netcat-openbsd \
         nmap \
         openssh-client \
+        ophcrack \
         p0f \
+        patchelf \
         php \
         php-cli \
         snmp \
+        sqlmap \
         strace \
         tcpdump \
         tmux \
@@ -311,6 +313,7 @@ RUN export http_proxy=$APT_PROXY \
     && usermod -aG docker $USERNAME \
     && chsh -s $(which zsh) $USERNAME \
     && pip3 install pwntools \
+    && pip3 install jedi \
     && unset http_proxy
 
 RUN pip3 install neovim \

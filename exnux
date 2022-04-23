@@ -28,19 +28,38 @@ case "$CMD" in
     ;;
     start-headless)
         "$0" net
-		xauthority=${XAUTHORITY:-"/home/$USER/.Xauthority"}
+                xauthority=${XAUTHORITY:-"/home/$USER/.Xauthority"}
         docker run --rm -it -d --name "$NAME" --network "$NAME-net" \
-            --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
+            --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --privileged \
             -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
             -v "$SCRIPT_DIR/dotfiles:/home/$USERNAME" \
             -v "$xauthority:/home/$USERNAME/.Xauthority" \
             -e "XAUTHORITY=/home/$USERNAME/.Xauthority" \
             -h "$(hostname)" \
             -e "DISPLAY=$DISPLAY" \
-            --device /dev/dri \
             -v "/:/home/$USERNAME/root" \
+            -v "$HOME:/home/$USERNAME/home" \
             -v "$HOME/.ssh:/home/$USERNAME/.ssh" \
             -v "/var/run/docker.sock:/var/run/docker.sock" \
+            "$NAME:$TAG" /bin/bash
+    ;;
+    start-home-mount)
+        "$0" net
+        xauthority=${XAUTHORITY:-"/home/$USER/.Xauthority"}
+        docker run --rm -it -d --name "$NAME" --network "$NAME-net" \
+            --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --privileged \
+            --user $(id -u):$(id -g) \
+            -h "$(hostname)" \
+            -e "XAUTHORITY=$XAUTHORITY" \
+            -e "DISPLAY=$DISPLAY" \
+            -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+            -v "$HOME:/home/$USERNAME" \
+            -v "$xauthority:/home/$USERNAME/.Xauthority" \
+            -v "/:/home/$USERNAME/root" \
+            -v "$HOME:/home/$USERNAME/home" \
+            -v "/var/run/docker.sock:/var/run/docker.sock" \
+            -v "/etc/passwd:/etc/passwd" \
+            -v "/etc/group:/etc/group" \
             "$NAME:$TAG" /bin/bash
     ;;
     start)
@@ -71,6 +90,6 @@ case "$CMD" in
         git clean -fdx :dotfiles
     ;;
     *)
-        echo "$0 build|start|clean|distclean|build-apt-cache|msf-postgres"
+        echo "$0 build|start|clean|distclean|build-apt-cache|msf-postgres|start-home-mount"
     ;;
 esac
