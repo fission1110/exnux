@@ -191,12 +191,11 @@ RUN export http_proxy=$APT_PROXY \
 
 # build r2 because for some reason all packaged versions segfault when debugging
 RUN mkdir -p /usr/local/src/radare2 \
-    && git clone -b 5.5.4 --recurse-submodules --depth 1 --shallow-submodules https://github.com/radareorg/radare2.git /usr/local/src/radare2 \
+    && git clone -b 5.6.8 --recurse-submodules --depth 1 --shallow-submodules https://github.com/radareorg/radare2.git /usr/local/src/radare2 \
     && cd /usr/local/src/radare2 \
     && ./sys/debian.sh \
     && mkdir ../build \
     && cp ./*.deb ../build \
-    && MAKE_JOBS=$(nproc) sys/install.sh --without-pull \
     && rm -r /usr/local/src/radare2
 
 ################################################
@@ -369,7 +368,7 @@ RUN cd /usr/local/src/radare2 \
     && sudo -E -u $USERNAME r2pm update \
 #    && r2pm -gi r2dec \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -gi r2ghidra \
-    && mv /home/$USERNAME/.local/share/radare2/plugins/r2ghidra_sleigh /usr/local/src/r2pm/plugins/r2ghidra_sleigh 
+    && mv /home/$USERNAME/.local/share/radare2/plugins/r2ghidra_sleigh /usr/local/src/r2pm/plugins/r2ghidra_sleigh
 
 RUN wget -O /iaito.deb https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb \
     && dpkg -i /iaito.deb \
