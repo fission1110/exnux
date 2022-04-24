@@ -57,7 +57,7 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 PATH=$PATH:$HOME/.composer/vendor/bin
-PATH=/usr/local/src/rbenv/.rbenv/bin:/usr/local/src/rbenv/.rbenv/shims:$PATH
+PATH=$HOME/.rbenv/bin:/usr/local/src/rbenv/.rbenv/shims:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
  # Preferred editor for local and remote sessions

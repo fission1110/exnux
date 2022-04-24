@@ -59,19 +59,11 @@ RUN useradd -m $USERNAME \
     && echo "$USERNAME       ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
     && chmod 0400 /etc/sudoers.d/$USERNAME
 
-# Do some weird things with rbenv to get it to install to the /usr/local/src directory so it won't get
-# overwritten by the home directory mount
-ENV RBENV_ROOT /usr/local/src/rbenv/.rbenv
-ENV RBENV_DIR $RBENV_ROOT
-ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:/usr/local/src/metasploit-framework:$PATH
+ENV PATH /home/$USERNAME/.rbenv/bin:/home/$USERNAME/.rbenv/shims:/usr/local/src/metasploit-framework:$PATH
 
-# Don't put plugins in the home directory
-ENV R2PM_PLUGDIR /usr/local/src/r2pm/plugins
-ENV R2PM_BINDIR /usr/local/src/r2pm/prefix/bin
-ENV R2PM_DBDIR /usr/local/src/r2pm/db
-ENV R2PM_GITDIR /usr/local/src/r2pm/git
-ENV SLEIGHHOME /usr/local/src/r2pm/plugins/r2ghidra_sleigh
-
+RUN wget -O - https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bash \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv install 3.0.2 \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv global 3.0.2
 
 ################################################
 #
@@ -140,23 +132,15 @@ RUN export http_proxy=$APT_PROXY \
     && rm -rf /var/lib/apt/lists/* \
     && unset http_proxy
 
-RUN mkdir -p /usr/local/src/rbenv \
-    && chown $USERNAME:$USERNAME /usr/local/src/rbenv \
-    && wget -O /usr/local/src/rbenv/rbenv-installer https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer \
-    && chmod +x /usr/local/src/rbenv/rbenv-installer \
-    # change home directory to /usr/local/src/rbenv to get rbenv installer to write to a global directory
-    && sudo -E -u $USERNAME "HOME=/usr/local/src/rbenv" /usr/local/src/rbenv/rbenv-installer \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv install 3.0.2 \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "RBENV_ROOT=$RBENV_ROOT" "RBENV_DIR=$RBENV_DIR" rbenv global 3.0.2
 
 RUN mkdir -p /usr/local/src/metasploit-framework \
     && chown $USERNAME:$USERNAME /usr/local/src/metasploit-framework \
     && sudo -u $USERNAME git clone -b 6.1.38 --recurse-submodules --depth 1 --shallow-submodules https://github.com/rapid7/metasploit-framework.git /usr/local/src/metasploit-framework && \
     # gem install and bundle install
     cd /usr/local/src/metasploit-framework \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" gem update --system \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" gem install --no-user-install bundler \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" bundle install --jobs=$(nproc)
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem update --system \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem install --no-user-install bundler \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bundle install --jobs=$(nproc)
 
 ################################################
 #
@@ -359,22 +343,18 @@ FROM base-extended AS base-final
 #        zlib1g-dev \
 #    && unset http_proxy
 
-COPY --from=metasploit-build --chown=$USERNAME /usr/local/src/rbenv /usr/local/src/rbenv
 COPY --from=metasploit-build --chown=$USERNAME /usr/local/src/metasploit-framework /usr/local/src/metasploit-framework
 
 COPY --from=radare2-build /usr/local/src/build/*.deb /usr/local/src/radare2/
 RUN cd /usr/local/src/radare2 \
     && dpkg -i ./radare2*.deb \
     && rm -r /usr/local/src/radare2 \
-    && mkdir /usr/local/src/r2pm \
-    && chown $USERNAME:$USERNAME /usr/local/src/r2pm \
     && update-alternatives --install /usr/bin/python python /usr/bin/python3 20 \
-    && sudo -E -u $USERNAME r2pm init \
-    && sudo -E -u $USERNAME r2pm update \
+    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm init \
+    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm update \
 #    && r2pm -gi r2dec \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -gi r2ghidra \
-    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -gi r2frida \
-    && mv /home/$USERNAME/.local/share/radare2/plugins/r2ghidra_sleigh /usr/local/src/r2pm/plugins/r2ghidra_sleigh
+    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -gi r2frida
 
 RUN wget -O /iaito.deb https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb \
     && dpkg -i /iaito.deb \
@@ -416,6 +396,8 @@ RUN ln -s /usr/local/src/ghidra/ghidraRun /usr/local/bin/ghidraRun
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
 USER $USERNAME
+
+COPY --chown=$USERNAME dotfiles ./
 
 #ohmyzsh stomps over .zshrc so do this last
 RUN nvim --headless +UpdateRemotePlugins +qa
