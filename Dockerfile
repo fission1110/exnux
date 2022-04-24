@@ -247,6 +247,7 @@ RUN export http_proxy=$APT_PROXY \
         exiftool \
         expect \
         exuberant-ctags \
+        fd-find \
         flake8 \
         foremost \
         git-gui \
@@ -282,15 +283,15 @@ RUN export http_proxy=$APT_PROXY \
         zsh \
       # ghidra
         fontconfig \
-        libc6-dbg \
         libc-dbg:i386 \
+        libc6-dbg \
         libglib2.0-dev \
         libxi6 \
         libxrender1 \
         libxtst6 \
         openjdk-11-jdk \
         openjdk-11-jre \
-        # iaito
+       # iaito
         libgvc6 \
         libqt5svg5 \
         libuuid1 \
@@ -298,6 +299,7 @@ RUN export http_proxy=$APT_PROXY \
     && echo 'y\ny' | unminimize \
     && groupmod -g 999 docker \
     && usermod -aG docker $USERNAME \
+    && ln -s $(which fdfind) /usr/local/bin/fd \
     && chsh -s $(which zsh) $USERNAME \
     && pip3 install pwntools \
     && pip3 install ipython \
@@ -353,8 +355,8 @@ RUN cd /usr/local/src/radare2 \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm init \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm update \
 #    && r2pm -gi r2dec \
-    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -gi r2ghidra \
-    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -gi r2frida
+    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2ghidra \
+    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2frida
 
 RUN wget -O /iaito.deb https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb \
     && dpkg -i /iaito.deb \
@@ -392,14 +394,12 @@ RUN cd /usr/local/src/pwndbg \
 COPY --from=ghidra-build /usr/local/src/ghidra /usr/local/src/ghidra
 RUN ln -s /usr/local/src/ghidra/ghidraRun /usr/local/bin/ghidraRun
 
-# Set home and change user before zsh configuration to keep correct permissions in the $USERNAME home dir
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
 USER $USERNAME
 
 COPY --chown=$USERNAME dotfiles ./
 
-#ohmyzsh stomps over .zshrc so do this last
 RUN touch .zsh_history && nvim --headless +UpdateRemotePlugins +qa
 
 CMD ["/usr/bin/byobu"]

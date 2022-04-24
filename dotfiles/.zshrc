@@ -44,12 +44,27 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # HIST_STAMPS="mm/dd/yyyy"
 
-export FZF_BASE=/usr/local/src/fzf
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(gitfast vi-mode dirhistory pip nmap fzf )
 COLORTERM=truecolor
+
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+# command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+
+export FZF_BASE=/usr/local/src/fzf
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
 
 source $ZSH/oh-my-zsh.sh
 
