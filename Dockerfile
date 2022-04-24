@@ -400,6 +400,6 @@ USER $USERNAME
 COPY --chown=$USERNAME dotfiles ./
 
 #ohmyzsh stomps over .zshrc so do this last
-RUN nvim --headless +UpdateRemotePlugins +qa
+RUN touch .zsh_history && nvim --headless +UpdateRemotePlugins +qa
 
 CMD ["/usr/bin/byobu"]
