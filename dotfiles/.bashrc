@@ -134,3 +134,16 @@ PATH=$PATH:$HOME/.composer/vendor/bin
 #complete -F __start_kubectl k
 PATH=/usr/local/src/rbenv/.rbenv/bin:/usr/local/src/rbenv/.rbenv/shims:$PATH
 eval "$(rbenv init -)"
+
+# Do some weird things with rbenv to get it to install to the /usr/local/src directory so it won't get
+# overwritten by the home directory mount
+RBENV_ROOT=/usr/local/src/rbenv/.rbenv
+RBENV_DIR=$RBENV_ROOT
+PATH=$RBENV_ROOT/bin:$RBENV_ROOT/shims:/usr/local/src/metasploit-framework:$PATH
+
+# Don't put plugins in the home directory
+R2PM_PLUGDIR=/usr/local/src/r2pm/plugins
+R2PM_BINDIR=/usr/local/src/r2pm/prefix/bin
+R2PM_DBDIR=/usr/local/src/r2pm/db
+R2PM_GITDIR=/usr/local/src/r2pm/git
+SLEIGHHOME=/usr/local/src/r2pm/plugins/r2ghidra_sleigh

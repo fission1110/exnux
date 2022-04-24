@@ -354,7 +354,7 @@ let g:syntastic_mode_map = {"mode": "passive", "active_filetypes":[], "passive_f
 let g:syntastic_php_phpcs_args = "--standard="
 let g:phpcomplete_index_composer_command = '/usr/local/bin/composer.phar'
 
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-6.0/lib/libclang.so.1'
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-9/lib/libclang.so.1'
 let g:deoplete#sources#clang#clang_header = '/usr/include/clang'
 augr class
 au!

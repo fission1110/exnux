@@ -48,7 +48,10 @@ RUN export http_proxy=$APT_PROXY \
         unzip \
         wget \
         zip \
-    && unset http_proxy
+    && unset http_proxy \
+    && pip3 install frida \
+    && pip3 install frida-tools \
+    && npm install frida
 
 ENV USERNAME=nonroot
 RUN useradd -m $USERNAME \
@@ -271,6 +274,7 @@ RUN export http_proxy=$APT_PROXY \
         iputils-ping \
         john \
         ldap-utils \
+        libclang-9-dev \
         ltrace \
         ncat \
         netcat-openbsd \
@@ -312,6 +316,7 @@ RUN export http_proxy=$APT_PROXY \
     && usermod -aG docker $USERNAME \
     && chsh -s $(which zsh) $USERNAME \
     && pip3 install pwntools \
+    && pip3 install ipython \
     && pip3 install jedi \
     && unset http_proxy
 
@@ -368,6 +373,7 @@ RUN cd /usr/local/src/radare2 \
     && sudo -E -u $USERNAME r2pm update \
 #    && r2pm -gi r2dec \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -gi r2ghidra \
+    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -gi r2frida \
     && mv /home/$USERNAME/.local/share/radare2/plugins/r2ghidra_sleigh /usr/local/src/r2pm/plugins/r2ghidra_sleigh
 
 RUN wget -O /iaito.deb https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb \
