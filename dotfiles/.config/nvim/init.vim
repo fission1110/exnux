@@ -271,40 +271,18 @@ au FileType python nmap <leader>ee :exec '!python3' shellescape(@%, 1)<cr>
 au FileType python nmap <leader>ei :exec '!python' shellescape(@%, 1)<cr>
 
 
-let g:jellybeans_use_lowcolor_black = 0
+colorscheme nightfox
 
-"Search: green bg grey fg underline
-"Identifier(varibles): light deep blue fg
-"DbgBreakptLine: green bg grey  fg
-"Statement: bluegreen foreground
-let g:jellybeans_overrides = {
-\    'Search': { 'guifg': '1c1c1c', 'guibg': '99ad6a',
-\              'ctermfg': 'Magenta', 'ctermbg': '',
-\              'attr': 'underline' },
-\    'Identifier': { 'guifg': '5B79BA', 'guibg': '',
-\              'ctermfg': 'LightCyan', 'ctermbg': '',
-\              'attr': '' },
-\    'DbgBreakptLine': { 'guifg': '1c1c1c', 'guibg': '99ad6a',
-\              'ctermfg': '1c1c1c', 'ctermbg': '99ad6a',
-\              'attr': '' },
-\    'Statement': { 'guifg': '447799', 'guibg': '',
-\              'ctermfg': '447799', 'ctermbg': '',
-\              'attr': '' },
-\}
-
-
-set background=dark
-colorscheme jellybeans
+hi Normal ctermbg=NONE
+hi NormalNC ctermbg=NONE
+hi StatusLine ctermbg=NONE
+hi StatusLineNC ctermbg=NONE
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
 "change the statusline highlighted background color to black
 "
-hi StatusLine gui=none guibg=DarkGrey cterm=none ctermbg=DarkGrey
-hi Normal gui=none guibg=none cterm=none ctermbg=none
-hi NonText gui=none guibg=none  cterm=none ctermbg=none
-" Neovim-qt Guifont command, to change the font
 command -nargs=? Guifont call rpcnotify(0, 'Gui', 'SetFont', "<args>")
 " Set font on start
 let g:Guifont="DejaVu Sans Mono for Powerline:h13"
