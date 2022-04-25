@@ -261,6 +261,8 @@ RUN export http_proxy=$APT_PROXY \
         ldap-utils \
         libclang-9-dev \
         ltrace \
+        postgresql-client \
+        mysql-client \
         ncat \
         netcat-openbsd \
         nmap \
@@ -378,6 +380,13 @@ RUN wget -O /code-minimap.deb https://github.com/wfxr/code-minimap/releases/down
     && dpkg -i /code-minimap.deb \
     && rm /code-minimap.deb
 
+RUN wget -O /usr/local/bin/websocat https://github.com/vi/websocat/releases/download/v1.9.0/websocat_linux64 \
+    && chmod +x /usr/local/bin/websocat
+
+RUN wget -O /jd-gui.deb https://github.com/java-decompiler/jd-gui/releases/download/v1.6.6/jd-gui-1.6.6.deb \
+    && dpkg -i /jd-gui.deb \
+    && rm /jd-gui.deb
+
 #RUN mkdir -p /usr/local/src/retdec \
 #    && cd /usr/local/src/retdec \
 #    && wget -O retdec.tar.xz https://github.com/avast/retdec/releases/download/v4.0/retdec-v4.0-ubuntu-64b.tar.xz \
@@ -400,6 +409,8 @@ USER $USERNAME
 
 COPY --chown=$USERNAME dotfiles ./
 
-RUN touch .zsh_history && nvim --headless +UpdateRemotePlugins +qa
+RUN touch .zsh_history \
+    && .config/nvim/bundle/nvim-typescript/install.sh \
+    && nvim --headless +UpdateRemotePlugins +qa
 
 CMD ["/usr/bin/byobu"]
