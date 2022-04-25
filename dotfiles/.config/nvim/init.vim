@@ -271,12 +271,12 @@ au FileType python nmap <leader>ee :exec '!python3' shellescape(@%, 1)<cr>
 au FileType python nmap <leader>ei :exec '!python' shellescape(@%, 1)<cr>
 
 
-colorscheme nightfox
+colorscheme terafox
 
-hi Normal ctermbg=NONE
-hi NormalNC ctermbg=NONE
-hi StatusLine ctermbg=NONE
-hi StatusLineNC ctermbg=NONE
+hi Normal ctermbg=NONE guibg=NONE
+hi NormalNC ctermbg=NONE guibg=NONE
+hi StatusLine ctermbg=NONE guibg=NONE
+hi StatusLineNC ctermbg=NONE guibg=NONE
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
