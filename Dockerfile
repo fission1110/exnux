@@ -385,6 +385,8 @@ RUN wget -O /usr/local/bin/websocat https://github.com/vi/websocat/releases/down
 
 RUN wget -O /jd-gui.deb https://github.com/java-decompiler/jd-gui/releases/download/v1.6.6/jd-gui-1.6.6.deb \
     && dpkg -i /jd-gui.deb \
+	&& echo "java -Xms2G -Xmx5G -jar /opt/jd-gui/jd-gui-1.6.6-min.jar" > /usr/local/bin/jd-gui \
+	&& chmod +x /usr/local/bin/jd-gui \
     && rm /jd-gui.deb
 
 #RUN mkdir -p /usr/local/src/retdec \
