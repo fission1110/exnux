@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+import sys
+import codecs
+
+def encode(hexin):
+    if len(sys.argv) >= 2:
+        codec = sys.argv[1]
+    else:
+        codec = 'utf-8'
+    return codecs.decode(hexin, 'hex').decode(codec)
+
+if __name__ == '__main__':
+    while True:
+        buf = sys.stdin.buffer.read(1024)
+        if not buf:
+            break
+        sys.stdout.write(encode(buf))

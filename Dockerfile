@@ -59,7 +59,7 @@ RUN useradd -m $USERNAME \
     && echo "$USERNAME       ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
     && chmod 0400 /etc/sudoers.d/$USERNAME
 
-ENV PATH /home/$USERNAME/.rbenv/bin:/home/$USERNAME/.rbenv/shims:/usr/local/src/metasploit-framework:$PATH
+ENV PATH /home/$USERNAME/.rbenv/bin:/home/$USERNAME/.rbenv/shims:/usr/local/src/metasploit-framework:$PATH:/home/$USERNAME/tools
 
 RUN wget -O - https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bash \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv install 3.0.2 \
@@ -269,6 +269,7 @@ RUN export http_proxy=$APT_PROXY \
         lzip \
         lzop \
         mysql-client \
+        nasm \
         ncat \
         netcat-openbsd \
         nmap \
@@ -323,38 +324,6 @@ RUN pip3 install neovim \
     && pip3 install libclang
 
 FROM base-extended AS base-final
-# general
-#RUN export http_proxy=$APT_PROXY \
-#    && apt-get update -y \
-#    && apt-get install -y \
-#      # neovim
-#        autoconf \
-#        automake \
-#        curl \
-#        doxygen \
-#        gettext \
-#        libtool \
-#        libtool-bin \
-#        ninja-build \
-#        nodejs \
-#        npm \
-#        unzip \
-      # retdec
-#        autoconf \
-#        automake \
-#        cmake \
-#        doxygen \
-#        git \
-#        graphviz \
-#        libssl-dev \
-#        libtool \
-#        m4 \
-#        openssl \
-#        pkg-config \
-#        python3 \
-#        upx \
-#        zlib1g-dev \
-#    && unset http_proxy
 
 COPY --from=metasploit-build --chown=$USERNAME /usr/local/src/metasploit-framework /usr/local/src/metasploit-framework
 
@@ -398,6 +367,12 @@ RUN wget -O /jd-gui.deb https://github.com/java-decompiler/jd-gui/releases/downl
 	&& chmod +x /usr/local/bin/jd-gui \
     && rm /jd-gui.deb
 
+RUN  mkdir -p /home/$USERNAME/Wordlists/ \
+    && wget -O /home/$USERNAME/Wordlists/rockyou.txt.gz https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz
+
+RUN curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose \
+    && chmod +x /usr/local/bin/docker-compose
+
 #RUN mkdir -p /usr/local/src/retdec \
 #    && cd /usr/local/src/retdec \
 #    && wget -O retdec.tar.xz https://github.com/avast/retdec/releases/download/v4.0/retdec-v4.0-ubuntu-64b.tar.xz \
@@ -419,6 +394,7 @@ ENV HOME /home/$USERNAME
 USER $USERNAME
 
 COPY --chown=$USERNAME dotfiles ./
+COPY --chown=$USERNAME tools ./tools
 
 RUN touch .zsh_history \
     && .config/nvim/bundle/nvim-typescript/install.sh \

@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+import sys
+
+def encode(hexin):
+    output = ''
+    for i in range(0,len(hexin),2):
+        byte = hexin[i:i+2]
+        output += ' ' + str(int(byte, 16))
+    return output
+
+if __name__ == '__main__':
+    while True:
+        buf = sys.stdin.read(1024)
+        if not buf:
+            break
+        sys.stdout.write(encode(buf))
