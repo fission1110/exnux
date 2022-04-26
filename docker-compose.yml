@@ -1,0 +1,53 @@
+services:
+  exnux:
+    container_name: "exnux"
+    build: "."
+    cap_add:
+      - SYS_PTRACE
+    privileged: true
+    networks:
+      exnux-net: {}
+    environment:
+      DISPLAY: "${DISPLAY}"
+      XAUTHORITY: "${XAUTHORITY}"
+    volumes:
+      - "$XAUTHORITY:/home/$USERNAME/.Xauthority"
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - "/:/home/$USERNAME/root"
+      - "$HOME:/home/$USERNAME/home"
+      - "$HOME/.ssh:/home/$USERNAME/.ssh"
+      - "./dotfiles/.zsh_history:/home/$USERNAME/.zsh_history"
+      - "$HOME/Downloads:/home/$USERNAME/Downloads"
+      - "$HOME/Documents:/home/$USERNAME/Documents"
+      - "$HOME/Pictures:/home/$USERNAME/Pictures"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    devices:
+      - "/dev/dri"
+    command: "/bin/bash"
+  msf-postgres:
+    container_name: "msf-postgres"
+    networks:
+      exnux-net: {}
+    environment:
+      POSTGRES_USER: "msf"
+      POSTGRES_PASSWORD: "msf"
+    volumes:
+      - "msf-postgres-pgdata:/var/lib/postgresql/data"
+    image: "postgres:14.2"
+  apt-cacher-ng:
+    container_name: "apt-cacher-ng"
+    image: "sameersbn/apt-cacher-ng:3.3-20200524"
+    volumes:
+      - "/srv/docker/apt-cacher-ng:/var/cache/apt-cacher-ng"
+    ports:
+      - "172.17.0.1:3142:3142"
+
+
+volumes:
+  msf-postgres-pgdata:
+
+networks:
+  exnux-net:
+    external: true
+    driver: "bridge"
+    name: "exnux-net"
