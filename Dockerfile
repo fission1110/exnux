@@ -235,11 +235,13 @@ RUN export http_proxy=$APT_PROXY \
     && apt-get install -y \
         apktool \
         audacity \
+        autopsy \
         bash-completion \
         binutils \
         binwalk \
         burp \
         byobu \
+        cpio \
         dc \
         dnsutils \
         docker.io \
@@ -250,28 +252,35 @@ RUN export http_proxy=$APT_PROXY \
         fd-find \
         flake8 \
         foremost \
+        gimp \
         git-gui \
         gitk \
         hashcat \
         hashcat-nvidia \
         htop \
         hydra \
+        inkscape \
         iputils-ping \
         john \
         ldap-utils \
         libclang-9-dev \
         ltrace \
-        postgresql-client \
+        lz4 \
+        lzip \
+        lzop \
         mysql-client \
         ncat \
         netcat-openbsd \
         nmap \
+        okular \
         openssh-client \
         ophcrack \
         p0f \
         patchelf \
         php \
         php-cli \
+        postgresql-client \
+        sleuthkit \
         snmp \
         sqlmap \
         strace \

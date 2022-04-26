@@ -10,7 +10,7 @@ set ignorecase		" Do case insensitive matching
 set smartcase		" Do smart case matching
 set nowrap	"Don't wrap long lines
 set hidden	"Hide edited buffers rather than quit them
-set laststatus = 3 " Global statuslin
+set laststatus=3 " Global statuslin
 let g:terminal_scrollback_buffer_size = 100000
 
 set clipboard+=unnamedplus
