@@ -220,3 +220,6 @@
 [submodule "dotfiles/tools/exploitdb"]
 	path = dotfiles/tools/exploitdb
 	url = https://github.com/offensive-security/exploitdb.git
+[submodule "dotfiles/.config/nvim/bundle/lualine.nvim"]
+	path = dotfiles/.config/nvim/bundle/lualine.nvim
+	url = https://github.com/nvim-lualine/lualine.nvim.git
