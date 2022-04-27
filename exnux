@@ -5,6 +5,13 @@ export DOCKER_BUILDKIT=1
 export USERNAME=nonroot
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
+mkdir -p $SCRIPT_DIR/dotfiles/.cache/radare2
+mkdir -p $SCRIPT_DIR/dotfiles/.msf4
+touch $SCRIPT_DIR/dotfiles/.zsh_history
+touch $SCRIPT_DIR/dotfiles/.bash_history
+touch $SCRIPT_DIR/dotfiles/.gdb_history
+touch $SCRIPT_DIR/dotfiles/.cache/radare2/history
+touch $SCRIPT_DIR/dotfiles/.msf4/history
 case "$CMD" in
 	init)
 		sudo apt-get install docker.io git

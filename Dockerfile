@@ -61,7 +61,7 @@ RUN useradd -m $USERNAME \
 
 ENV PATH /home/$USERNAME/.rbenv/bin:/home/$USERNAME/.rbenv/shims:/usr/local/src/metasploit-framework:$PATH:/home/$USERNAME/tools
 
-RUN wget -O - https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bash \
+RUN wget -O- 'https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer' | sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bash \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv install 3.0.2 \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv global 3.0.2
 
@@ -408,8 +408,7 @@ USER $USERNAME
 
 COPY --chown=$USERNAME dotfiles ./
 
-RUN touch .zsh_history \
-    && .config/nvim/bundle/nvim-typescript/install.sh \
+RUN .config/nvim/bundle/nvim-typescript/install.sh \
     && nvim --headless +UpdateRemotePlugins +qa
 
 CMD ["/usr/bin/byobu"]
