@@ -1,7 +1,6 @@
 call pathogen#infect()
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let $TERM="screen-256color"
-set title titlestring=%{getcwd()}\ (%{fnamemodify(expand(\"%\"),\ \":~:.\")})\ -\ NVIM
 set mouse=
 set showcmd		" Show (partial) command in status line.
 set synmaxcol=600
@@ -12,10 +11,6 @@ set nowrap	"Don't wrap long lines
 set hidden	"Hide edited buffers rather than quit them
 let g:terminal_scrollback_buffer_size = 100000
 
-lua << END
-require('lualine').setup()
-END
-set laststatus=3 " Global statuslin
 set clipboard+=unnamedplus
 
 set smartindent	"When creating a new line in a block it will put the cursor in the correct place
@@ -358,3 +353,19 @@ let g:minimap_width = 20
 let g:minimap_auto_start = 1
 let g:minimap_auto_start_win_enter = 0
 
+lua << END
+require('lualine').setup({
+    options = {
+        globalstatus = true,
+        theme = 'terafox'
+    },
+    sections = {
+        lualine_a = {'mode'},
+        lualine_b = {'branch', 'diff', 'diagnostics'},
+        lualine_c = {'filename'},
+        lualine_x = {'encoding', 'filetype'},
+        lualine_y = {'progress'},
+        lualine_z = {'location'}
+    }
+})
+END
