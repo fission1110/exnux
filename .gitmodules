@@ -214,3 +214,9 @@
 [submodule "dotfiles/.config/nvim/bundle/nightfox.nvim"]
 	path = dotfiles/.config/nvim/bundle/nightfox.nvim
 	url = https://github.com/EdenEast/nightfox.nvim.git
+[submodule "dotfiles/exploitdb"]
+	path = dotfiles/exploitdb
+	url = https://github.com/offensive-security/exploitdb.git
+[submodule "dotfiles/tools/exploitdb"]
+	path = dotfiles/tools/exploitdb
+	url = https://github.com/offensive-security/exploitdb.git

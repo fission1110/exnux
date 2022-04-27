@@ -59,7 +59,7 @@ RUN useradd -m $USERNAME \
     && echo "$USERNAME       ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
     && chmod 0400 /etc/sudoers.d/$USERNAME
 
-ENV PATH /home/$USERNAME/.rbenv/bin:/home/$USERNAME/.rbenv/shims:/usr/local/src/metasploit-framework:$PATH:/home/$USERNAME/tools
+ENV PATH /home/$USERNAME/.rbenv/bin:/home/$USERNAME/.rbenv/shims:/usr/local/src/metasploit-framework:$PATH:/home/$USERNAME/dotfiles/tools
 
 RUN wget -O - https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bash \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv install 3.0.2 \
@@ -394,7 +394,6 @@ ENV HOME /home/$USERNAME
 USER $USERNAME
 
 COPY --chown=$USERNAME dotfiles ./
-COPY --chown=$USERNAME tools ./tools
 
 RUN touch .zsh_history \
     && .config/nvim/bundle/nvim-typescript/install.sh \
