@@ -140,7 +140,9 @@ RUN mkdir -p /usr/local/src/metasploit-framework \
     cd /usr/local/src/metasploit-framework \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem update --system \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem install --no-user-install bundler \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem install --no-user-install wpscan \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bundle install --jobs=$(nproc)
+
 
 ################################################
 #
@@ -254,8 +256,8 @@ RUN export http_proxy=$APT_PROXY \
         foremost \
         gimp \
         git-gui \
-        gobuster \
         gitk \
+        gobuster \
         hashcat \
         hashcat-nvidia \
         htop \
@@ -285,6 +287,7 @@ RUN export http_proxy=$APT_PROXY \
         php-cli \
         postgresql-client \
         sleuthkit \
+        smbclient \
         snmp \
         sqlmap \
         strace \
@@ -329,6 +332,7 @@ RUN pip3 install neovim \
 FROM base-extended AS base-final
 
 COPY --from=metasploit-build --chown=$USERNAME /usr/local/src/metasploit-framework /usr/local/src/metasploit-framework
+COPY --from=metasploit-build --chown=$USERNAME /home/$USERNAME/.rbenv /home/$USERNAME/.rbenv
 
 COPY --from=radare2-build /usr/local/src/build/*.deb /usr/local/src/radare2/
 RUN cd /usr/local/src/radare2 \
@@ -389,6 +393,7 @@ RUN mkdir -p /usr/local/src/zap \
     && cd /usr/local/src/zap \
     && tar -I pigz -xf ./zap.tar.gz \
     && rm ./zap.tar.gz
+
 
 COPY --from=pwndbg-build --chown=$USERNAME /usr/local/src/pwndbg /usr/local/src/pwndbg
 RUN cd /usr/local/src/pwndbg \
