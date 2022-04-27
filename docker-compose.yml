@@ -5,8 +5,7 @@ services:
     cap_add:
       - SYS_PTRACE
     privileged: true
-    networks:
-      exnux-net: {}
+    network_mode: "host"
     environment:
       DISPLAY: "${DISPLAY}"
       XAUTHORITY: "${XAUTHORITY}"
@@ -26,8 +25,7 @@ services:
     command: "/bin/bash"
   msf-postgres:
     container_name: "msf-postgres"
-    networks:
-      exnux-net: {}
+    network_mode: "host"
     environment:
       POSTGRES_USER: "msf"
       POSTGRES_PASSWORD: "msf"
@@ -42,12 +40,6 @@ services:
     ports:
       - "172.17.0.1:3142:3142"
 
-
 volumes:
   msf-postgres-pgdata:
 
-networks:
-  exnux-net:
-    external: true
-    driver: "bridge"
-    name: "exnux-net"
