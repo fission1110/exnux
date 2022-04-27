@@ -254,6 +254,7 @@ RUN export http_proxy=$APT_PROXY \
         foremost \
         gimp \
         git-gui \
+        gobuster \
         gitk \
         hashcat \
         hashcat-nvidia \
@@ -272,9 +273,11 @@ RUN export http_proxy=$APT_PROXY \
         nasm \
         ncat \
         netcat-openbsd \
+        nikto \
         nmap \
         okular \
         openssh-client \
+        openvpn \
         ophcrack \
         p0f \
         patchelf \
@@ -368,19 +371,24 @@ RUN wget -O /jd-gui.deb https://github.com/java-decompiler/jd-gui/releases/downl
     && rm /jd-gui.deb
 
 RUN  mkdir -p /home/$USERNAME/Wordlists/ \
-    && wget -O /home/$USERNAME/Wordlists/rockyou.txt.gz https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz
+    && wget -O /home/$USERNAME/Wordlists/rockyou.txt.gz https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz \
+    && wget -O /home/$USERNAME/Wordlists/directory-list-2.3-big.txt https://github.com/daviddias/node-dirbuster/raw/master/lists/directory-list-2.3-big.txt \
+    && wget -O /home/$USERNAME/Wordlists/directory-list-2.3-medium.txt https://github.com/daviddias/node-dirbuster/raw/master/lists/directory-list-2.3-medium.txt \
+    && pigz -9 /home/$USERNAME/Wordlists/directory-list-2.3-big.txt \
+    && pigz -9 /home/$USERNAME/Wordlists/directory-list-2.3-medium.txt
 
 RUN curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose \
     && chmod +x /usr/local/bin/docker-compose
 
-#RUN mkdir -p /usr/local/src/retdec \
-#    && cd /usr/local/src/retdec \
-#    && wget -O retdec.tar.xz https://github.com/avast/retdec/releases/download/v4.0/retdec-v4.0-ubuntu-64b.tar.xz \
-#    && tar -I pixz -xvf retdec.tar.xz \
-#    && rm retdec.tar.xz \
-#    && cp -r ./retdec/* /usr/local \
-#    && cd / \
-#    && rm -r /usr/local/src/retdec
+RUN mkdir -p /usr/local/src/burp/ \
+    && wget -O /usr/local/src/burp/burp.sh "https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.2.5&type=Linux" \
+    && chmod +x /usr/local/src/burp/burp.sh
+
+RUN mkdir -p /usr/local/src/zap \
+    && wget -O /usr/local/src/zap/zap.tar.gz https://github.com/zaproxy/zaproxy/releases/download/v2.11.1/ZAP_2.11.1_Linux.tar.gz \
+    && cd /usr/local/src/zap \
+    && tar -I pigz -xf ./zap.tar.gz \
+    && rm ./zap.tar.gz
 
 COPY --from=pwndbg-build --chown=$USERNAME /usr/local/src/pwndbg /usr/local/src/pwndbg
 RUN cd /usr/local/src/pwndbg \
