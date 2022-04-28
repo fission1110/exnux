@@ -226,3 +226,6 @@
 [submodule "dotfiles/.config/nvim/bundle/nvim-treesitter"]
 	path = dotfiles/.config/nvim/bundle/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter.git
+[submodule "dotfiles/.config/nvim/bundle/telescope.nvim"]
+	path = dotfiles/.config/nvim/bundle/telescope.nvim
+	url = https://github.com/nvim-telescope/telescope.nvim.git

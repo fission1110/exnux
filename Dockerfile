@@ -59,7 +59,7 @@ RUN useradd -m $USERNAME \
     && echo "$USERNAME       ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
     && chmod 0400 /etc/sudoers.d/$USERNAME
 
-ENV PATH /home/$USERNAME/.rbenv/bin:/home/$USERNAME/.rbenv/shims:/usr/local/src/metasploit-framework:$PATH:/home/$USERNAME/tools
+ENV PATH /home/$USERNAME/.rbenv/bin:/home/$USERNAME/.rbenv/shims:/usr/local/src/metasploit-framework:$PATH
 
 RUN wget -O- 'https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer' | sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bash \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv install 3.0.2 \
@@ -230,75 +230,9 @@ RUN mkdir -p /usr/local/src/ghidra \
 #
 ################################################
 FROM base AS base-extended
-
-# install random tools to make the image a full dev environment
 RUN export http_proxy=$APT_PROXY \
     && apt-get update -y \
     && apt-get install -y \
-        apktool \
-        audacity \
-        autopsy \
-        bash-completion \
-        binutils \
-        binwalk \
-        burp \
-        byobu \
-        cpio \
-        dc \
-        dnsutils \
-        docker.io \
-        elfutils \
-        exiftool \
-        expect \
-        exuberant-ctags \
-        fd-find \
-        flake8 \
-        foremost \
-        gimp \
-        git-gui \
-        gitk \
-        gobuster \
-        hashcat \
-        hashcat-nvidia \
-        htop \
-        hydra \
-        inkscape \
-        iputils-ping \
-        john \
-        ldap-utils \
-        libclang-9-dev \
-        ltrace \
-        lz4 \
-        lzip \
-        lzop \
-        mysql-client \
-        nasm \
-        ncat \
-        netcat-openbsd \
-        nikto \
-        nmap \
-        okular \
-        openssh-client \
-        openvpn \
-        ophcrack \
-        p0f \
-        patchelf \
-        php \
-        php-cli \
-        postgresql-client \
-        sleuthkit \
-        smbclient \
-        snmp \
-        sqlmap \
-        strace \
-        tcpdump \
-        tmux \
-        virt-manager \
-        wireshark \
-        x2goclient \
-        xclip \
-        xxd \
-        zsh \
       # ghidra
         fontconfig \
         libc-dbg:i386 \
@@ -323,15 +257,88 @@ RUN export http_proxy=$APT_PROXY \
         libxkbcommon-dev \
         pkg-config \
         python3 \
-    && echo 'y\ny' | unminimize \
+      # large
+        audacity \
+        burp \
+        docker.io \
+        gimp \
+        hashcat \
+        hashcat-nvidia \
+        inkscape \
+        mysql-client \
+        nmap \
+        okular \
+        smbclient \
+        sqlmap \
+        wireshark \
+    && unset http_proxy
+
+# install random tools to make the image a full dev environment
+RUN export http_proxy=$APT_PROXY \
+    && apt-get update -y \
+    && apt-get install -y \
+        apktool \
+        autopsy \
+        bash-completion \
+        binutils \
+        binwalk \
+        byobu \
+        cpio \
+        dc \
+        dnsutils \
+        elfutils \
+        exiftool \
+        expect \
+        exuberant-ctags \
+        fd-find \
+        flake8 \
+        foremost \
+        git-gui \
+        gitk \
+        gobuster \
+        htop \
+        hydra \
+        iputils-ping \
+        john \
+        ldap-utils \
+        libclang-9-dev \
+        ltrace \
+        lz4 \
+        lzip \
+        lzop \
+        nasm \
+        ncat \
+        netcat-openbsd \
+        nikto \
+        openssh-client \
+        openvpn \
+        ophcrack \
+        p0f \
+        patchelf \
+        php \
+        php-cli \
+        postgresql-client \
+        ripgrep \
+        sleuthkit \
+        snmp \
+        strace \
+        tcpdump \
+        tmux \
+        virt-manager \
+        x2goclient \
+        xclip \
+        xxd \
+        zsh \
+    && unset http_proxy
+
+RUN echo 'y\ny' | unminimize \
     && groupmod -g 999 docker \
     && usermod -aG docker $USERNAME \
     && ln -s $(which fdfind) /usr/local/bin/fd \
     && chsh -s $(which zsh) $USERNAME \
     && pip3 install pwntools \
     && pip3 install ipython \
-    && pip3 install jedi \
-    && unset http_proxy
+    && pip3 install jedi
 
 RUN pip3 install neovim \
     && npm install -g neovim \
@@ -418,13 +425,66 @@ ENV HOME /home/$USERNAME
 USER $USERNAME
 
 
+ENV PATH=$PATH:/home/$USERNAME/tools
 COPY --chown=$USERNAME dotfiles ./
+COPY --chown=$USERNAME dotfiles/.config/nvim/parser/* ./dotfiles/.config/nvim/bundle/nvim-treesitter/
 
 RUN .config/nvim/bundle/nvim-typescript/install.sh \
     && nvim --headless +UpdateRemotePlugins +qa \
-    && nvim --headless '+lua require"nvim-treesitter.configs".setup { ensure_installed = "all", sync_install = true  }; vim.cmd("qa")'
-
-
-
+    && nvim --headless +TSUpdate +qa \
+    && nvim --headless '+lua require"nvim-treesitter.configs".setup { ensure_installed = { \
+        "bash", \
+        "c", \
+        "c_sharp", \
+        "clojure", \
+        "cmake", \
+        "comment", \
+        "commonlisp", \
+        "cpp", \
+        "css", \
+        "dart", \
+        "dockerfile", \
+        "elm", \
+        "fortran", \
+        "go", \
+        "gomod", \
+        "graphql", \
+        "hack", \
+        "haskell", \
+        "help", \
+        "html", \
+        "http", \
+        "java", \
+        "javascript", \
+        "jsdoc", \
+        "json", \
+        "json5", \
+        "jsonc", \
+        "julia", \
+        "kotlin", \
+        "latex", \
+        "llvm", \
+        "lua", \
+        "make", \
+        "markdown", \
+        "ninja", \
+        "pascal", \
+        "perl", \
+        "php", \
+        "python", \
+        "r", \
+        "regex", \
+        "ruby", \
+        "rust", \
+        "scala", \
+        "scheme", \
+        "scss", \
+        "swift", \
+        "typescript", \
+        "verilog", \
+        "vim", \
+        "vue", \
+        "yaml" \
+    }, sync_install = true  }; vim.cmd("qa")'
 
 CMD ["/usr/bin/byobu"]

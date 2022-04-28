@@ -23,6 +23,7 @@ case "$CMD" in
         docker-compose build exnux
     ;;
     build-apt-cache)
+        docker-compose create apt-cacher-ng
         docker-compose start apt-cacher-ng
         docker-compose build --build-arg APT_PROXY="http://172.17.0.1:3142" exnux
         docker-compose stop apt-cacher-ng

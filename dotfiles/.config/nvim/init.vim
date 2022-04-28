@@ -111,9 +111,6 @@ autocmd BufNewFile,BufReadPost *messages* :set filetype=messages
 " Use systags with c
 autocmd  FileType  c setlocal tags+=~/.config/nvim/ctags/systags
 
-" Search for ctags
-"autocmd  BufReadPost * exec Findctags(1)
-
 "#############Nerdtree stuff#############
 autocmd VimEnter * NERDTree | wincmd p
 let g:NERDTreeWinSize = 30
@@ -142,44 +139,6 @@ au BufNewFile *.php set ft=php
 au BufRead *.ctp set ft=php.html
 au BufNewFile *.ctp set ft=php.html
 
-" If 1, losen the restrictions on ctags to include c, c++, etc files..
-nmap <f9> :call Findctags(0)<CR>
-nmap <f10> :call Updatectags(1)<CR>
-nmap <f12> :call Updatectags(0)<CR>
-
-function! Updatectags(more)
-    echo "Updating more Ctags!"
-	" If more, losen the restrictions on ctags to include c, c++, etc files..
-	if a:more
-		execute "!~/.config/nvim/ctags/ctags_update_more.sh"
-	else
-		execute "!~/.config/nvim/ctags/ctags_update_".&ft.".sh"
-	endif
-   	let cwd = getcwd()."/main"
-	let ctags_file = $HOME . "/.config/nvim/mytags"
-    let  &tags = ctags_file.cwd.".".&ft
-endfunction
-
-function! Findctags(silent)
-    if a:silent == 0
-        echo "Finding Ctags!"
-    endif
-   	let cwd = getcwd().""
-	let ctags_file = $HOME . "/.config/nvim/ctags/mytags"
-    let ctags_path = ctags_file.cwd."/"
-    let loopcount = 0
-    while !filereadable(ctags_path."main.".&ft) && loopcount < 10
-        let ctags_path = substitute(ctags_path, '[^\/]\{-}\/$', '', '')
-		if a:silent == 0
-			echo "looking in: ".ctags_path."main.".&ft
-		endif
-        let loopcount = loopcount + 1
-    endwhile
-    if a:silent == 0
-        echo ctags_path."main.".&ft
-    endif
-    let  &tags = ctags_path."main.".&ft
-endfunction
 
 "#############Ctrlp#############
 let g:ctrlp_working_path_mode = ''
@@ -209,9 +168,6 @@ let g:snipMate.scope_aliases['php'] = 'php'
 let g:jedi#auto_close_doc = 0
 let g:jedi#completions_enabled = 0
 
-"au FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
-"let g:deoplete#sources#padawan#auto_update = 1
-"
 "Deoplete ternjs requires multiple threads https://github.com/carlitux/deoplete-ternjs/issues/88
 call deoplete#custom#option('num_processes', 4)
 let g:deoplete#sources#ternjs#types = 1
@@ -225,9 +181,6 @@ let g:deoplete#sources#jedi#show_docstring = 1
 inoremap <C-l> <C-x><C-o>
 
 let g:phpcomplete_complete_for_unknown_classes = 0
-"let g:deoplete#sources._ = ['buffer', 'tag']
-"set completeopt=longest,menuone,preview
-"inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 
 let g:vdebug_options = {
@@ -317,11 +270,6 @@ nnoremap <silent> <leader>tt :tabnew term://$SHELL<cr>
 nmap <leader>s :Scratch<cr>
 let g:scratch_persistence_file="/tmp/nvim_scratch_persistance"
 
-" syntastic syntax checking
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
@@ -341,10 +289,10 @@ au bufreadpost,filereadpost *.class set ft=java
 au bufreadpost,filereadpost *.class normal gg=G
 au bufreadpost,filereadpost *.class set nomodified
 augr END
-"autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " . expand("%F"))
 
 let g:gutentags_cache_dir = '~/.config/nvim/ctags/mytags/'
 let g:gutentags_project_root = ['Makefile', '.git']
+
 " Causes hangs for some reason
 let g:gutentags_generate_on_write = 0
 
@@ -353,49 +301,10 @@ let g:minimap_width = 20
 let g:minimap_auto_start = 1
 let g:minimap_auto_start_win_enter = 0
 
-lua << END
-require('lualine').setup({
-    options = {
-        globalstatus = true,
-        theme = 'terafox'
-    },
-    sections = {
-        lualine_a = {'mode'},
-        lualine_b = {'branch', 'diff', 'diagnostics'},
-        lualine_c = {'filename'},
-        lualine_x = {'encoding', 'filetype'},
-        lualine_y = {'progress'},
-        lualine_z = {'location'}
-    }
-})
-END
-lua << END
-require'nvim-treesitter.configs'.setup {
-
-  -- A list of parser names, or "all"
-  ensure_installed = {},
-
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-
-  -- List of parsers to ignore installing (for "all")
-  ignore_install = {},
-
-  highlight = {
-    -- `false` will disable the whole extension
-    enable = true,
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    disable = {},
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
-END
+" Telescope
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+lua require('config')
