@@ -13,36 +13,37 @@ touch $SCRIPT_DIR/dotfiles/.gdb_history
 touch $SCRIPT_DIR/dotfiles/.cache/radare2/history
 touch $SCRIPT_DIR/dotfiles/.msf4/history
 case "$CMD" in
-	init)
-		sudo apt-get install docker.io git
-		sudo curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
-		sudo chmod +x /usr/local/bin/docker-compose
-	;;
+    init)
+        sudo apt-get install docker.io git
+        sudo curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+    ;;
     build)
-		docker-compose build exnux
+        docker-compose build exnux
     ;;
     build-apt-cache)
-		docker-compose start apt-cacher-ng
-		docker-compose build --build-arg APT_PROXY="http://172.17.0.1:3142" exnux
-		docker-compose stop apt-cacher-ng
+        docker-compose start apt-cacher-ng
+        docker-compose build --build-arg APT_PROXY="http://172.17.0.1:3142" exnux
+        docker-compose stop apt-cacher-ng
     ;;
     start)
-		docker-compose run exnux /usr/bin/byobu
+        docker-compose run exnux /usr/bin/byobu
     ;;
     start-gui)
-		docker-compose run exnux alacritty --command byobu
+        docker-compose run exnux alacritty --command byobu
     ;;
     msf-postgres)
-		docker-compose start msf-postgres
+        docker-compose create msf-postgres
+        docker-compose start msf-postgres
     ;;
     net)
         docker network create "$NAME-net" 2> /dev/null
     ;;
     clean)
-		docker-compose down
+        docker-compose down
     ;;
     distclean)
-		$0 clean
+        $0 clean
         git clean -fdx :dotfiles
     ;;
     *)
