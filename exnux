@@ -29,6 +29,9 @@ case "$CMD" in
     start)
 		docker-compose run exnux /usr/bin/byobu
     ;;
+    start-gui)
+		docker-compose run exnux alacritty --command byobu
+    ;;
     msf-postgres)
 		docker-compose start msf-postgres
     ;;

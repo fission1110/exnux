@@ -314,6 +314,15 @@ RUN export http_proxy=$APT_PROXY \
         libqt5svg5 \
         libuuid1 \
         qt5-default \
+      # alacritty
+        cargo \
+        cmake \
+        libfontconfig1-dev \
+        libfreetype6-dev \
+        libxcb-xfixes0-dev \
+        libxkbcommon-dev \
+        pkg-config \
+        python3 \
     && echo 'y\ny' | unminimize \
     && groupmod -g 999 docker \
     && usermod -aG docker $USERNAME \
@@ -394,6 +403,8 @@ RUN mkdir -p /usr/local/src/zap \
     && tar -I pigz -xf ./zap.tar.gz \
     && rm ./zap.tar.gz
 
+RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install alacritty
+ENV PATH=$PATH:/home/$USERNAME/.cargo/bin
 
 COPY --from=pwndbg-build --chown=$USERNAME /usr/local/src/pwndbg /usr/local/src/pwndbg
 RUN cd /usr/local/src/pwndbg \
