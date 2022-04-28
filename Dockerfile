@@ -417,9 +417,14 @@ WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
 USER $USERNAME
 
+
 COPY --chown=$USERNAME dotfiles ./
 
 RUN .config/nvim/bundle/nvim-typescript/install.sh \
-    && nvim --headless +UpdateRemotePlugins +qa
+    && nvim --headless +UpdateRemotePlugins +qa \
+    && nvim --headless '+lua require"nvim-treesitter.configs".setup { ensure_installed = "all", sync_install = true  }; vim.cmd("qa")'
+
+
+
 
 CMD ["/usr/bin/byobu"]

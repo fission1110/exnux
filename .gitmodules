@@ -223,3 +223,6 @@
 [submodule "dotfiles/.config/nvim/bundle/lualine.nvim"]
 	path = dotfiles/.config/nvim/bundle/lualine.nvim
 	url = https://github.com/nvim-lualine/lualine.nvim.git
+[submodule "dotfiles/.config/nvim/bundle/nvim-treesitter"]
+	path = dotfiles/.config/nvim/bundle/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter.git
