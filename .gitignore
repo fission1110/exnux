@@ -1,5 +1,1 @@
-dotfiles/.zsh_history
-dotfiles/.bash_history
-dotfiles/.gdb_history
-dotfiles/.cache/radare2/history
-dotfiles/.msf4/history
+cache/
