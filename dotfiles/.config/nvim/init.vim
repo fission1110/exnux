@@ -30,7 +30,7 @@ set expandtab shiftwidth=4 softtabstop=4
 " You stay in control of your tabstop setting.
 set tabstop=4
 
-let mapleader="," "Set the leader key 
+let mapleader="," "Set the leader key
 syntax on
 filetype plugin on
 
@@ -57,30 +57,6 @@ cmap w!! SudaWrite
 " This doesn't seem to work in nvim
 "vmap <leader>y "+y
 "vmap <leader>y "+p
-
-""""" EASY GREP STUFF """"""""
-nmap <C-f> :Grep 
-"let g:EasyGrepDefaultUserPattern='*.php *.ctp *.js *.po'
-let g:EasyGrepFileAssociations=$HOME."/.config/nvim/bundle/vim-easygrep/plugin/EasyGrepFileAssociations"
-let g:EasyGrepMode=0
-let g:EasyGrepCommand=1
-let g:EasyGrepRecursive=1
-let g:EasyGrepSearchCurrentBufferDir=0
-let g:EasyGrepIgnoreCase=1
-let g:EasyGrepHidden=0
-let g:EasyGrepFilesToExclude='main.js *webroot/js/languages'
-let g:EasyGrepAllOptionsInExplorer=1
-let g:EasyGrepWindow=0
-let g:EasyGrepReplaceWindowMode=2
-let g:EasyGrepOpenWindowOnMatch=1
-let g:EasyGrepEveryMatch=0
-let g:EasyGrepJumpToMatch=0
-let g:EasyGrepInvertWholeWord=0
-let g:EasyGrepFileAssociationsInExplorer=0
-let g:EasyGrepExtraWarnings=1
-let g:EasyGrepOptionPrefix='<leader>vy'
-let g:EasyGrepReplaceAllPerFile=0
-
 
 " Easily jump around windows
 map <C-h> <C-w>h
@@ -143,14 +119,14 @@ au BufNewFile *.ctp set ft=php.html
 "#############Ctrlp#############
 let g:ctrlp_working_path_mode = ''
 
-command! Ctrlp execute (exists("*fugitive#head") && len(fugitive#head())) ? 'GFiles' : 'Files'
-map <C-p> :Ctrlp<CR>
+"command! Ctrlp execute (exists("*fugitive#head") && len(fugitive#head())) ? 'GFiles' : 'Files'
+"map <C-p> :Ctrlp<CR>
 
 " Use fzf instead of ctrlt
-nnoremap <c-t> :Tags<cr>
+"nnoremap <c-t> :Tags<cr>
 
 "let g:SuperTabNoCompleteAfter = ['^', ',', '\s']
-let g:SuperTabDefaultCompletionType = "<c-n>"
+"let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " vim-jedi go to definition
 au FileType python nmap <c-]> <leader>d
@@ -270,13 +246,13 @@ nnoremap <silent> <leader>tt :tabnew term://$SHELL<cr>
 nmap <leader>s :Scratch<cr>
 let g:scratch_persistence_file="/tmp/nvim_scratch_persistance"
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-nmap <leader>S :SyntasticToggle<cr>
-let g:syntastic_mode_map = {"mode": "passive", "active_filetypes":[], "passive_filetypes":[]}
-let g:syntastic_php_phpcs_args = "--standard="
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 0
+"let g:syntastic_check_on_wq = 0
+"nmap <leader>S :SyntasticToggle<cr>
+"let g:syntastic_mode_map = {"mode": "passive", "active_filetypes":[], "passive_filetypes":[]}
+"let g:syntastic_php_phpcs_args = "--standard="
 let g:phpcomplete_index_composer_command = '/usr/local/bin/composer.phar'
 
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-9/lib/libclang.so.1'
@@ -303,8 +279,9 @@ let g:minimap_auto_start_win_enter = 0
 
 " Telescope
 " Using Lua functions
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <C-f> <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <C-t> <cmd>lua require('telescope.builtin').tags()<cr>
+
 lua require('config')

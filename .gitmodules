@@ -229,3 +229,6 @@
 [submodule "dotfiles/.config/nvim/bundle/telescope.nvim"]
 	path = dotfiles/.config/nvim/bundle/telescope.nvim
 	url = https://github.com/nvim-telescope/telescope.nvim.git
+[submodule "dotfiles/.config/nvim/bundle/plenary.nvim"]
+	path = dotfiles/.config/nvim/bundle/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim.git

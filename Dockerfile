@@ -340,6 +340,7 @@ RUN echo 'y\ny' | unminimize \
     && pip3 install ipython \
     && pip3 install jedi
 
+# nvim
 RUN pip3 install neovim \
     && npm install -g neovim \
     && npm install -g typescript \
@@ -347,9 +348,11 @@ RUN pip3 install neovim \
 
 FROM base-extended AS base-final
 
+# metasploit
 COPY --from=metasploit-build --chown=$USERNAME /usr/local/src/metasploit-framework /usr/local/src/metasploit-framework
 COPY --from=metasploit-build --chown=$USERNAME /home/$USERNAME/.rbenv /home/$USERNAME/.rbenv
 
+# radare2
 COPY --from=radare2-build /usr/local/src/build/*.deb /usr/local/src/radare2/
 RUN cd /usr/local/src/radare2 \
     && dpkg -i ./radare2*.deb \
@@ -361,35 +364,48 @@ RUN cd /usr/local/src/radare2 \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2ghidra \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2frida
 
+# iaito
 RUN wget -O /iaito.deb https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb \
     && dpkg -i /iaito.deb \
     && rm /iaito.deb
 
+#afl++
 COPY --from=aflpp-build /usr/local/src/build /usr/local/src/AFLplusplus/build
 RUN cp -rf /usr/local/src/AFLplusplus/build/* / \
     && rm -r /usr/local/src/AFLplusplus
 
+# fzf for nvim zsh
 COPY --from=fzf-build /usr/local/src/fzf /usr/local/src/fzf
 RUN cd /usr/local/src/fzf \
     && ./install --bin
 
+# nvim
 RUN wget -O /neovim.deb https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb \
     && dpkg -i /neovim.deb \
     && rm /neovim.deb
 
+# nvim
 RUN wget -O /code-minimap.deb https://github.com/wfxr/code-minimap/releases/download/v0.6.4/code-minimap-musl_0.6.4_amd64.deb \
     && dpkg -i /code-minimap.deb \
     && rm /code-minimap.deb
 
+# websocat
 RUN wget -O /usr/local/bin/websocat https://github.com/vi/websocat/releases/download/v1.9.0/websocat_linux64 \
     && chmod +x /usr/local/bin/websocat
 
+# jd-gui
 RUN wget -O /jd-gui.deb https://github.com/java-decompiler/jd-gui/releases/download/v1.6.6/jd-gui-1.6.6.deb \
     && dpkg -i /jd-gui.deb \
 	&& echo "java -Xms2G -Xmx5G -jar /opt/jd-gui/jd-gui-1.6.6-min.jar" > /usr/local/bin/jd-gui \
 	&& chmod +x /usr/local/bin/jd-gui \
     && rm /jd-gui.deb
 
+RUN mkdir /usr/local/src/procyon \
+    && wget -o procyon-decompiler.jar https://github.com/mstrobel/procyon/releases/download/v0.6.0/procyon-decompiler-0.6.0.jar \
+	&& echo "java -Xms2G -Xmx5G -jar /usr/local/src/procyon/procyon-decompiler.jar" > /usr/local/bin/procyon \
+    && chmod +x /usr/local/bin/procyon
+
+# gobuster
 RUN  mkdir -p /home/$USERNAME/Wordlists/ \
     && wget -O /home/$USERNAME/Wordlists/rockyou.txt.gz https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz \
     && wget -O /home/$USERNAME/Wordlists/directory-list-2.3-big.txt https://github.com/daviddias/node-dirbuster/raw/master/lists/directory-list-2.3-big.txt \
@@ -397,26 +413,32 @@ RUN  mkdir -p /home/$USERNAME/Wordlists/ \
     && pigz -9 /home/$USERNAME/Wordlists/directory-list-2.3-big.txt \
     && pigz -9 /home/$USERNAME/Wordlists/directory-list-2.3-medium.txt
 
+# docker
 RUN curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose \
     && chmod +x /usr/local/bin/docker-compose
 
+# burp
 RUN mkdir -p /usr/local/src/burp/ \
     && wget -O /usr/local/src/burp/burp.sh "https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.2.5&type=Linux" \
     && chmod +x /usr/local/src/burp/burp.sh
 
+# zap
 RUN mkdir -p /usr/local/src/zap \
     && wget -O /usr/local/src/zap/zap.tar.gz https://github.com/zaproxy/zaproxy/releases/download/v2.11.1/ZAP_2.11.1_Linux.tar.gz \
     && cd /usr/local/src/zap \
     && tar -I pigz -xf ./zap.tar.gz \
     && rm ./zap.tar.gz
 
+# alacritty
 RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install alacritty
 ENV PATH=$PATH:/home/$USERNAME/.cargo/bin
 
+# pwndbg for gdb
 COPY --from=pwndbg-build --chown=$USERNAME /usr/local/src/pwndbg /usr/local/src/pwndbg
 RUN cd /usr/local/src/pwndbg \
     && sudo -u $USERNAME ./setup.sh
 
+# ghidra
 COPY --from=ghidra-build /usr/local/src/ghidra /usr/local/src/ghidra
 RUN ln -s /usr/local/src/ghidra/ghidraRun /usr/local/bin/ghidraRun
 
@@ -425,10 +447,12 @@ ENV HOME /home/$USERNAME
 USER $USERNAME
 
 
+# dotfiles
 ENV PATH=$PATH:/home/$USERNAME/tools
 COPY --chown=$USERNAME dotfiles ./
 COPY --chown=$USERNAME dotfiles/.config/nvim/parser/* ./dotfiles/.config/nvim/bundle/nvim-treesitter/
 
+# nvim
 RUN .config/nvim/bundle/nvim-typescript/install.sh \
     && nvim --headless +UpdateRemotePlugins +qa \
     && nvim --headless +TSUpdate +qa \
