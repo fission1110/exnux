@@ -7,7 +7,9 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 mkdir -p $SCRIPT_DIR/cache
 mkdir -p $SCRIPT_DIR/cache/.cache/radare2
-mkdir -p $SCRIPT_DIR/cache/.cache/treesitter/
+mkdir -p $SCRIPT_DIR/cache/treesitter/
+mkdir -p $SCRIPT_DIR/cache/treesitter/parser
+mkdir -p $SCRIPT_DIR/cache/treesitter/parser-info
 mkdir -p $SCRIPT_DIR/cache/.msf4
 touch -a $SCRIPT_DIR/cache/.zsh_history
 touch -a $SCRIPT_DIR/cache/.bash_history

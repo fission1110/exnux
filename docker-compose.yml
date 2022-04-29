@@ -24,8 +24,8 @@ services:
       - "${HOME}/Downloads:/home/${USERNAME}/Downloads"
       - "${HOME}/Documents:/home/${USERNAME}/Documents"
       - "${HOME}/Pictures:/home/${USERNAME}/Pictures"
-      - ./cache/treesitter:${HOME}/.config/nvim/bundle/nvim-treesitter/parser/
-      - ./cache/treesitter:${HOME}/.config/nvim/bundle/nvim-treesitter/parser-info/
+      - "./cache/treesitter/parser:/home/${USERNAME}/.config/nvim/bundle/nvim-treesitter/parser/"
+      - "./cache/treesitter/parser-info:/home/${USERNAME}/.config/nvim/bundle/nvim-treesitter/parser-info/"
       - "/var/run/docker.sock:/var/run/docker.sock"
     devices:
       - "/dev/dri"
