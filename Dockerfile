@@ -468,6 +468,7 @@ RUN mkdir /usr/local/src/phpactor \
 
 ENV PATH $PATH:/home/$USERNAME/go/bin
 RUN mkdir /home/$USERNAME/go \
+    && chown $USERNAME:$USERNAME /home/$USERNAME/go \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" "GO111MODULE=on" go get golang.org/x/tools/gopls@latest
 
 WORKDIR /home/$USERNAME
