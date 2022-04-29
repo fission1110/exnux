@@ -260,14 +260,22 @@ RUN export http_proxy=$APT_PROXY \
       # large
         audacity \
         burp \
+        clangd \
         docker.io \
         gimp \
+        golang \
         hashcat \
         hashcat-nvidia \
         inkscape \
         mysql-client \
         nmap \
         okular \
+        php \
+        php-cli \
+        php-curl \
+        php-gd \
+        php-mbstring \
+        php-xml \
         smbclient \
         sqlmap \
         wireshark \
@@ -315,8 +323,6 @@ RUN export http_proxy=$APT_PROXY \
         ophcrack \
         p0f \
         patchelf \
-        php \
-        php-cli \
         postgresql-client \
         ripgrep \
         sleuthkit \
@@ -343,8 +349,9 @@ RUN echo 'y\ny' | unminimize \
 # nvim
 RUN pip3 install neovim \
     && npm install -g neovim \
-    && npm install -g typescript \
-    && pip3 install libclang
+    && npm install -g typescript typescript-language-server bash-language-server @tailwindcss/language-server \
+    && pip3 install libclang \
+    && pip3 install pyright
 
 FROM base-extended AS base-final
 
@@ -442,6 +449,27 @@ RUN cd /usr/local/src/pwndbg \
 COPY --from=ghidra-build /usr/local/src/ghidra /usr/local/src/ghidra
 RUN ln -s /usr/local/src/ghidra/ghidraRun /usr/local/bin/ghidraRun
 
+# composer
+RUN cd /usr/local/bin \
+    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
+    && php composer-setup.php \
+    && php -r "unlink('composer-setup.php');" \
+    && mv ./composer.phar ./composer
+
+# Phpactor
+RUN mkdir /usr/local/src/phpactor \
+    && chown $USERNAME:$USERNAME /usr/local/src/phpactor \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" git clone https://github.com/phpactor/phpactor /usr/local/src/phpactor \
+    && cd /usr/local/src/phpactor \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" composer update \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" composer install \
+    && ln -s /usr/local/src/phpactor/bin/phpactor /usr/local/bin/phpactor
+
+ENV PATH $PATH:/home/$USERNAME/go/bin
+RUN mkdir /home/$USERNAME/go \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" "GO111MODULE=on" go get golang.org/x/tools/gopls@latest
+
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
 USER $USERNAME
@@ -450,65 +478,64 @@ USER $USERNAME
 # dotfiles
 ENV PATH=$PATH:/home/$USERNAME/tools
 COPY --chown=$USERNAME dotfiles ./
-COPY --chown=$USERNAME dotfiles/.config/nvim/parser/* ./dotfiles/.config/nvim/bundle/nvim-treesitter/
 
 # nvim
 RUN .config/nvim/bundle/nvim-typescript/install.sh \
     && nvim --headless +UpdateRemotePlugins +qa \
-    && nvim --headless +TSUpdate +qa \
-    && nvim --headless '+lua require"nvim-treesitter.configs".setup { ensure_installed = { \
-        "bash", \
-        "c", \
-        "c_sharp", \
-        "clojure", \
-        "cmake", \
-        "comment", \
-        "commonlisp", \
-        "cpp", \
-        "css", \
-        "dart", \
-        "dockerfile", \
-        "elm", \
-        "fortran", \
-        "go", \
-        "gomod", \
-        "graphql", \
-        "hack", \
-        "haskell", \
-        "help", \
-        "html", \
-        "http", \
-        "java", \
-        "javascript", \
-        "jsdoc", \
-        "json", \
-        "json5", \
-        "jsonc", \
-        "julia", \
-        "kotlin", \
-        "latex", \
-        "llvm", \
-        "lua", \
-        "make", \
-        "markdown", \
-        "ninja", \
-        "pascal", \
-        "perl", \
-        "php", \
-        "python", \
-        "r", \
-        "regex", \
-        "ruby", \
-        "rust", \
-        "scala", \
-        "scheme", \
-        "scss", \
-        "swift", \
-        "typescript", \
-        "verilog", \
-        "vim", \
-        "vue", \
-        "yaml" \
-    }, sync_install = true  }; vim.cmd("qa")'
+    && nvim --headless +TSUpdate +qa
+#    && nvim --headless '+lua require"nvim-treesitter.configs".setup { ensure_installed = { \
+#        "bash", \
+#        "c", \
+#        "c_sharp", \
+#        "clojure", \
+#        "cmake", \
+#        "comment", \
+#        "commonlisp", \
+#        "cpp", \
+#        "css", \
+#        "dart", \
+#        "dockerfile", \
+#        "elm", \
+#        "fortran", \
+#        "go", \
+#        "gomod", \
+#        "graphql", \
+#        "hack", \
+#        "haskell", \
+#        "help", \
+#        "html", \
+#        "http", \
+#        "java", \
+#        "javascript", \
+#        "jsdoc", \
+#        "json", \
+#        "json5", \
+#        "jsonc", \
+#        "julia", \
+#        "kotlin", \
+#        "latex", \
+#        "llvm", \
+#        "lua", \
+#        "make", \
+#        "markdown", \
+#        "ninja", \
+#        "pascal", \
+#        "perl", \
+#        "php", \
+#        "python", \
+#        "r", \
+#        "regex", \
+#        "ruby", \
+#        "rust", \
+#        "scala", \
+#        "scheme", \
+#        "scss", \
+#        "swift", \
+#        "typescript", \
+#        "verilog", \
+#        "vim", \
+#        "vue", \
+#        "yaml" \
+#    }, sync_install = true  }; vim.cmd("qa")'
 
 CMD ["/usr/bin/byobu"]

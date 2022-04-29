@@ -128,11 +128,6 @@ let g:ctrlp_working_path_mode = ''
 "let g:SuperTabNoCompleteAfter = ['^', ',', '\s']
 "let g:SuperTabDefaultCompletionType = "<c-n>"
 
-" vim-jedi go to definition
-au FileType python nmap <c-]> <leader>d
-" tern_for_vim go to defenition
-" au FileType javascript nmap <c-]> :TernDef<cr>
-
 " My hack to the forked version of vim snipmate to ignore the
 " fact that the pumvisible() and use my snippets anyways.
 let g:snipmateIgnorePum = 1
@@ -141,23 +136,7 @@ let g:snipMate.snippet_version = 0
 let g:snipMate.scope_aliases = {}
 let g:snipMate.scope_aliases['php'] = 'php'
 
-let g:jedi#auto_close_doc = 0
-let g:jedi#completions_enabled = 0
-
-"Deoplete ternjs requires multiple threads https://github.com/carlitux/deoplete-ternjs/issues/88
-call deoplete#custom#option('num_processes', 4)
-let g:deoplete#sources#ternjs#types = 1
-
-let g:tern_set_omni_function = 0
-
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#jedi#show_docstring = 1
-
-
 inoremap <C-l> <C-x><C-o>
-
-let g:phpcomplete_complete_for_unknown_classes = 0
-
 
 let g:vdebug_options = {
 \    "port" : 9000,
@@ -253,10 +232,7 @@ let g:scratch_persistence_file="/tmp/nvim_scratch_persistance"
 "nmap <leader>S :SyntasticToggle<cr>
 "let g:syntastic_mode_map = {"mode": "passive", "active_filetypes":[], "passive_filetypes":[]}
 "let g:syntastic_php_phpcs_args = "--standard="
-let g:phpcomplete_index_composer_command = '/usr/local/bin/composer.phar'
 
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-9/lib/libclang.so.1'
-let g:deoplete#sources#clang#clang_header = '/usr/include/clang'
 augr class
 au!
 au bufreadpost,filereadpost *.class %!/usr/local/src/jad/jad -noctor -ff -i -p %
