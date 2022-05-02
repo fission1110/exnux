@@ -28,13 +28,12 @@ RUN export http_proxy=$APT_PROXY \
         curl \
         gdb \
         git \
+        libssl-dev \
         libtool \
         libtool-bin \
         linux-headers-generic \
         make \
         ninja-build \
-        nodejs \
-        npm \
         openssl \
         pigz \
         pixz \
@@ -48,6 +47,8 @@ RUN export http_proxy=$APT_PROXY \
         unzip \
         wget \
         zip \
+    && curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - \
+    && sudo apt-get -y install nodejs \
     && unset http_proxy \
     && pip3 install frida \
     && pip3 install frida-tools \
@@ -301,6 +302,25 @@ RUN export http_proxy=$APT_PROXY \
         fd-find \
         flake8 \
         foremost \
+        fonts-beng \
+        fonts-dejavu \
+        fonts-deva \
+        fonts-gujr \
+        fonts-guru \
+        fonts-indic \
+        fonts-knda \
+        fonts-liberation \
+        fonts-mlym \
+        fonts-noto-cjk \
+        fonts-noto-color-emoji \
+        fonts-opensymbol \
+        fonts-orya \
+        fonts-smc \
+        fonts-taml \
+        fonts-telu \
+        fonts-ubuntu \
+        fonts-ubuntu-console \
+        fonts-ubuntu-title \
         git-gui \
         gitk \
         gobuster \
@@ -413,12 +433,9 @@ RUN mkdir /usr/local/src/procyon \
     && chmod +x /usr/local/bin/procyon
 
 # gobuster
-RUN  mkdir -p /home/$USERNAME/Wordlists/ \
-    && wget -O /home/$USERNAME/Wordlists/rockyou.txt.gz https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz \
-    && wget -O /home/$USERNAME/Wordlists/directory-list-2.3-big.txt https://github.com/daviddias/node-dirbuster/raw/master/lists/directory-list-2.3-big.txt \
-    && wget -O /home/$USERNAME/Wordlists/directory-list-2.3-medium.txt https://github.com/daviddias/node-dirbuster/raw/master/lists/directory-list-2.3-medium.txt \
-    && pigz -9 /home/$USERNAME/Wordlists/directory-list-2.3-big.txt \
-    && pigz -9 /home/$USERNAME/Wordlists/directory-list-2.3-medium.txt
+RUN mkdir -p /home/$USERNAME/Wordlists/ \
+    && chown $USERNAME:$USERNAME /home/$USERNAME/Wordlists \
+    && sudo -u $USERNAME wget -O /home/$USERNAME/Wordlists/kali-wordlists.tar.gz https://github.com/3ndG4me/KaliLists/archive/refs/heads/master.tar.gz
 
 # docker
 RUN curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose \
@@ -459,11 +476,24 @@ RUN cd /usr/local/bin \
 # Phpactor
 RUN mkdir /usr/local/src/phpactor \
     && chown $USERNAME:$USERNAME /usr/local/src/phpactor \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" git clone https://github.com/phpactor/phpactor /usr/local/src/phpactor \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" git clone --depth 1 https://github.com/phpactor/phpactor /usr/local/src/phpactor \
     && cd /usr/local/src/phpactor \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" composer update \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" composer install \
     && ln -s /usr/local/src/phpactor/bin/phpactor /usr/local/bin/phpactor
+
+# lua-language-server
+RUN mkdir /usr/local/src/lua-language-server \
+    && git clone --recurse-submodules https://github.com/sumneko/lua-language-server.git /usr/local/src/lua-language-server \
+    && cd /usr/local/src/lua-language-server/ \
+    && git checkout fe121d00514898842a07b67a257a1af2cb2fb604 \
+    && git submodule update --init --recursive \
+    && cd ./3rd/luamake \
+    && ./compile/install.sh \
+    && cd ../../ \
+    && ./3rd/luamake/luamake rebuild \
+    && ln -s /usr/local/src/lua-language-server/bin/lua-language-server /usr/local/bin/lua-language-server
+
 
 ENV PATH $PATH:/home/$USERNAME/go/bin
 RUN mkdir /home/$USERNAME/go \
@@ -483,59 +513,5 @@ COPY --chown=$USERNAME dotfiles ./
 RUN .config/nvim/bundle/nvim-typescript/install.sh \
     && nvim --headless +UpdateRemotePlugins +qa \
     && nvim --headless +TSUpdate +qa
-#    && nvim --headless '+lua require"nvim-treesitter.configs".setup { ensure_installed = { \
-#        "bash", \
-#        "c", \
-#        "c_sharp", \
-#        "clojure", \
-#        "cmake", \
-#        "comment", \
-#        "commonlisp", \
-#        "cpp", \
-#        "css", \
-#        "dart", \
-#        "dockerfile", \
-#        "elm", \
-#        "fortran", \
-#        "go", \
-#        "gomod", \
-#        "graphql", \
-#        "hack", \
-#        "haskell", \
-#        "help", \
-#        "html", \
-#        "http", \
-#        "java", \
-#        "javascript", \
-#        "jsdoc", \
-#        "json", \
-#        "json5", \
-#        "jsonc", \
-#        "julia", \
-#        "kotlin", \
-#        "latex", \
-#        "llvm", \
-#        "lua", \
-#        "make", \
-#        "markdown", \
-#        "ninja", \
-#        "pascal", \
-#        "perl", \
-#        "php", \
-#        "python", \
-#        "r", \
-#        "regex", \
-#        "ruby", \
-#        "rust", \
-#        "scala", \
-#        "scheme", \
-#        "scss", \
-#        "swift", \
-#        "typescript", \
-#        "verilog", \
-#        "vim", \
-#        "vue", \
-#        "yaml" \
-#    }, sync_install = true  }; vim.cmd("qa")'
 
 CMD ["/usr/bin/byobu"]

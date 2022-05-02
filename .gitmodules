@@ -232,3 +232,15 @@
 [submodule "dotfiles/.config/nvim/bundle/plenary.nvim"]
 	path = dotfiles/.config/nvim/bundle/plenary.nvim
 	url = https://github.com/nvim-lua/plenary.nvim.git
+[submodule "dotfiles/.config/nvim/bundle/nvim-cmp"]
+	path = dotfiles/.config/nvim/bundle/nvim-cmp
+	url = https://github.com/hrsh7th/nvim-cmp.git
+[submodule "dotfiles/.config/nvim/bundle/cmp-nvim-lsp"]
+	path = dotfiles/.config/nvim/bundle/cmp-nvim-lsp
+	url = https://github.com/hrsh7th/cmp-nvim-lsp.git
+[submodule "dotfiles/.config/nvim/bundle/cmp-cmdline"]
+	path = dotfiles/.config/nvim/bundle/cmp-cmdline
+	url = https://github.com/hrsh7th/cmp-cmdline.git
+[submodule "dotfiles/.config/nvim/bundle/cmp-git"]
+	path = dotfiles/.config/nvim/bundle/cmp-git
+	url = https://github.com/petertriho/cmp-git.git

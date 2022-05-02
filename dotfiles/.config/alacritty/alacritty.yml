@@ -35,3 +35,22 @@ window:
 
 env:
   TERM: xterm-256color
+
+font:
+  normal:
+    family: 'DejaVu Sans Mono'
+    style: Book
+
+  bold:
+    family: 'DejaVu Sans Mono'
+    style: Bold
+
+  italic:
+    family: 'DejaVu Sans Mono'
+    style: Italic
+
+  bold_italic:
+    family: 'DejaVu Sans Mono'
+    style: Bold Italic
+
+  size: 11
