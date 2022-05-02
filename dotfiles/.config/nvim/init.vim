@@ -235,7 +235,7 @@ let g:scratch_persistence_file="/tmp/nvim_scratch_persistance"
 
 augr class
 au!
-au bufreadpost,filereadpost *.class %!/usr/local/src/jad/jad -noctor -ff -i -p %
+au bufreadpost,filereadpost *.class %!/usr/local/bin/procyon %
 au bufreadpost,filereadpost *.class set readonly
 au bufreadpost,filereadpost *.class set ft=java
 au bufreadpost,filereadpost *.class normal gg=G

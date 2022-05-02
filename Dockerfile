@@ -427,9 +427,9 @@ RUN wget -O /jd-gui.deb https://github.com/java-decompiler/jd-gui/releases/downl
 	&& chmod +x /usr/local/bin/jd-gui \
     && rm /jd-gui.deb
 
-RUN mkdir /usr/local/src/procyon \
-    && wget -o procyon-decompiler.jar https://github.com/mstrobel/procyon/releases/download/v0.6.0/procyon-decompiler-0.6.0.jar \
-	&& echo "java -Xms2G -Xmx5G -jar /usr/local/src/procyon/procyon-decompiler.jar" > /usr/local/bin/procyon \
+RUN mkdir -p /usr/local/src/procyon \
+    && wget -O /usr/local/src/procyon/procyon-decompiler.jar https://github.com/mstrobel/procyon/releases/download/v0.6.0/procyon-decompiler-0.6.0.jar \
+	&& echo 'java -Xms2G -Xmx5G -jar /usr/local/src/procyon/procyon-decompiler.jar $@' > /usr/local/bin/procyon \
     && chmod +x /usr/local/bin/procyon
 
 # gobuster
