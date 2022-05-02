@@ -2,6 +2,8 @@
 CMD="$1"
 # echo "/tmp/cores/core.%e.%p.%h.%t" > /proc/sys/kernel/core_pattern
 export DOCKER_BUILDKIT=1
+export XAUTHORITY=${XAUTHORITY:-$HOME/.Xauthority}
+export DISPLAY=${DISPLAY:-:0}
 export USERNAME=nonroot
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR

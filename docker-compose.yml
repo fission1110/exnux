@@ -23,7 +23,7 @@ services:
       LC_MEASUREMENT: "en_US.UTF-8"
       LC_IDENTIFICATION: "en_US.UTF-8"
     volumes:
-      - "$XAUTHORITY:/home/${USERNAME}/.Xauthority"
+      - "${XAUTHORITY}:/home/${USERNAME}/.Xauthority"
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
       - "/:/home/${USERNAME}/root"
       - "${HOME}:/home/${USERNAME}/home"

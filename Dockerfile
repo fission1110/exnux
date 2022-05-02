@@ -510,7 +510,8 @@ ENV PATH=$PATH:/home/$USERNAME/tools
 COPY --chown=$USERNAME dotfiles ./
 
 # nvim
-RUN .config/nvim/bundle/nvim-typescript/install.sh \
+RUN  mkdir -p ~/.config/nvim/ctags/mytags \
+    && .config/nvim/bundle/nvim-typescript/install.sh \
     && nvim --headless +UpdateRemotePlugins +qa \
     && nvim --headless +TSUpdate +qa
 
