@@ -47,8 +47,9 @@ case "$CMD" in
         docker-compose down apt-cacher-ng
     ;;
     start-headless)
+        DOCKER_GROUP_ID=$(getent group docker | awk -F: '{print $3}')
         docker-compose up -d exnux msf-postgres
-        docker-compose exec exnux /usr/sbin/groupmod -g $(getent group docker | awk -F: '{print $3}') docker
+        docker-compose exec exnux /usr/bin/sudo groupmod -g $DOCKER_GROUP_ID docker
     ;;
     start)
         $0 start-headless
