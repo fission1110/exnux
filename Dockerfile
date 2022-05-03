@@ -358,7 +358,6 @@ RUN export http_proxy=$APT_PROXY \
     && unset http_proxy
 
 RUN echo 'y\ny' | unminimize \
-    && groupmod -g 999 docker \
     && usermod -aG docker $USERNAME \
     && ln -s $(which fdfind) /usr/local/bin/fd \
     && chsh -s $(which zsh) $USERNAME \
