@@ -255,12 +255,12 @@ let g:minimap_auto_start_win_enter = 0
 
 " Telescope
 " Using Lua functions
-"nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
+"nnoremap <C-o> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <C-f> <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <C-t> <cmd>lua require('telescope.builtin').tags()<cr>
 
 " Bring back FZF as the fuzzy file finder because I like it better
-map <C-p> :Files<CR>
+map <C-o> :Files<CR>
 
 lua require('config')
