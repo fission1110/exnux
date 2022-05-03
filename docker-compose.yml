@@ -5,6 +5,8 @@ services:
     cap_add:
       - SYS_PTRACE
     privileged: true
+    stdin_open: true # -i
+    tty: true # -t
     network_mode: "host"
     environment:
       DISPLAY: "${DISPLAY}"
