@@ -1,7 +1,37 @@
+
+# Search in all mapped memory
 e search.in = dbg.maps
+
+# Set default v layout
 e scr.layout = default
+
+# Idk what this does, but I think it lets the decompiler work
 e scr.slow = true
+
+# Use less
 e scr.pager = less -R
+
+# vim mode
 e scr.prompt.vi = true
+
+# popup completion menu
 e scr.prompt.popup = true
+
+# Use ghidra as the default decompiler
 e cmd.pdc = pdg
+
+# Esil emulation
+#e asm.emu = true
+#e asm.esil = true
+e asm.section = true
+
+# Describe the asm in comments
+e asm.describe = true
+
+e scr.utf8 = true
+e scr.utf8.curvy = true
+e scr.pipecolor = true
+
+
+# Theme
+eco ayu
