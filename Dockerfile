@@ -337,6 +337,7 @@ RUN export http_proxy=$APT_PROXY \
         nasm \
         ncat \
         netcat-openbsd \
+        nfs-common \
         nikto \
         openssh-client \
         openvpn \
@@ -347,6 +348,7 @@ RUN export http_proxy=$APT_PROXY \
         ripgrep \
         sleuthkit \
         snmp \
+        socat \
         strace \
         tcpdump \
         tmux \
