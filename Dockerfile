@@ -258,6 +258,22 @@ RUN export http_proxy=$APT_PROXY \
         libxkbcommon-dev \
         pkg-config \
         python3 \
+      # john
+        build-essential \
+        libssl-dev \
+        git \
+        zlib1g-dev \
+        yasm \
+        libgmp-dev \
+        libpcap-dev \
+        pkg-config \
+        libbz2-dev \
+        nvidia-opencl-dev \
+        ocl-icd-opencl-dev \
+        opencl-headers \
+        ocl-icd-opencl-dev \
+        opencl-headers \
+        pocl-opencl-icd \
       # large
         audacity \
         burp \
@@ -327,7 +343,6 @@ RUN export http_proxy=$APT_PROXY \
         htop \
         hydra \
         iputils-ping \
-        john \
         ldap-utils \
         libclang-9-dev \
         ltrace \
@@ -494,6 +509,15 @@ RUN mkdir /usr/local/src/lua-language-server \
     && cd ../../ \
     && ./3rd/luamake/luamake rebuild \
     && ln -s /usr/local/src/lua-language-server/bin/lua-language-server /usr/local/bin/lua-language-server
+
+# john
+RUN mkdir -p /usr/local/src/john \
+    && git clone -b bleeding-jumbo --recurse-submodules --depth 1 https://github.com/openwall/john.git /usr/local/src/john \
+    && cd /usr/local/src/john/src \
+    && ./configure \
+    && make -s clean \
+    && make -sj$(nproc)
+ENV PATH $PATH:/usr/local/src/john/run
 
 
 ENV PATH $PATH:/home/$USERNAME/go/bin
