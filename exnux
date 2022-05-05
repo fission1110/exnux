@@ -49,6 +49,8 @@ case "$CMD" in
     start-headless)
         docker-compose up -d exnux msf-postgres
         docker-compose exec -u "0:0" exnux groupmod -g $(getent group docker | awk -F: '{print $3}') docker
+        docker-compose exec -u "0:0" exnux usermod -u $(id -u) $USERNAME
+        docker-compose exec -u "0:0" exnux groupmod -g $(id -g) $USERNAME
     ;;
     start)
         $0 start-headless
