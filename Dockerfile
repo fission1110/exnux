@@ -316,16 +316,18 @@ RUN export http_proxy=$APT_PROXY \
         expect \
         exuberant-ctags \
         fd-find \
+        ffmpeg \
         flake8 \
-        foremost \
         fonts-beng \
         fonts-dejavu \
         fonts-deva \
+        fonts-freefont-ttf \
         fonts-gujr \
         fonts-guru \
         fonts-indic \
         fonts-knda \
         fonts-liberation \
+        ftp \
         fonts-mlym \
         fonts-noto-cjk \
         fonts-noto-color-emoji \
@@ -337,6 +339,7 @@ RUN export http_proxy=$APT_PROXY \
         fonts-ubuntu \
         fonts-ubuntu-console \
         fonts-ubuntu-title \
+        foremost \
         git-gui \
         gitk \
         gobuster \
