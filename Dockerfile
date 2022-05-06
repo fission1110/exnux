@@ -64,7 +64,10 @@ ENV PATH /home/$USERNAME/.rbenv/bin:/home/$USERNAME/.rbenv/shims:/usr/local/src/
 
 RUN wget -O- 'https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer' | sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bash \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv install 3.0.2 \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv global 3.0.2
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv install 2.7.2 \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv global 3.0.2 \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem update --system \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem install --no-user-install bundler
 
 ################################################
 #
@@ -139,8 +142,6 @@ RUN mkdir -p /usr/local/src/metasploit-framework \
     && sudo -u $USERNAME git clone -b 6.1.38 --recurse-submodules --depth 1 --shallow-submodules https://github.com/rapid7/metasploit-framework.git /usr/local/src/metasploit-framework && \
     # gem install and bundle install
     cd /usr/local/src/metasploit-framework \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem update --system \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem install --no-user-install bundler \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem install --no-user-install wpscan \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bundle install --jobs=$(nproc)
 
@@ -227,6 +228,44 @@ RUN mkdir -p /usr/local/src/ghidra \
 
 ################################################
 #
+#    john-build
+#
+################################################
+FROM base AS john-build
+
+RUN export http_proxy=$APT_PROXY \
+    && apt-get install -y \
+      # john
+        build-essential \
+        libssl-dev \
+        git \
+        zlib1g-dev \
+        yasm \
+        libgmp-dev \
+        libpcap-dev \
+        pkg-config \
+        libbz2-dev \
+        nvidia-opencl-dev \
+        ocl-icd-opencl-dev \
+        opencl-headers \
+        ocl-icd-opencl-dev \
+        opencl-headers \
+        pocl-opencl-icd \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && unset http_proxy
+
+# john
+RUN mkdir -p /usr/local/src/john \
+    && git clone -b bleeding-jumbo --recurse-submodules --depth 1 https://github.com/openwall/john.git /usr/local/src/john \
+    && cd /usr/local/src/john/src \
+    && ./configure \
+    && make -s clean \
+    && make -sj$(nproc)
+
+
+################################################
+#
 #    base-extended Adds user tools
 #
 ################################################
@@ -258,22 +297,31 @@ RUN export http_proxy=$APT_PROXY \
         libxkbcommon-dev \
         pkg-config \
         python3 \
-      # john
-        build-essential \
-        libssl-dev \
+      # BeEF
+        curl \
         git \
+        build-essential \
+        openssl \
+        libreadline6-dev \
+        zlib1g \
         zlib1g-dev \
-        yasm \
-        libgmp-dev \
-        libpcap-dev \
-        pkg-config \
-        libbz2-dev \
-        nvidia-opencl-dev \
-        ocl-icd-opencl-dev \
-        opencl-headers \
-        ocl-icd-opencl-dev \
-        opencl-headers \
-        pocl-opencl-icd \
+        libssl-dev \
+        libyaml-dev \
+        libsqlite3-0 \
+        libsqlite3-dev \
+        sqlite3 \
+        libxml2-dev \
+        libxslt1-dev \
+        autoconf \
+        libc6-dev \
+        libncurses5-dev \
+        automake \
+        libtool \
+        bison \
+        #nodejs \
+        libcurl4-openssl-dev \
+        gcc-9-base \
+        libgcc-9-dev \
       # large
         audacity \
         burp \
@@ -327,7 +375,6 @@ RUN export http_proxy=$APT_PROXY \
         fonts-indic \
         fonts-knda \
         fonts-liberation \
-        ftp \
         fonts-mlym \
         fonts-noto-cjk \
         fonts-noto-color-emoji \
@@ -340,6 +387,7 @@ RUN export http_proxy=$APT_PROXY \
         fonts-ubuntu-console \
         fonts-ubuntu-title \
         foremost \
+        ftp \
         git-gui \
         gitk \
         gobuster \
@@ -354,6 +402,7 @@ RUN export http_proxy=$APT_PROXY \
         lzop \
         nasm \
         ncat \
+        net-tools \
         netcat-openbsd \
         nfs-common \
         nikto \
@@ -461,15 +510,18 @@ RUN curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-c
     && chmod +x /usr/local/bin/docker-compose
 
 # burp
-RUN mkdir -p /usr/local/src/burp/ \
-    && wget -O /usr/local/src/burp/burp.sh "https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.2.5&type=Linux" \
-    && chmod +x /usr/local/src/burp/burp.sh
+#RUN mkdir -p /usr/local/src/burp/ \
+#    && wget -O /usr/local/src/burp/burp.sh "https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.2.5&type=Linux" \
+#    && chmod +x /usr/local/src/burp/burp.sh
+RUN echo 'burp -c /etc/burp/burp-server.conf' > /usr/local/bin/burp_server \
+    echo 'java -Xms2G -Xmx5G -jar /home/nonroot/root/home/ryan/Hack/BurpSuiteCommunity/burpsuite_community.jar' > /usr/local/bin/burp_ui
 
 # zap
 RUN mkdir -p /usr/local/src/zap \
     && wget -O /usr/local/src/zap/zap.tar.gz https://github.com/zaproxy/zaproxy/releases/download/v2.11.1/ZAP_2.11.1_Linux.tar.gz \
     && cd /usr/local/src/zap \
     && tar -I pigz -xf ./zap.tar.gz \
+    && ln -s /usr/local/src/zap/ZAP_2.11.1/zap.sh /usr/local/bin/zap \
     && rm ./zap.tar.gz
 
 # alacritty
@@ -513,14 +565,20 @@ RUN mkdir /usr/local/src/lua-language-server \
     && ./3rd/luamake/luamake rebuild \
     && ln -s /usr/local/src/lua-language-server/bin/lua-language-server /usr/local/bin/lua-language-server
 
-# john
-RUN mkdir -p /usr/local/src/john \
-    && git clone -b bleeding-jumbo --recurse-submodules --depth 1 https://github.com/openwall/john.git /usr/local/src/john \
-    && cd /usr/local/src/john/src \
-    && ./configure \
-    && make -s clean \
-    && make -sj$(nproc)
+COPY --from=john-build /usr/local/src/john /usr/local/src/john
 ENV PATH $PATH:/usr/local/src/john/run
+
+# BeEF
+RUN mkdir -p /usr/local/src/beef/ \
+    && chown $USERNAME:$USERNAME /usr/local/src/beef \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" git clone -b v0.5.4.0 --depth 1 https://github.com/beefproject/beef.git /usr/local/src/beef \
+    && cd /usr/local/src/beef/ \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv local 2.7.2 \
+    && bundle install \
+    && echo -n '#!/bin/bash\ncd /usr/local/src/beef && ./beef' > /usr/local/bin/beef \
+    && chmod +x /usr/local/bin/beef \
+    && sed -i 's/user:\s*"beef"/user: "'"$USERNAME"'"/' /usr/local/src/beef/config.yaml \
+    && sed -i 's/passwd:\s*"beef"/passwd: "changeme"/' /usr/local/src/beef/config.yaml
 
 
 ENV PATH $PATH:/home/$USERNAME/go/bin

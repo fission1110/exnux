@@ -12,6 +12,7 @@ services:
       DISPLAY: "${DISPLAY}"
       XAUTHORITY: "${XAUTHORITY}"
       LANG: en_US.UTF-8
+      _JAVA_OPTIONS: "${_JAVA_OPTIONS}"
       LC_CTYPE: "en_US.UTF-8"
       LC_NUMERIC: "en_US.UTF-8"
       LC_TIME: "en_US.UTF-8"
