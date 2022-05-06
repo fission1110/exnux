@@ -47,6 +47,13 @@ RUN export http_proxy=$APT_PROXY \
         unzip \
         wget \
         zip \
+        # Phpactor
+        php \
+        php-cli \
+        php-curl \
+        php-gd \
+        php-mbstring \
+        php-xml \
     && curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - \
     && sudo apt-get install -y nodejs \
     && unset http_proxy \
@@ -267,6 +274,43 @@ RUN mkdir -p /usr/local/src/john \
     && make -s clean \
     && make -sj$(nproc)
 
+################################################
+#
+#    lua-lsp-build
+#
+################################################
+FROM base AS lua-lsp-build
+# lua-language-server
+RUN mkdir /usr/local/src/lua-language-server \
+    && git clone https://github.com/sumneko/lua-language-server.git /usr/local/src/lua-language-server \
+    && cd /usr/local/src/lua-language-server/ \
+    && git checkout fe121d00514898842a07b67a257a1af2cb2fb604 \
+    && git submodule update --init --recursive \
+    && cd ./3rd/luamake \
+    && ./compile/install.sh \
+    && cd ../../ \
+    && ./3rd/luamake/luamake rebuild
+
+################################################
+#
+#    phpactor-build
+#
+################################################
+FROM base AS phpactor-build
+# composer
+RUN cd /usr/local/bin \
+    && wget -O composer-setup.php https://getcomposer.org/installer \
+    && php composer-setup.php \
+    && php -r "unlink('composer-setup.php');" \
+    && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+
+# Phpactor
+RUN mkdir /usr/local/src/phpactor \
+    && chown $USERNAME:$USERNAME /usr/local/src/phpactor \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" git clone --depth 1 https://github.com/phpactor/phpactor /usr/local/src/phpactor \
+    && cd /usr/local/src/phpactor \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" composer update \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" composer install
 
 ################################################
 #
@@ -339,12 +383,6 @@ RUN export http_proxy=$APT_PROXY \
         mysql-client \
         nmap \
         okular \
-        php \
-        php-cli \
-        php-curl \
-        php-gd \
-        php-mbstring \
-        php-xml \
         smbclient \
         sqlmap \
         wireshark \
@@ -430,7 +468,10 @@ RUN export http_proxy=$APT_PROXY \
         zsh \
     && unset http_proxy
 
-RUN echo 'y\ny' | unminimize \
+RUN export http_proxy=$APT_PROXY \
+    && apt-get update -y \
+    && echo 'y\ny' | unminimize \
+    && unset http_proxy \
     && usermod -aG docker $USERNAME \
     && ln -s $(which fdfind) /usr/local/bin/fd \
     && chsh -s $(which zsh) $USERNAME \
@@ -541,34 +582,17 @@ RUN cd /usr/local/src/pwndbg \
 COPY --from=ghidra-build /usr/local/src/ghidra /usr/local/src/ghidra
 RUN ln -s /usr/local/src/ghidra/ghidraRun /usr/local/bin/ghidraRun
 
-# composer
-RUN cd /usr/local/bin \
-    && wget -O composer-setup.php https://getcomposer.org/installer \
-    && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');" \
-    && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
-
 # Phpactor
-RUN mkdir /usr/local/src/phpactor \
-    && chown $USERNAME:$USERNAME /usr/local/src/phpactor \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" git clone --depth 1 https://github.com/phpactor/phpactor /usr/local/src/phpactor \
-    && cd /usr/local/src/phpactor \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" composer update \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" composer install \
+COPY --from=phpactor-build /usr/local/bin/composer.phar /usr/local/bin/composer.phar
+COPY --from=phpactor-build /usr/local/src/phpactor /usr/local/src/phpactor
+RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer \
     && ln -s /usr/local/src/phpactor/bin/phpactor /usr/local/bin/phpactor
 
 # lua-language-server
-RUN mkdir /usr/local/src/lua-language-server \
-    && git clone --recurse-submodules https://github.com/sumneko/lua-language-server.git /usr/local/src/lua-language-server \
-    && cd /usr/local/src/lua-language-server/ \
-    && git checkout fe121d00514898842a07b67a257a1af2cb2fb604 \
-    && git submodule update --init --recursive \
-    && cd ./3rd/luamake \
-    && ./compile/install.sh \
-    && cd ../../ \
-    && ./3rd/luamake/luamake rebuild \
-    && ln -s /usr/local/src/lua-language-server/bin/lua-language-server /usr/local/bin/lua-language-server
+COPY --from=lua-lsp-build /usr/local/src/lua-language-server /usr/local/src/lua-language-server
+RUN ln -s /usr/local/src/lua-language-server/bin/lua-language-server /usr/local/bin/lua-language-server
 
+# john
 COPY --from=john-build /usr/local/src/john /usr/local/src/john
 ENV PATH $PATH:/usr/local/src/john/run
 
