@@ -372,9 +372,9 @@ RUN export http_proxy=$APT_PROXY \
         libgcc-9-dev \
       # large
         audacity \
-        burp \
         clangd \
         docker.io \
+        firefox \
         gimp \
         golang \
         hashcat \
@@ -540,6 +540,7 @@ RUN wget -O /jd-gui.deb https://github.com/java-decompiler/jd-gui/releases/downl
 	&& chmod +x /usr/local/bin/jd-gui \
     && rm /jd-gui.deb
 
+# procyon
 RUN mkdir -p /usr/local/src/procyon \
     && wget -O /usr/local/src/procyon/procyon-decompiler.jar https://github.com/mstrobel/procyon/releases/download/v0.6.0/procyon-decompiler-0.6.0.jar \
 	&& echo 'java -Xms2G -Xmx5G -jar /usr/local/src/procyon/procyon-decompiler.jar $@' > /usr/local/bin/procyon \
@@ -555,11 +556,8 @@ RUN curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-c
     && chmod +x /usr/local/bin/docker-compose
 
 # burp
-#RUN mkdir -p /usr/local/src/burp/ \
-#    && wget -O /usr/local/src/burp/burp.sh "https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.2.5&type=Linux" \
-#    && chmod +x /usr/local/src/burp/burp.sh
-RUN echo 'burp -c /etc/burp/burp-server.conf' > /usr/local/bin/burp_server \
-    echo 'java -Xms2G -Xmx5G -jar /home/nonroot/root/home/ryan/Hack/BurpSuiteCommunity/burpsuite_community.jar' > /usr/local/bin/burp_ui
+RUN mkdir -p /usr/local/src/burp/ \
+    && wget -O /usr/local/src/burp/burp.sh "https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.2.5&type=Linux"
 
 # zap
 RUN mkdir -p /usr/local/src/zap \
