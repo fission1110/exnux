@@ -32,6 +32,9 @@ colors:
 
 window:
   opacity: .9
+  dimensions:
+    columns: 133
+    lines: 40
 
 env:
   TERM: xterm-256color
