@@ -48,7 +48,7 @@ RUN export http_proxy=$APT_PROXY \
         wget \
         zip \
     && curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - \
-    && sudo apt-get -y install nodejs \
+    && sudo apt-get install -y nodejs \
     && unset http_proxy \
     && pip3 install frida \
     && pip3 install frida-tools \
@@ -62,12 +62,7 @@ RUN useradd -m $USERNAME \
 
 ENV PATH /home/$USERNAME/.rbenv/bin:/home/$USERNAME/.rbenv/shims:/usr/local/src/metasploit-framework:$PATH
 
-RUN wget -O- 'https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer' | sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bash \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv install 3.0.2 \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv install 2.7.2 \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv global 3.0.2 \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem update --system \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem install --no-user-install bundler
+RUN wget -O- 'https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer' | sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bash
 
 ################################################
 #
@@ -77,6 +72,7 @@ RUN wget -O- 'https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-instal
 FROM base AS aflpp-build
 
 RUN export http_proxy=$APT_PROXY \
+    && apt-get update -y \
     && apt-get install -y \
       # afl++
         bison \
@@ -118,6 +114,7 @@ RUN mkdir -p /usr/local/src/AFLplusplus \
 FROM base AS metasploit-build
 
 RUN export http_proxy=$APT_PROXY \
+    && apt-get update -y \
     && apt-get install -y \
         # metasploit
         autoconf \
@@ -142,6 +139,11 @@ RUN mkdir -p /usr/local/src/metasploit-framework \
     && sudo -u $USERNAME git clone -b 6.1.38 --recurse-submodules --depth 1 --shallow-submodules https://github.com/rapid7/metasploit-framework.git /usr/local/src/metasploit-framework && \
     # gem install and bundle install
     cd /usr/local/src/metasploit-framework \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv install 3.0.2 \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv install 2.7.2 \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv global 3.0.2 \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem update --system \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem install --no-user-install bundler \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" gem install --no-user-install wpscan \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bundle install --jobs=$(nproc)
 
@@ -154,6 +156,7 @@ RUN mkdir -p /usr/local/src/metasploit-framework \
 FROM base AS radare2-build
 
 RUN export http_proxy=$APT_PROXY \
+    && apt-get update -y \
     && apt-get install -y \
       # radare2
         build-essential \
@@ -234,6 +237,7 @@ RUN mkdir -p /usr/local/src/ghidra \
 FROM base AS john-build
 
 RUN export http_proxy=$APT_PROXY \
+    && apt-get update -y \
     && apt-get install -y \
       # john
         build-essential \
@@ -574,7 +578,7 @@ RUN mkdir -p /usr/local/src/beef/ \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" git clone -b v0.5.4.0 --depth 1 https://github.com/beefproject/beef.git /usr/local/src/beef \
     && cd /usr/local/src/beef/ \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" rbenv local 2.7.2 \
-    && bundle install \
+    && bundle install --jobs=$(nproc) \
     && echo -n '#!/bin/bash\ncd /usr/local/src/beef && ./beef' > /usr/local/bin/beef \
     && chmod +x /usr/local/bin/beef \
     && sed -i 's/user:\s*"beef"/user: "'"$USERNAME"'"/' /usr/local/src/beef/config.yaml \
