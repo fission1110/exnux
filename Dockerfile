@@ -612,6 +612,14 @@ RUN mkdir /home/$USERNAME/go \
     && chown $USERNAME:$USERNAME /home/$USERNAME/go \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" "GO111MODULE=on" go get golang.org/x/tools/gopls@latest
 
+# ffuf
+RUN mkdir -p /usr/local/src/ffuf \
+    && wget -O /usr/local/src/ffuf/ffuf.tar.gz https://github.com/ffuf/ffuf/releases/download/v1.4.1/ffuf_1.4.1_linux_amd64.tar.gz \
+    && cd /usr/local/src/ffuf \
+    && tar -I 'pigz' -xf ./ffuf.tar.gz \
+    && ln -s /usr/local/src/ffuf/ffuf /usr/local/bin/ffuf \
+    && rm /usr/local/src/ffuf/ffuf.tar.gz
+
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
 USER $USERNAME
