@@ -282,10 +282,8 @@ RUN mkdir -p /usr/local/src/john \
 FROM base AS lua-lsp-build
 # lua-language-server
 RUN mkdir /usr/local/src/lua-language-server \
-    && git clone https://github.com/sumneko/lua-language-server.git /usr/local/src/lua-language-server \
+    && git clone -b 3.2.3 --depth 1 --recurse-submodules https://github.com/sumneko/lua-language-server.git /usr/local/src/lua-language-server \
     && cd /usr/local/src/lua-language-server/ \
-    && git checkout fe121d00514898842a07b67a257a1af2cb2fb604 \
-    && git submodule update --init --recursive \
     && cd ./3rd/luamake \
     && ./compile/install.sh \
     && cd ../../ \
