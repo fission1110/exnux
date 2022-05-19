@@ -2,7 +2,6 @@ FROM ubuntu:focal AS base
 
 ENV LANG C.UTF-8
 ENV LANGUAGE C.UTF-8
-ENV LC_ALL C.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 
 # Use an apt-cache-ng proxy as the http_proxy if you want to speed up fetching packages.
