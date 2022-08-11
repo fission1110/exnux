@@ -233,6 +233,9 @@ let g:scratch_persistence_file="/tmp/nvim_scratch_persistance"
 "let g:syntastic_mode_map = {"mode": "passive", "active_filetypes":[], "passive_filetypes":[]}
 "let g:syntastic_php_phpcs_args = "--standard="
 
+" ansible syntax highlighting
+au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+
 augr class
 au!
 au bufreadpost,filereadpost *.class %!/usr/local/bin/procyon %

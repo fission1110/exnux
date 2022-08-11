@@ -247,3 +247,6 @@
 [submodule "dotfiles/.config/nvim/bundle/nvim-lspconfig"]
 	path = dotfiles/.config/nvim/bundle/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git
+[submodule "dotfiles/.config/nvim/bundle/ansible-vim"]
+	path = dotfiles/.config/nvim/bundle/ansible-vim
+	url = https://github.com/pearofducks/ansible-vim.git

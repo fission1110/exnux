@@ -391,6 +391,7 @@ RUN export http_proxy=$APT_PROXY \
     && apt-get update -y \
     && apt-get install -y \
         apktool \
+        ansible \
         autopsy \
         bash-completion \
         binutils \
@@ -617,6 +618,9 @@ RUN mkdir -p /usr/local/src/ffuf \
     && tar -I 'pigz' -xf ./ffuf.tar.gz \
     && ln -s /usr/local/src/ffuf/ffuf /usr/local/bin/ffuf \
     && rm /usr/local/src/ffuf/ffuf.tar.gz
+
+# fix ansible
+RUN pip3 install markupsafe==2.0.1
 
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
