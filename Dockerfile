@@ -453,6 +453,7 @@ RUN export http_proxy=$APT_PROXY \
         p0f \
         patchelf \
         postgresql-client \
+        pv \
         ripgrep \
         sleuthkit \
         snmp \
@@ -610,6 +611,10 @@ ENV PATH $PATH:/home/$USERNAME/go/bin
 RUN mkdir /home/$USERNAME/go \
     && chown $USERNAME:$USERNAME /home/$USERNAME/go \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" "GO111MODULE=on" go get golang.org/x/tools/gopls@latest
+
+RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" go get -d github.com/lemonade-command/lemonade \
+    && cd /home/$USERNAME/go/src/github.com/lemonade-command/lemonade \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" make install
 
 # ffuf
 RUN mkdir -p /usr/local/src/ffuf \
