@@ -47,7 +47,7 @@ case "$CMD" in
         docker-compose stop apt-cacher-ng
     ;;
     start-headless)
-        docker-compose up -d exnux msf-postgres
+        docker-compose up --no-recreate -d exnux msf-postgres
         docker-compose exec -T -u "0:0" exnux groupmod -g $(getent group docker | awk -F: '{print $3}') docker
 
         # Change uid and gid to match host os
