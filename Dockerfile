@@ -43,6 +43,7 @@ RUN export http_proxy=$APT_PROXY \
         python3-pip \
         python3-requests \
         python3-setuptools \
+        software-properties-common \
         sudo \
         unzip \
         wget \
@@ -388,6 +389,7 @@ RUN export http_proxy=$APT_PROXY \
 
 # install random tools to make the image a full dev environment
 RUN export http_proxy=$APT_PROXY \
+    && add-apt-repository ppa:ansible/ansible \
     && apt-get update -y \
     && apt-get install -y \
         apktool \
