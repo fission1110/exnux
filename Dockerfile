@@ -522,7 +522,7 @@ RUN cd /usr/local/src/fzf \
     && ./install --bin
 
 # nvim
-RUN wget -O /neovim.deb https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb \
+RUN wget -O /neovim.deb https://github.com/neovim/neovim/releases/download/v0.7.2/nvim-linux64.deb \
     && dpkg -i /neovim.deb \
     && rm /neovim.deb
 
