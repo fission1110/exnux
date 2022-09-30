@@ -629,6 +629,9 @@ RUN mkdir -p /usr/local/src/ffuf \
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
 
+# chepy
+RUN pip3 install chepy
+
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
 USER $USERNAME
