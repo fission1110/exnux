@@ -253,3 +253,6 @@
 [submodule "dotfiles/.config/nvim/bundle/copilot.vim"]
 	path = dotfiles/.config/nvim/bundle/copilot.vim
 	url = https://github.com/github/copilot.vim
+[submodule "dotfiles/.config/nvim/bundle/nvim-treesitter-context"]
+	path = dotfiles/.config/nvim/bundle/nvim-treesitter-context
+	url = https://github.com/nvim-treesitter/nvim-treesitter-context.git
