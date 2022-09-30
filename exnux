@@ -25,11 +25,13 @@ mkdir -p $SCRIPT_DIR/cache/treesitter/
 mkdir -p $SCRIPT_DIR/cache/treesitter/parser
 mkdir -p $SCRIPT_DIR/cache/treesitter/parser-info
 mkdir -p $SCRIPT_DIR/cache/.msf4
+mkdir -p $SCRIPT_DIR/cache/.cache/github-copilot
 touch -a $SCRIPT_DIR/cache/.zsh_history
 touch -a $SCRIPT_DIR/cache/.bash_history
 touch -a $SCRIPT_DIR/cache/.gdb_history
 touch -a $SCRIPT_DIR/cache/.cache/radare2/history
 touch -a $SCRIPT_DIR/cache/.msf4/history
+touch -a $SCRIPT_DIR/cache/.cache/github-copilot/hosts.json
 
 case "$CMD" in
     init)
