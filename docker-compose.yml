@@ -35,6 +35,7 @@ services:
       - "./cache/.bash_history:/home/${USERNAME}/.bash_history"
       - "./cache/.gdb_history:/home/${USERNAME}/.gdb_history"
       - "./cache/.cache/radare2/history:/home/${USERNAME}/.cache/radare2/history"
+      - "./cache/.cache/github-copilot/hosts.json:/home/${USERNAME}/.cache/github-copilot/hosts.json"
       - "./cache/.msf4/history:/home/${USERNAME}/.msf4/history"
       - "./cache/mytags:/home/${USERNAME}/.config/nvim/ctags/mytags"
       - "${HOME}/Downloads:/home/${USERNAME}/Downloads"
