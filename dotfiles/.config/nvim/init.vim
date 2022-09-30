@@ -256,6 +256,11 @@ let g:minimap_width = 20
 let g:minimap_auto_start = 1
 let g:minimap_auto_start_win_enter = 0
 
+" Copilot
+let g:copilot_filetypes = {
+    \   'yaml': v:true
+    \ }
+
 " Telescope
 " Using Lua functions
 "nnoremap <C-o> <cmd>lua require('telescope.builtin').find_files()<cr>
