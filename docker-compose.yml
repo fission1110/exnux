@@ -46,6 +46,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     devices:
       - "/dev/dri"
+      - "/dev/snd"
     command: "/bin/bash"
   msf-postgres:
     container_name: "msf-postgres"

@@ -375,7 +375,6 @@ RUN export http_proxy=$APT_PROXY \
         docker.io \
         firefox \
         gimp \
-        golang \
         hashcat \
         hashcat-nvidia \
         inkscape \
@@ -392,8 +391,10 @@ RUN export http_proxy=$APT_PROXY \
     && add-apt-repository ppa:ansible/ansible \
     && apt-get update -y \
     && apt-get install -y \
-        apktool \
+        alsa-base \
+        alsa-utils \
         ansible \
+        apktool \
         autopsy \
         bash-completion \
         binutils \
@@ -439,14 +440,15 @@ RUN export http_proxy=$APT_PROXY \
         iputils-ping \
         ldap-utils \
         libclang-9-dev \
+        libsndfile1-dev \
         ltrace \
         lz4 \
         lzip \
         lzop \
         nasm \
         ncat \
-        net-tools \
         netcat-openbsd \
+        net-tools \
         nfs-common \
         nikto \
         openssh-client \
@@ -608,15 +610,22 @@ RUN mkdir -p /usr/local/src/beef/ \
     && sed -i 's/user:\s*"beef"/user: "'"$USERNAME"'"/' /usr/local/src/beef/config.yaml \
     && sed -i 's/passwd:\s*"beef"/passwd: "changeme"/' /usr/local/src/beef/config.yaml
 
+#golang
+RUN mkdir -p /usr/local/src/golang \
+    && wget -O /usr/local/src/golang/go.tar.gz https://go.dev/dl/go1.19.1.linux-amd64.tar.gz \
+    && tar -C /usr/local -xzf /usr/local/src/golang/go.tar.gz \
+    && ln -s /usr/local/go/bin/go /usr/local/bin/go \
+    && rm -r /usr/local/src/golang
 
+
+# gopls
 ENV PATH $PATH:/home/$USERNAME/go/bin
 RUN mkdir /home/$USERNAME/go \
     && chown $USERNAME:$USERNAME /home/$USERNAME/go \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" "GO111MODULE=on" go get golang.org/x/tools/gopls@latest
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" go install golang.org/x/tools/gopls@latest
 
-RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" go get -d github.com/lemonade-command/lemonade \
-    && cd /home/$USERNAME/go/src/github.com/lemonade-command/lemonade \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" make install
+# lemonade
+RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" go install github.com/lemonade-command/lemonade@latest
 
 # ffuf
 RUN mkdir -p /usr/local/src/ffuf \
