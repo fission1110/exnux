@@ -4,6 +4,7 @@ services:
     build: "."
     cap_add:
       - SYS_PTRACE
+      - NET_ADMIN
     privileged: true
     stdin_open: true # -i
     tty: true # -t

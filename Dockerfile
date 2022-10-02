@@ -62,6 +62,7 @@ RUN useradd -m $USERNAME \
     && echo "$USERNAME       ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
     && chmod 0400 /etc/sudoers.d/$USERNAME
 
+
 ENV PATH /home/$USERNAME/.rbenv/bin:/home/$USERNAME/.rbenv/shims:/usr/local/src/metasploit-framework:$PATH
 
 RUN wget -O- 'https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer' | sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" bash
@@ -367,7 +368,6 @@ RUN export http_proxy=$APT_PROXY \
         audacity \
         clangd \
         docker.io \
-        firefox \
         gimp \
         hashcat \
         hashcat-nvidia \
@@ -396,6 +396,7 @@ RUN export http_proxy=$APT_PROXY \
         byobu \
         cpio \
         dc \
+        dialog \
         dnsutils \
         elfutils \
         exiftool \
@@ -631,8 +632,20 @@ RUN mkdir -p /usr/local/src/ffuf \
     && ln -s /usr/local/src/ffuf/ffuf /usr/local/bin/ffuf \
     && rm /usr/local/src/ffuf/ffuf.tar.gz
 
+# google-chrome
+RUN wget -O /usr/local/src/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+    && dpkg -i /usr/local/src/google-chrome.deb \
+    && rm /usr/local/src/google-chrome.deb
+
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
+
+# fix wireshark
+RUN groupadd wireshark \
+    && usermod -a -G wireshark $USERNAME \
+    && chgrp wireshark /usr/bin/dumpcap \
+    && chmod 750 /usr/bin/dumpcap \
+    && setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
 
 # chepy
 #RUN pip3 install chepy
