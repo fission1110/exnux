@@ -31,6 +31,7 @@ services:
       - "/:/home/${USERNAME}/root"
       - "${HOME}:/home/${USERNAME}/home"
       - "${HOME}/.ssh:/home/${USERNAME}/.ssh"
+      - "./cache/swp:/home/${USERNAME}/.cache/swp"
       - "./cache/.zsh_history:/home/${USERNAME}/.zsh_history"
       - "./cache/.bash_history:/home/${USERNAME}/.bash_history"
       - "./cache/.gdb_history:/home/${USERNAME}/.gdb_history"

@@ -1,17 +1,19 @@
 call pathogen#infect()
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let $TERM="screen-256color"
-set mouse=
-set showcmd		" Show (partial) command in status line.
-set synmaxcol=600
+set mouse=          " disable mouse support
+set showcmd		    " Show (partial) command in status line.
+set synmaxcol=600   " Don't syntax highlight long lines.
 set showmatch		" Show matching brackets.
 set ignorecase		" Do case insensitive matching
 set smartcase		" Do smart case matching
 set nowrap	"Don't wrap long lines
 set hidden	"Hide edited buffers rather than quit them
-let g:terminal_scrollback_buffer_size = 100000
+let g:terminal_scrollback_buffer_size = 100000 "Increase terminal scrollback buffer size
+colorscheme terafox
+syntax on
 
-set clipboard+=unnamedplus
+set clipboard+=unnamedplus " copy to system clipboard
 
 set smartindent	"When creating a new line in a block it will put the cursor in the correct place
 set autoindent	"When creating a new line in a block it will put the cursor in the correct place
@@ -30,18 +32,20 @@ set expandtab shiftwidth=4 softtabstop=4
 " You stay in control of your tabstop setting.
 set tabstop=4
 
-let mapleader="," "Set the leader key
-syntax on
 filetype plugin on
+
+let mapleader="," "Set the leader key
 
 "set relativenumber
 set nu "Show line numbers
 set fileencodings=utf-8 "Force utf8
 
 "stop stupid .swp files from showing up ever. If you need them, they're in
-"/tmp
-set backupdir=/tmp,.
-set directory=/tmp,.
+"~/.cache/swp
+set backupdir=/home/nonroot/.cache/swp,.
+set directory=/home/nonroot/.cache/swp,.
+
+" Remap redraw to <leader>r
 nmap <leader>r :redraw!<CR>jk
 
 " Semi colon aliased to :
@@ -54,32 +58,16 @@ nnoremap } <C-i>
 "w!! will now sudo write the file
 cmap w!! SudaWrite
 
-" This doesn't seem to work in nvim
-"vmap <leader>y "+y
-"vmap <leader>y "+p
-
 " Easily jump around windows
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-" ,ee will run the file
-au FileType sh nmap <leader>ee :exec '!bash' shellescape(@%, 1)<cr>
-xnoremap <leader>er :!python<cr>
-
+" python uses 4 spaces (PEP8) expandtab
 au FileType python setlocal ts=4 sw=4 smartindent expandtab
+" php is tabs
 au FileType php setlocal ts=4 sw=4 smartindent noexpandtab
-
-au FileType c nmap <leader>ee :exec '!gcc -o test ' shellescape(@%, 1)<cr> :exec '!./test'<cr>
-au FileType c nmap <leader>ei :exec '!gcc -g -o test ' shellescape(@%, 1)<cr> :exec '!gdb ./test'<cr>
-
-au FileType php nmap <leader>ee :VdebugStart<cr>
-
-au FileType mysql nmap <leader>ee :exec '!mysql -u root -ppassword < ' shellescape(@%, 1)<cr>
-au FileType postgres nmap <leader>ee :exec '!postgres -u root -ppassword < ' shellescape(@%, 1)<cr>
-
-au FileType sql set ft=mysql
 
 "Set ft=messages when file is called messages
 autocmd BufNewFile,BufReadPost *messages* :set filetype=messages
@@ -98,6 +86,7 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 2 && bufexists('-MINI
 " HEX MODE!!
 nmap <leader>hh :%!xxd<cr>
 nmap <leader>hu :%!xxd -r<cr>
+
 "turn on javascript snippets in typescript files
 au BufRead,BufNewFile *.ts set ft=typescript.javascript
 
@@ -118,15 +107,6 @@ au BufNewFile *.ctp set ft=php.html
 
 "#############Ctrlp#############
 let g:ctrlp_working_path_mode = ''
-
-"command! Ctrlp execute (exists("*fugitive#head") && len(fugitive#head())) ? 'GFiles' : 'Files'
-"map <C-p> :Ctrlp<CR>
-
-" Use fzf instead of ctrlt
-"nnoremap <c-t> :Tags<cr>
-
-"let g:SuperTabNoCompleteAfter = ['^', ',', '\s']
-"let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " My hack to the forked version of vim snipmate to ignore the
 " fact that the pumvisible() and use my snippets anyways.
@@ -172,13 +152,7 @@ let g:vdebug_features = {'max_depth': 10}
 
 
 "#############Python Stuff#############
-"execute python, then drop to the interpreter
-au FileType python nmap <leader>ee :exec '!python3' shellescape(@%, 1)<cr>
-"execute python
-au FileType python nmap <leader>ei :exec '!python' shellescape(@%, 1)<cr>
 
-
-colorscheme terafox
 
 hi Normal ctermbg=NONE guibg=NONE
 hi NormalNC ctermbg=NONE guibg=NONE
@@ -225,14 +199,6 @@ nnoremap <silent> <leader>tt :tabnew term://$SHELL<cr>
 nmap <leader>s :Scratch<cr>
 let g:scratch_persistence_file="/tmp/nvim_scratch_persistance"
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 0
-"let g:syntastic_check_on_wq = 0
-"nmap <leader>S :SyntasticToggle<cr>
-"let g:syntastic_mode_map = {"mode": "passive", "active_filetypes":[], "passive_filetypes":[]}
-"let g:syntastic_php_phpcs_args = "--standard="
-
 " ansible syntax highlighting
 au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
 
@@ -258,7 +224,7 @@ let g:minimap_auto_start_win_enter = 0
 
 " Copilot
 let g:copilot_filetypes = {
-    \   'yaml': v:true
+    \   'yaml': v:true " enable copilot for yaml files
     \ }
 
 " Telescope

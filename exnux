@@ -19,6 +19,7 @@ cd $SCRIPT_DIR
 
 # Create all the cache directories and files (to prevent these being owned by root)
 mkdir -p $SCRIPT_DIR/cache
+mkdir -p $SCRIPT_DIR/cache/swp
 mkdir -p $SCRIPT_DIR/cache/mytags
 mkdir -p $SCRIPT_DIR/cache/.cache/radare2
 mkdir -p $SCRIPT_DIR/cache/treesitter/
