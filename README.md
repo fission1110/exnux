@@ -11,6 +11,5 @@
 - TODO: Maybe switch to a modern plugin management system for vim plugins 
 - TODO: Update to neovim and fix all the issues with current plugins (and plugin version audit)
 - TODO: Maybe rename this because it's more of my personal dev environment than a purpose built OS
-- TODO: Fix up the LC stuff
 - TODO: Test sound or find a better way to impliment sound
 - TODO: Maybe integrate postgres into the image so we don't need two containers
