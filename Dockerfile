@@ -153,50 +153,6 @@ RUN mkdir -p /usr/local/src/metasploit-framework \
 
 ################################################
 #
-#    radare2-build
-#
-################################################
-FROM base AS radare2-build
-
-RUN export http_proxy=$APT_PROXY \
-    && apt-get update -y \
-    && apt-get install -y \
-      # radare2
-        build-essential \
-        ccache \
-        cmake \
-        git \
-        wget \
-      # iaito
-        libgvc6 \
-        libqt5svg5 \
-        libqt5svg5-dev \
-        libuuid1 \
-        linux-headers-generic \
-        make \
-        qt5-default \
-        qt5-qmake \
-        qtbase5-dev \
-        qtbase5-dev-tools \
-        qtchooser \
-        qttools5-dev \
-        qttools5-dev-tools \
-        zip \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && unset http_proxy
-
-# build r2 because for some reason all packaged versions segfault when debugging
-RUN mkdir -p /usr/local/src/radare2 \
-    && git clone -b 5.6.8 --recurse-submodules --depth 1 --shallow-submodules https://github.com/radareorg/radare2.git /usr/local/src/radare2 \
-    && cd /usr/local/src/radare2 \
-    && ./sys/debian.sh \
-    && mkdir ../build \
-    && cp ./*.deb ../build \
-    && rm -r /usr/local/src/radare2
-
-################################################
-#
 #    fzf-build
 #
 ################################################
@@ -389,6 +345,7 @@ RUN export http_proxy=$APT_PROXY \
         alsa-utils \
         ansible \
         apktool \
+        apulse \
         autopsy \
         bash-completion \
         binutils \
@@ -491,11 +448,12 @@ FROM base-extended AS base-final
 COPY --from=metasploit-build --chown=$USERNAME /usr/local/src/metasploit-framework /usr/local/src/metasploit-framework
 COPY --from=metasploit-build --chown=$USERNAME /home/$USERNAME/.rbenv /home/$USERNAME/.rbenv
 
-# radare2
-COPY --from=radare2-build /usr/local/src/build/*.deb /usr/local/src/radare2/
-RUN cd /usr/local/src/radare2 \
-    && dpkg -i ./radare2*.deb \
-    && rm -r /usr/local/src/radare2 \
+RUN mkdir -p /usr/local/src/radare2 \
+    && wget -O /usr/local/src/radare2/radare2.deb https://github.com/radareorg/radare2/releases/download/5.7.8/radare2_5.7.8_amd64.deb \
+    && wget -O /usr/local/src/radare2/radare2-dev.deb https://github.com/radareorg/radare2/releases/download/5.7.8/radare2-dev_5.7.8_amd64.deb \
+    && dpkg -i /usr/local/src/radare2/radare2.deb \
+    && dpkg -i /usr/local/src/radare2/radare2-dev.deb \
+    && rm -rf /usr/local/src/radare2 \
     && update-alternatives --install /usr/bin/python python /usr/bin/python3 20 \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm init \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm update \
@@ -504,7 +462,7 @@ RUN cd /usr/local/src/radare2 \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2frida
 
 # iaito
-RUN wget -O /iaito.deb https://github.com/radareorg/iaito/releases/download/5.5.0-beta/iaito_5.5.0_amd64.deb \
+RUN wget -O /iaito.deb https://github.com/radareorg/iaito/releases/download/5.7.0/iaito_5.7.0_amd64.deb \
     && dpkg -i /iaito.deb \
     && rm /iaito.deb
 
@@ -646,6 +604,9 @@ RUN groupadd wireshark \
     && chgrp wireshark /usr/bin/dumpcap \
     && chmod 750 /usr/bin/dumpcap \
     && setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
+
+# fix sound
+RUN usermod -a -G audio $USERNAME
 
 # chepy
 #RUN pip3 install chepy
