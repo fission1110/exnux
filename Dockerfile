@@ -228,21 +228,6 @@ RUN mkdir -p /usr/local/src/john \
 
 ################################################
 #
-#    lua-lsp-build
-#
-################################################
-FROM base AS lua-lsp-build
-# lua-language-server
-RUN mkdir /usr/local/src/lua-language-server \
-    && git clone -b 3.2.3 --depth 1 --recurse-submodules https://github.com/sumneko/lua-language-server.git /usr/local/src/lua-language-server \
-    && cd /usr/local/src/lua-language-server/ \
-    && cd ./3rd/luamake \
-    && ./compile/install.sh \
-    && cd ../../ \
-    && ./3rd/luamake/luamake rebuild
-
-################################################
-#
 #    phpactor-build
 #
 ################################################
@@ -392,6 +377,8 @@ RUN export http_proxy=$APT_PROXY \
         iputils-ping \
         ldap-utils \
         libclang-9-dev \
+        libgl1-mesa-dri \
+        libgl1-mesa-glx \
         libsndfile1-dev \
         ltrace \
         lz4 \
@@ -546,8 +533,12 @@ RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer \
     && ln -s /usr/local/src/phpactor/bin/phpactor /usr/local/bin/phpactor
 
 # lua-language-server
-COPY --from=lua-lsp-build /usr/local/src/lua-language-server /usr/local/src/lua-language-server
-RUN ln -s /usr/local/src/lua-language-server/bin/lua-language-server /usr/local/bin/lua-language-server
+RUN mkdir /usr/local/src/lua-language-server \
+    && wget -O /usr/local/src/lua-language-server.tar.gz https://github.com/sumneko/lua-language-server/releases/download/3.5.6/lua-language-server-3.5.6-linux-x64.tar.gz \
+    && tar -xvf /usr/local/src/lua-language-server.tar.gz -C /usr/local/src/lua-language-server \
+    && ln -s /usr/local/src/lua-language-server/bin/lua-language-server /usr/local/bin/lua-language-server \
+    && chown -R $USERNAME:$USERNAME /usr/local/src/lua-language-server \
+    && rm /usr/local/src/lua-language-server.tar.gz
 
 # john
 COPY --from=john-build /usr/local/src/john /usr/local/src/john
@@ -605,8 +596,9 @@ RUN groupadd wireshark \
     && chmod 750 /usr/bin/dumpcap \
     && setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
 
-# fix sound
-RUN usermod -a -G audio $USERNAME
+# fix sound and video
+RUN usermod -a -G audio $USERNAME \
+    && usermod -a -G video $USERNAME
 
 # chepy
 #RUN pip3 install chepy

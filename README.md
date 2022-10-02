@@ -15,4 +15,3 @@ TODO: Maybe rename this because it's more of my personal dev environment than a 
 TODO: Fix up the LC stuff
 TODO: Test sound or find a better way to impliment sound
 TODO: Maybe integrate postgres into the image so we don't need two containers
-TODO: Fix iaito and radare2 integration once the apis catch up to each other
