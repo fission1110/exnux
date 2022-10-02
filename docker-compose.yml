@@ -40,6 +40,7 @@ services:
       - "./cache/.config/github-copilot/hosts.json:/home/${USERNAME}/.config/github-copilot/hosts.json"
       - "./cache/.msf4/history:/home/${USERNAME}/.msf4/history"
       - "./cache/mytags:/home/${USERNAME}/.config/nvim/ctags/mytags"
+      - "./cache/.config/google-chrome:/home/${USERNAME}/.config/google-chrome"
       - "${HOME}/Downloads:/home/${USERNAME}/Downloads"
       - "${HOME}/Documents:/home/${USERNAME}/Documents"
       - "${HOME}/Pictures:/home/${USERNAME}/Pictures"

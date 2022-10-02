@@ -27,6 +27,7 @@ mkdir -p $SCRIPT_DIR/cache/treesitter/parser
 mkdir -p $SCRIPT_DIR/cache/treesitter/parser-info
 mkdir -p $SCRIPT_DIR/cache/.msf4
 mkdir -p $SCRIPT_DIR/cache/.config/github-copilot
+mkdir -p $SCRIPT_DIR/cache/.config/google-chrome
 touch -a $SCRIPT_DIR/cache/.zsh_history
 touch -a $SCRIPT_DIR/cache/.bash_history
 touch -a $SCRIPT_DIR/cache/.gdb_history
