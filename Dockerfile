@@ -328,8 +328,8 @@ RUN export http_proxy=$APT_PROXY \
         libxi6 \
         libxrender1 \
         libxtst6 \
-        openjdk-11-jdk \
-        openjdk-11-jre \
+        openjdk-17-jdk \
+        openjdk-17-jre \
        # iaito
         libgvc6 \
         libqt5svg5 \
