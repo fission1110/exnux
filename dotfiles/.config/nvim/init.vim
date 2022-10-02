@@ -223,8 +223,9 @@ let g:minimap_auto_start = 1
 let g:minimap_auto_start_win_enter = 0
 
 " Copilot
+" enable copilot for yaml files
 let g:copilot_filetypes = {
-    \   'yaml': v:true " enable copilot for yaml files
+    \   'yaml': v:true
     \ }
 
 " Telescope
