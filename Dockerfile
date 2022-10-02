@@ -3,12 +3,6 @@ FROM ubuntu:focal AS base
 ENV LC_ALL en_US.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 
-# Use an apt-cache-ng proxy as the http_proxy if you want to speed up fetching packages.
-# docker run --name apt-cacher-ng --init -d --restart=always \
-#    --publish 3142:3142 \
-#    --volume /srv/docker/apt-cacher-ng:/var/cache/apt-cacher-ng \
-#    sameersbn/apt-cacher-ng:3.3-20200524
-# docker build -t exnux:v0.1 --build-arg=APT_PROXY="http://<IP>:3142" .
 ARG APT_PROXY
 
 RUN export http_proxy=$APT_PROXY \
