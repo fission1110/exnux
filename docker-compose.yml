@@ -3,19 +3,19 @@ services:
     container_name: "exnux"
     build: "."
     cap_add:
-      - SYS_PTRACE
-      - NET_ADMIN
-    privileged: true
+      - SYS_PTRACE # Required for strace
+      - NET_ADMIN # for WireShark
+    privileged: true # required for network access
     stdin_open: true # -i
     tty: true # -t
-    network_mode: "host"
+    network_mode: "host" # YOLO. Network is not isolated.
     environment:
       LC_ALL: "C.UTF-8"
       LANG: "C.UTF-8"
+      DISPLAY: "${DISPLAY}" # X11
+      XAUTHORITY: "${XAUTHORITY}" # X11
+      _JAVA_OPTIONS: "${_JAVA_OPTIONS}" # for JAVA scaling issues (_JAVA_OPTIONS="-Dsun.java2d.uiScale=2.0" in .env to scale UI)
 
-      DISPLAY: "${DISPLAY}"
-      XAUTHORITY: "${XAUTHORITY}"
-      _JAVA_OPTIONS: "${_JAVA_OPTIONS}"
     volumes:
       # Mount x11 and docker socket
       - "${XAUTHORITY}:/home/${USERNAME}/.Xauthority"
@@ -45,8 +45,9 @@ services:
       - "./cache/treesitter/parser:/home/${USERNAME}/.config/nvim/bundle/nvim-treesitter/parser/"
       - "./cache/treesitter/parser-info:/home/${USERNAME}/.config/nvim/bundle/nvim-treesitter/parser-info/"
     devices:
-      - "/dev/dri"
-      - "/dev/snd"
+      - "/dev/dri" # GPU
+      - "/dev/snd" # Sound
+      - "/dev/video0:/dev/video0" # Webcam
     command: "/bin/bash"
   msf-postgres:
     container_name: "msf-postgres"
