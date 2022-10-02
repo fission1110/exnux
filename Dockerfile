@@ -301,10 +301,12 @@ RUN export http_proxy=$APT_PROXY \
         automake \
         libtool \
         bison \
-        #nodejs \
+       # nodejs \
         libcurl4-openssl-dev \
         gcc-9-base \
         libgcc-9-dev \
+      # pwninit
+        liblzma-dev \
       # large
         audacity \
         clangd \
@@ -607,6 +609,9 @@ RUN python3 -m venv /usr/local/src/chepy \
     && /usr/local/src/chepy/bin/pip install chepy \
     && /usr/local/src/chepy/bin/pip install chepy[extras] \
     && ln -s /usr/local/src/chepy/bin/chepy /usr/local/bin/chepy
+
+# pwninit
+RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install pwninit
 
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
