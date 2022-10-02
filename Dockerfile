@@ -528,7 +528,7 @@ RUN wget -O /neovim.deb https://github.com/neovim/neovim/releases/download/v0.7.
     && dpkg -i /neovim.deb \
     && rm /neovim.deb
 
-# nvim
+# nvim minimap
 RUN wget -O /code-minimap.deb https://github.com/wfxr/code-minimap/releases/download/v0.6.4/code-minimap-musl_0.6.4_amd64.deb \
     && dpkg -i /code-minimap.deb \
     && rm /code-minimap.deb
@@ -559,9 +559,11 @@ RUN mkdir -p /home/$USERNAME/Wordlists/ \
 RUN curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose \
     && chmod +x /usr/local/bin/docker-compose
 
-# burp
+# burpsuite
 RUN mkdir -p /usr/local/src/burp/ \
-    && wget -O /usr/local/src/burp/burp.sh "https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.2.5&type=Linux"
+    && wget -O /usr/local/src/burp/burp.jar "https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.8.5&type=Jar" \
+    && echo "java -Xms2G -Xmx5G -jar /usr/local/src/burp/burp.jar" > /usr/local/bin/burp \
+    && chmod +x /usr/local/bin/burp
 
 # zap
 RUN mkdir -p /usr/local/src/zap \
@@ -610,7 +612,7 @@ RUN mkdir -p /usr/local/src/beef/ \
     && sed -i 's/user:\s*"beef"/user: "'"$USERNAME"'"/' /usr/local/src/beef/config.yaml \
     && sed -i 's/passwd:\s*"beef"/passwd: "changeme"/' /usr/local/src/beef/config.yaml
 
-#golang
+# golang
 RUN mkdir -p /usr/local/src/golang \
     && wget -O /usr/local/src/golang/go.tar.gz https://go.dev/dl/go1.19.1.linux-amd64.tar.gz \
     && tar -C /usr/local -xzf /usr/local/src/golang/go.tar.gz \
