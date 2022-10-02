@@ -311,6 +311,7 @@ RUN export http_proxy=$APT_PROXY \
         audacity \
         clangd \
         docker.io \
+        firefox \
         gimp \
         hashcat \
         hashcat-nvidia \
