@@ -18,22 +18,15 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
 # Create all the cache directories and files (to prevent these being owned by root)
-mkdir -p $SCRIPT_DIR/cache
-mkdir -p $SCRIPT_DIR/cache/swp
-mkdir -p $SCRIPT_DIR/cache/mytags
-mkdir -p $SCRIPT_DIR/cache/.cache/radare2
-mkdir -p $SCRIPT_DIR/cache/treesitter/
-mkdir -p $SCRIPT_DIR/cache/treesitter/parser
-mkdir -p $SCRIPT_DIR/cache/treesitter/parser-info
-mkdir -p $SCRIPT_DIR/cache/.msf4
-mkdir -p $SCRIPT_DIR/cache/.config/github-copilot
-mkdir -p $SCRIPT_DIR/cache/.config/google-chrome
-touch -a $SCRIPT_DIR/cache/.zsh_history
-touch -a $SCRIPT_DIR/cache/.bash_history
-touch -a $SCRIPT_DIR/cache/.gdb_history
-touch -a $SCRIPT_DIR/cache/.cache/radare2/history
-touch -a $SCRIPT_DIR/cache/.msf4/history
-touch -a $SCRIPT_DIR/cache/.config/github-copilot/hosts.json
+CACHE_DIR_LIST="/cache /cache/swp /cache/mytags /cache/.cache/radare2 /cache/treesitter/ /cache/treesitter/parser /cache/treesitter/parser-info /cache/.msf4 /cache/.config/github-copilot /cache/.config/google-chrome"
+CACHE_FILE_LIST="/cache/.zsh_history /cache/.bash_history /cache/.gdb_history /cache/.cache/radare2/history /cache/.msf4/history /cache/.config/github-copilot/hosts.json"
+
+for CACHE_DIR in $CACHE_DIR_LIST; do
+    mkdir -p $SCRIPT_DIR/$CACHE_DIR
+done
+for CACHE_FILE in $CACHE_FILE_LIST; do
+    touch -a $SCRIPT_DIR/$CACHE_FILE
+done
 
 case "$CMD" in
     init)
