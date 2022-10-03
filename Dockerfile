@@ -588,7 +588,8 @@ RUN mkdir -p /usr/local/src/ffuf \
 # google-chrome
 RUN wget -O /usr/local/src/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && dpkg -i /usr/local/src/google-chrome.deb \
-    && rm /usr/local/src/google-chrome.deb
+    && rm /usr/local/src/google-chrome.deb \
+    && xdg-settings set default-web-browser google-chrome.desktop
 
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
