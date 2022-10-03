@@ -17,16 +17,9 @@ export USERNAME=nonroot
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
-# Create all the cache directories and files (to prevent these being owned by root)
 CACHE_DIR_LIST="/cache /cache/swp /cache/mytags /cache/.cache/radare2 /cache/treesitter/ /cache/treesitter/parser /cache/treesitter/parser-info /cache/.msf4 /cache/.config/github-copilot /cache/.config/google-chrome /cache/.cache/undo"
 CACHE_FILE_LIST="/cache/.zsh_history /cache/.bash_history /cache/.gdb_history /cache/.cache/radare2/history /cache/.msf4/history /cache/.config/github-copilot/hosts.json"
 
-for CACHE_DIR in $CACHE_DIR_LIST; do
-    mkdir -p $SCRIPT_DIR/$CACHE_DIR
-done
-for CACHE_FILE in $CACHE_FILE_LIST; do
-    touch -a $SCRIPT_DIR/$CACHE_FILE
-done
 
 case "$CMD" in
     init)
@@ -39,11 +32,20 @@ case "$CMD" in
     ;;
     build-apt-cache)
         docker-compose up -d apt-cacher-ng
-        sleep 5
+        sleep 5 # Wait for apt-cacher-ng to start
         docker-compose build --build-arg APT_PROXY="http://172.17.0.1:3142" exnux
         docker-compose stop apt-cacher-ng
     ;;
     start-headless)
+
+        # Create all the cache directories and files (to prevent these being owned by root)
+        for CACHE_DIR in $CACHE_DIR_LIST; do
+            mkdir -p $SCRIPT_DIR/$CACHE_DIR
+        done
+        for CACHE_FILE in $CACHE_FILE_LIST; do
+            touch -a $SCRIPT_DIR/$CACHE_FILE
+        done
+
         docker-compose up --no-recreate -d exnux msf-postgres
         docker-compose exec -T -u "0:0" exnux groupmod -g $(getent group docker | awk -F: '{print $3}') docker
 

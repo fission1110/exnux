@@ -187,6 +187,9 @@ let g:php_manual_online_search_shortcut=''
 tnoremap <ESC><ESC> <C-\><C-n>
 tnoremap <ESC> <ESC>
 
+" no line numbers in terminal
+autocmd TermOpen * setlocal nonumber norelativenumber
+
 tnoremap <C-h> <C-\><C-n><C-w><C-h>
 tnoremap <C-j> <C-\><C-n><C-w><C-j>
 tnoremap <C-k> <C-\><C-n><C-w><C-k>
