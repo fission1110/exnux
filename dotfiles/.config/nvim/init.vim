@@ -68,6 +68,10 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" Easily move up and down pages
+noremap <M-j> <C-d>
+noremap <M-k> <C-u>
+
 " python uses 4 spaces (PEP8) expandtab
 au FileType python setlocal ts=4 sw=4 smartindent expandtab
 " php is tabs
