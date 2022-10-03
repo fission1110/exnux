@@ -37,6 +37,7 @@ services:
       - "./cache/.cache/radare2/history:/home/${USERNAME}/.cache/radare2/history"
       - "./cache/.msf4/history:/home/${USERNAME}/.msf4/history"
       - "./cache/swp:/home/${USERNAME}/.cache/swp"
+      - "./cache/.cache/undo:/home/${USERNAME}/.cache/undo"
 
       # Mount other directories
       - "./cache/mytags:/home/${USERNAME}/.config/nvim/ctags/mytags"

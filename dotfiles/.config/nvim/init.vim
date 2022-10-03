@@ -45,6 +45,10 @@ set fileencodings=utf-8 "Force utf8
 set backupdir=/home/nonroot/.cache/swp,.
 set directory=/home/nonroot/.cache/swp,.
 
+" persistent undo
+set undodir=/home/nonroot/.cache/undo
+set undofile
+
 " Remap redraw to <leader>r
 nmap <leader>r :redraw!<CR>jk
 

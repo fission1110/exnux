@@ -18,7 +18,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
 # Create all the cache directories and files (to prevent these being owned by root)
-CACHE_DIR_LIST="/cache /cache/swp /cache/mytags /cache/.cache/radare2 /cache/treesitter/ /cache/treesitter/parser /cache/treesitter/parser-info /cache/.msf4 /cache/.config/github-copilot /cache/.config/google-chrome"
+CACHE_DIR_LIST="/cache /cache/swp /cache/mytags /cache/.cache/radare2 /cache/treesitter/ /cache/treesitter/parser /cache/treesitter/parser-info /cache/.msf4 /cache/.config/github-copilot /cache/.config/google-chrome /cache/.cache/undo"
 CACHE_FILE_LIST="/cache/.zsh_history /cache/.bash_history /cache/.gdb_history /cache/.cache/radare2/history /cache/.msf4/history /cache/.config/github-copilot/hosts.json"
 
 for CACHE_DIR in $CACHE_DIR_LIST; do
