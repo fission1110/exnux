@@ -36,7 +36,7 @@ filetype plugin on
 
 let mapleader="," "Set the leader key
 
-"set relativenumber
+set relativenumber
 set nu "Show line numbers
 set fileencodings=utf-8 "Force utf8
 
