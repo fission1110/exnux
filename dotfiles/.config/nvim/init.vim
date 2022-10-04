@@ -42,11 +42,11 @@ set fileencodings=utf-8 "Force utf8
 
 "stop stupid .swp files from showing up ever. If you need them, they're in
 "~/.cache/swp
-set backupdir=/home/nonroot/.cache/swp,.
-set directory=/home/nonroot/.cache/swp,.
+set backupdir=/home/nonroot/.cache/nvim/swp,.
+set directory=/home/nonroot/.cache/nvim/swp,.
 
 " persistent undo
-set undodir=/home/nonroot/.cache/undo
+set undodir=/home/nonroot/.cache/nvim/undo
 set undofile
 
 " Remap redraw to <leader>r
