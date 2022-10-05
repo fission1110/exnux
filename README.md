@@ -6,7 +6,6 @@
 - TODO: Maybe add more concurrency on the dockerfile for more tools
 - TODO: Add and configure harpoon for neovim
 - TODO: Add documentation for hotkeys, configurations, and included tools
-- TODO: Open source this
 - TODO: Maybe switch to a modern plugin management system for vim plugins 
 - TODO: Update to neovim and fix all the issues with current plugins (and plugin version audit)
 - TODO: Maybe rename this because it's more of my personal dev environment than a purpose built OS
