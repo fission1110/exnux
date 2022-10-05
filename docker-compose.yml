@@ -44,6 +44,7 @@ services:
       - "./cache/.config/google-chrome:/home/${USERNAME}/.config/google-chrome"
       - "./cache/treesitter/parser:/home/${USERNAME}/.config/nvim/bundle/nvim-treesitter/parser/"
       - "./cache/treesitter/parser-info:/home/${USERNAME}/.config/nvim/bundle/nvim-treesitter/parser-info/"
+      - "./cache/.config/lazygit:/home/${USERNAME}/.config/lazygit/"
     devices:
       - "/dev/dri" # GPU
       - "/dev/snd" # Sound

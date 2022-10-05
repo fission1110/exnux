@@ -256,3 +256,6 @@
 [submodule "dotfiles/.config/nvim/bundle/nvim-treesitter-context"]
 	path = dotfiles/.config/nvim/bundle/nvim-treesitter-context
 	url = https://github.com/nvim-treesitter/nvim-treesitter-context.git
+[submodule "dotfiles/.config/nvim/bundle/vim-floaterm"]
+	path = dotfiles/.config/nvim/bundle/vim-floaterm
+	url = https://github.com/voldikss/vim-floaterm.git

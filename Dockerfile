@@ -529,6 +529,7 @@ RUN parallel --verbose ::: /usr/local/src/scripts/jd-gui.sh \
 # Single threaded because they rely on go install
 RUN /usr/local/src/scripts/gopls.sh
 RUN /usr/local/src/scripts/lemonade.sh
+RUN /usr/local/src/scripts/lazygit.sh
 
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
