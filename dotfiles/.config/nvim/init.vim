@@ -239,6 +239,8 @@ let g:copilot_filetypes = {
     \   'yaml': v:true,
     \   'TelescopePrompt': v:false
     \ }
+" Map copilot panel to <M-cr>
+noremap <silent> <M-CR> <ESC>:Copilot panel<cr>
 
 " Telescope
 " Using Lua functions
