@@ -3,4 +3,5 @@ mkdir -p /usr/local/src/john \
     && cd /usr/local/src/john/src \
     && ./configure \
     && make -s clean \
-    && make -sj$(nproc)
+    && make DJOHN_SYSTEMWIDE=1 -sj$(nproc) \
+    && chown -R $USERNAME:$USERNAME /usr/local/src/john

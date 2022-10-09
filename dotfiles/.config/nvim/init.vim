@@ -251,7 +251,7 @@ nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <C-t> <cmd>lua require('telescope.builtin').tags()<cr>
 
 " lazygit
-nnoremap <leader>g :FloatermNew --name=lazygit --width=0.9 --height=0.9 --autoclose=2 lazygit<cr>
+nnoremap <leader>gg :FloatermNew --name=lazygit --width=0.9 --height=0.9 --autoclose=2 lazygit<cr>
 
 " Bring back FZF as the fuzzy file finder because I like it better
 map <C-o> :Files<CR>
