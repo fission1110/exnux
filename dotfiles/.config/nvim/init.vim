@@ -75,7 +75,7 @@ noremap <M-k> <C-u>
 " python uses 4 spaces (PEP8) expandtab
 au FileType python setlocal ts=4 sw=4 smartindent expandtab
 " php is tabs
-au FileType php setlocal ts=4 sw=4 smartindent noexpandtab
+au FileType php setlocal ts=4 sw=4 smartindent autoindent noexpandtab
 
 "Set ft=messages when file is called messages
 autocmd BufNewFile,BufReadPost *messages* :set filetype=messages
