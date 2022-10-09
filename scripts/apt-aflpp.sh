@@ -14,4 +14,11 @@ apt-get update -y \
         llvm-11-tools \
         autoconf \
         automake \
-        pkg-config
+        pkg-config \
+        `# nyx tools` \
+        cargo \
+        libgtk-3-dev \
+        pax-utils \
+        python3-msgpack \
+        python3-jinja2 \
+        libgtk-3-dev
