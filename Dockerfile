@@ -30,6 +30,9 @@ ENV V_BEEF_BRANCH v0.5.4.0
 ENV V_GOLANG_URL https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
 ENV V_FFUF_URL https://github.com/ffuf/ffuf/releases/download/v1.5.0/ffuf_1.5.0_linux_amd64.tar.gz
 ENV V_GOOGLE_CHROME_URL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+ENV V_GOBUSTER_URL https://github.com/OJ/gobuster/releases/download/v3.2.0/gobuster_3.2.0_Linux_x86_64.tar.gz
+ENV V_FRIDA_VERSION 15.2.2
+ENV V_FRIDA_TOOLS_VERSION 11.0.0
 
 COPY scripts/apt-base.sh /usr/local/src/scripts/apt-base.sh
 
@@ -37,8 +40,6 @@ RUN chmod +x /usr/local/src/scripts/apt-base.sh \
     && export http_proxy=$APT_PROXY \
     && /usr/local/src/scripts/apt-base.sh \
     && unset http_proxy \
-    && pip3 install frida \
-    && pip3 install frida-tools \
     && npm install frida
 
 ENV USERNAME=nonroot
