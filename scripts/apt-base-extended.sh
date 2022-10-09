@@ -116,7 +116,6 @@ add-apt-repository ppa:ansible/ansible \
         ftp \
         git-gui \
         gitk \
-        gobuster \
         htop \
         hydra \
         iputils-ping \
