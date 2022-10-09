@@ -44,6 +44,7 @@ apt-get update -y \
     && curl -sL "${V_NODE_URL}" | sudo -E bash - \
     && sudo apt-get install -y nodejs \
     && unset http_proxy \
-    && pip3 install frida \
-    && pip3 install frida-tools \
+    && pip3 install --upgrade pip \
+    && pip3 install frida==$V_FRIDA_VERSION \
+    && pip3 install frida-tools==$V_FRIDA_TOOLS_VERSION \
     && npm install frida
