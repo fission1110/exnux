@@ -85,7 +85,7 @@ autocmd  FileType  c setlocal tags+=~/.config/nvim/ctags/systags
 
 "#############Nerdtree stuff#############
 autocmd VimEnter * NERDTree | wincmd p
-let g:NERDTreeWinSize = 30
+let g:NERDTreeWinSize = 25
 let g:NERDTreeWinPos = "left"
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
