@@ -97,10 +97,10 @@ RUN chmod +x /usr/local/src/scripts/metasploit.sh \
 #
 ################################################
 FROM base AS fzf-build
+
 COPY scripts/fzf.sh /usr/local/src/scripts/fzf.sh
 RUN chmod +x /usr/local/src/scripts/fzf.sh \
     && /usr/local/src/scripts/fzf.sh
-
 
 ################################################
 #
@@ -123,7 +123,6 @@ FROM base AS ghidra-build
 COPY scripts/ghidra.sh /usr/local/src/scripts/ghidra.sh
 RUN chmod +x /usr/local/src/scripts/ghidra.sh \
     && /usr/local/src/scripts/ghidra.sh
-
 
 ################################################
 #
@@ -185,13 +184,18 @@ RUN pip3 install neovim \
     && pip3 install libclang \
     && pip3 install pyright
 
+################################################
+#
+#    base-final Builds the final image
+#
+################################################
 FROM base-extended AS base-final
 
 # metasploit
 COPY --from=metasploit-build --chown=$USERNAME /usr/local/src/metasploit-framework /usr/local/src/metasploit-framework
 COPY --from=metasploit-build --chown=$USERNAME /home/$USERNAME/.rbenv /home/$USERNAME/.rbenv
 
-#afl++
+# aflpp
 COPY --from=aflpp-build /usr/local/src/build /usr/local/src/AFLplusplus/build
 RUN cp -rf /usr/local/src/AFLplusplus/build/* / \
     && rm -r /usr/local/src/AFLplusplus
@@ -267,9 +271,9 @@ RUN groupadd wireshark \
 RUN usermod -a -G audio $USERNAME \
     && usermod -a -G video $USERNAME
 
-
 # pwninit
 RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install pwninit
+
 
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME
