@@ -41,6 +41,8 @@ apt-get update -y \
         php-gd \
         php-mbstring \
         php-xml \
+        `# rust` \
+        cargo \
     && curl -sL "${V_NODE_URL}" | sudo -E bash - \
     && sudo apt-get install -y nodejs \
     && unset http_proxy \

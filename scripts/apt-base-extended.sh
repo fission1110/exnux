@@ -17,7 +17,6 @@ add-apt-repository ppa:ansible/ansible \
         libuuid1 \
         qt5-default \
       `# alacritty` \
-        cargo \
         cmake \
         libfontconfig1-dev \
         libfreetype6-dev \

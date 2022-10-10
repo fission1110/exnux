@@ -16,7 +16,6 @@ apt-get update -y \
         automake \
         pkg-config \
         `# nyx tools` \
-        cargo \
         libgtk-3-dev \
         pax-utils \
         python3-msgpack \
