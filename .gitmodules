@@ -4,9 +4,6 @@
 [submodule "dotfiles/.config/nvim/bundle/deoplete-clang"]
 	path = dotfiles/.config/nvim/bundle/deoplete-clang
 	url = https://github.com/deoplete-plugins/deoplete-clang.git
-[submodule "dotfiles/.config/nvim/bundle/jellybeans.vim"]
-	path = dotfiles/.config/nvim/bundle/jellybeans.vim
-	url = https://github.com/nanotech/jellybeans.vim.git
 [submodule "dotfiles/.config/nvim/bundle/nerdtree"]
 	path = dotfiles/.config/nvim/bundle/nerdtree
 	url = https://github.com/preservim/nerdtree.git
@@ -39,9 +36,6 @@
 [submodule "dotfiles/.config/nvim/bundle/deoplete-clang"]
 	path = dotfiles/.config/nvim/bundle/deoplete-clang
 	url = https://github.com/deoplete-plugins/deoplete-clang.git
-[submodule "dotfiles/.config/nvim/bundle/jellybeans.vim"]
-	path = dotfiles/.config/nvim/bundle/jellybeans.vim
-	url = https://github.com/nanotech/jellybeans.vim.git
 [submodule "dotfiles/.config/nvim/bundle/nerdtree"]
 	path = dotfiles/.config/nvim/bundle/nerdtree
 	url = https://github.com/preservim/nerdtree.git

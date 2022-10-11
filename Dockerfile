@@ -16,7 +16,7 @@ ENV V_JOHN_BRANCH bleeding-jumbo
 ENV V_RADARE2_URL https://github.com/radareorg/radare2/releases/download/5.7.8/radare2_5.7.8_amd64.deb
 ENV V_RADARE2_DEV_URL https://github.com/radareorg/radare2/releases/download/5.7.8/radare2-dev_5.7.8_amd64.deb
 ENV V_IAITO_URL https://github.com/radareorg/iaito/releases/download/5.7.0/iaito_5.7.0_amd64.deb
-ENV V_NVIM_URL https://github.com/neovim/neovim/releases/download/v0.7.2/nvim-linux64.deb
+ENV V_NVIM_URL https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-linux64.deb
 ENV V_WEBSOCAT_URL https://github.com/vi/websocat/releases/download/v1.11.0/websocat.x86_64-unknown-linux-musl
 ENV V_JD_GUI_URL https://github.com/java-decompiler/jd-gui/releases/download/v1.6.6/jd-gui-1.6.6.deb
 ENV V_PROCYON_URL https://github.com/mstrobel/procyon/releases/download/v0.6.0/procyon-decompiler-0.6.0.jar
