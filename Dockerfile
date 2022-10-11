@@ -180,6 +180,7 @@ RUN export http_proxy=$APT_PROXY \
 RUN pip3 install neovim \
     && npm install -g neovim \
     && npm install -g typescript typescript-language-server bash-language-server @tailwindcss/language-server \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install tree-sitter-cli \
     && pip3 install libclang \
     && pip3 install pyright
 
