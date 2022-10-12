@@ -15,7 +15,7 @@ services:
       DISPLAY: "${DISPLAY}" # X11
       XAUTHORITY: "${XAUTHORITY}" # X11
       _JAVA_OPTIONS: "${_JAVA_OPTIONS}" # for JAVA scaling issues (_JAVA_OPTIONS="-Dsun.java2d.uiScale=2.0" in .env to scale UI)
-
+      TERM: "xterm-256color" # for tmux
     volumes:
       # Mount x11 and docker socket
       - "${XAUTHORITY}:/home/${USERNAME}/.Xauthority"
