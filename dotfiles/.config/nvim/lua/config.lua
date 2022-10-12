@@ -63,8 +63,7 @@ require'treesitter-context'.setup{
         -- appear in the context window.
         default = {
             'class',
-            'function',
-            'method',
+            'function', 'method',
             'for',
             'while',
             'if',
@@ -269,6 +268,28 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+
+-- telescope ignore patterns
+require('telescope').setup {
+  defaults = {
+    file_ignore_patterns = { "node_modules", ".git", "exploits", "shellcodes" },
+    hidden = true,
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+      '--hidden',
+    },
+  },
+}
+
+
+
+
 
 require("color-picker").setup({ -- for changing icons & mappings
 	-- ["icons"] = { "ﱢ", "" },
