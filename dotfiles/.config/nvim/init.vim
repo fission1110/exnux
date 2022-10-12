@@ -255,4 +255,7 @@ nnoremap <leader>gg :FloatermNew --name=lazygit --width=0.9 --height=0.9 --autoc
 " Bring back FZF as the fuzzy file finder because I like it better
 map <C-o> :Files<CR>
 
+" ,c to bring up ColorPicker
+nnoremap <silent> <leader>c :ColorPicker<CR>
+
 lua require('config')
