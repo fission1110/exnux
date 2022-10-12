@@ -169,6 +169,9 @@ hi StatusLineNC ctermbg=NONE guibg=NONE
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
+" Change the color of the split line
+highlight VertSplit guifg=#5e5755
+
 "change the statusline highlighted background color to black
 "
 command -nargs=? Guifont call rpcnotify(0, 'Gui', 'SetFont', "<args>")
