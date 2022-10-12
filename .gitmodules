@@ -158,3 +158,6 @@
 [submodule "dotfiles/.config/nvim/bundle/vim-floaterm"]
 	path = dotfiles/.config/nvim/bundle/vim-floaterm
 	url = https://github.com/voldikss/vim-floaterm.git
+[submodule "dotfiles/.config/nvim/bundle/color-picker.nvim"]
+	path = dotfiles/.config/nvim/bundle/color-picker.nvim
+	url = https://github.com/ziontee113/color-picker.nvim.git
