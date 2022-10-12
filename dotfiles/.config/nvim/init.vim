@@ -1,6 +1,5 @@
 call pathogen#infect()
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-let $TERM="screen-256color"
 set mouse=          " disable mouse support
 set showcmd		    " Show (partial) command in status line.
 set synmaxcol=600   " Don't syntax highlight long lines.
