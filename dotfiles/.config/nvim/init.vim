@@ -257,6 +257,6 @@ nnoremap <leader>gg :FloatermNew --name=lazygit --width=0.9 --height=0.9 --autoc
 map <C-o> :Files<CR>
 
 " ,c to bring up ColorPicker
-nnoremap <silent> <leader>c :ColorPicker<CR>
+nnoremap <silent> <leader>c :PickColor<CR>
 
 lua require('config')
