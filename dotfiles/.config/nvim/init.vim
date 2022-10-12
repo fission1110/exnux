@@ -170,7 +170,7 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
 " Change the color of the split line
-highlight VertSplit guifg=#5e5755
+highlight VertSplit guifg=#587b7b
 
 "change the statusline highlighted background color to black
 "
