@@ -65,6 +65,7 @@ case "$CMD" in
     ;;
     clean)
         docker-compose down
+        docker-compose rm -f
     ;;
     pull)
         git stash
