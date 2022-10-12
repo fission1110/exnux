@@ -1,5 +1,5 @@
 call pathogen#infect()
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let $TERM="screen-256color"
 set mouse=          " disable mouse support
 set showcmd		    " Show (partial) command in status line.
@@ -9,6 +9,7 @@ set ignorecase		" Do case insensitive matching
 set smartcase		" Do smart case matching
 set nowrap	"Don't wrap long lines
 set hidden	"Hide edited buffers rather than quit them
+set termguicolors
 let g:terminal_scrollback_buffer_size = 100000 "Increase terminal scrollback buffer size
 colorscheme terafox
 syntax on
