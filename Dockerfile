@@ -283,6 +283,8 @@ USER $USERNAME
 ENV PATH=$PATH:/home/$USERNAME/tools
 COPY --chown=$USERNAME dotfiles ./
 
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions /home/$USERNAME/.oh-my-zsh/plugins/zsh-autosuggestions
+
 # nvim
 RUN  mkdir -p ~/.config/nvim/ctags/mytags \
     && .config/nvim/bundle/nvim-typescript/install.sh \

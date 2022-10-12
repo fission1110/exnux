@@ -47,7 +47,15 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(gitfast vi-mode dirhistory pip nmap fzf )
+plugins=(
+  gitfast
+  vi-mode
+  dirhistory
+  pip
+  nmap
+  fzf
+  zsh-autosuggestions
+)
 COLORTERM=truecolor
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
@@ -69,6 +77,12 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+# vim like auto suggestions and history search
+bindkey '^l' autosuggest-accept
+bindkey '^n' history-search-forward
+bindkey '^p' history-search-backward
+
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 PATH=$PATH:$HOME/.composer/vendor/bin
