@@ -94,7 +94,6 @@
 [submodule "dotfiles/.config/nvim/bundle/vim-visual-star-search"]
 	path = dotfiles/.config/nvim/bundle/vim-visual-star-search
 	url = https://github.com/nelstrom/vim-visual-star-search.git
-	url = https://github.com/vim-autoformat/vim-autoformat.git
 [submodule "dotfiles/.config/nvim/bundle/vimproc.vim"]
 	path = dotfiles/.config/nvim/bundle/vimproc.vim
 	url = https://github.com/Shougo/vimproc.vim.git
