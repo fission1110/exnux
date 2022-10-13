@@ -1,5 +1,7 @@
-Install: https://raw.githubusercontent.com/fission1110/exnux/master/infect.sh | bash
-Uninstall: exnux disinfect
+## Install:
+curl https://raw.githubusercontent.com/fission1110/exnux/master/infect.sh | bash
+## Uninstall:
+exnux disinfect
 
 - TODO: randomize metasploit postgres password
 - TODO: Attempt to reduce size of image (currently ~12g) without compromising functionality

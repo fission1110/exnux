@@ -36,7 +36,7 @@ fi
 if [ ! -d "/usr/local/src/exnux" ]; then
     echo "Installing exnux..."
     sudo git clone --recursive https://github.com/fission1110/exnux.git /usr/local/src/exnux
-    sudo chown -R $SUDO_USER:$SUDO_USER /usr/local/src/exnux
+    sudo chown -R $USER:$USER /usr/local/src/exnux
 fi
 
 # Install exnux
