@@ -73,6 +73,7 @@ _fzf_compgen_dir() {
 
 export FZF_BASE=/usr/local/src/fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+export HISTFILE=~/.cache/zsh/.zsh_history
 
 source $ZSH/oh-my-zsh.sh
 
