@@ -91,7 +91,6 @@ case "$CMD" in
             "  pull             Updates the repo from origin/master and initializes submodules\n" \
             "  clean            Stops all containers\n" \
             "  distclean        Tries to restore files to a fresh state\n" \
-            "  infect           Pushes a exnux docker image to another server with ssh (./exnux infect foo@192.168.1.2)\n" \
             "  start-headless   Starts exnux in the background\n" \
             "  help             This help message\n"
     ;;
