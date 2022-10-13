@@ -79,25 +79,6 @@ case "$CMD" in
         git clean -fdx :dotfiles
         git reset --hard origin/master
     ;;
-    infect)
-        if [ -z "$2" ]; then
-            $0
-            exit
-        fi
-        echo "Transfering exnux to ${2}, requires docker permissions on both sides, ssh keys setup, and pv (for progress)"
-        docker save exnux | pv | ssh ${2} "docker load && mkdir ~/exnux; touch ~/exnux/exnux && chmod +x ~/exnux/exnux && mkdir -p ~/exnux/cache"
-
-        echo "Transfering ${0} to ~/exnux/exnux on ${2}"
-        cat ${0} | ssh ${2} "cat > ~/exnux/exnux"
-
-        echo "Transfering ${SCRIPT_DIR}/docker-compsose.yaml to ~/exnux/docker-compose.yml on ${2}"
-        cat ${SCRIPT_DIR}/docker-compose.yml | ssh ${2} "cat > ~/exnux/docker-compose.yml"
-
-        echo "installing docker/docker compose (apt-get)"
-        ssh -t "$2" "sudo sh -c 'apt-get install docker.io && curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose'"
-
-        echo "Run ssh ${2} \"~/exnux/exnux start\" to start exnux"
-    ;;
     *)
         echo $0 [COMMAND]
         echo ""
