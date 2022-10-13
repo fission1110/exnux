@@ -64,8 +64,7 @@ case "$CMD" in
         docker-compose exec -d exnux alacritty --command byobu
     ;;
     clean)
-        docker-compose down
-        docker-compose rm -f
+        docker-compose rm -s -f
     ;;
     pull)
         git stash
@@ -78,6 +77,10 @@ case "$CMD" in
         git stash
         git clean -fdx :dotfiles
         git reset --hard origin/master
+    ;;
+    disinfect)
+        rm -rf /usr/local/src/exnux
+        rm -f /usr/local/bin/exnux
     ;;
     *)
         echo $0 [COMMAND]
@@ -92,6 +95,7 @@ case "$CMD" in
             "  clean            Stops all containers\n" \
             "  distclean        Tries to restore files to a fresh state\n" \
             "  start-headless   Starts exnux in the background\n" \
+            "  disinfect        Removes exnux from the system installed from infect\n" \
             "  help             This help message\n"
     ;;
 esac

@@ -1,8 +1,14 @@
 #!/bin/bash
 #
-# Install requirements (docker, docker-compose, git)
+# Install requirements (docker, docker-compose, git, curl)
 # Clone the repo in /usr/local/src/exnux
 # Add the exnux command to /usr/local/bin
+
+# Install curl
+if ! command -v curl &> /dev/null
+then
+    sudo apt-get install -y curl
+fi
 
 # install docker
 if ! command -v docker &> /dev/null
@@ -15,7 +21,6 @@ fi
 if ! command -v docker-compose &> /dev/null
 then
     echo "Installing docker-compose..."
-    sudo apt-get install -y curl
     sudo curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
 fi
