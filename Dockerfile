@@ -32,6 +32,7 @@ ENV V_GOOGLE_CHROME_URL https://dl.google.com/linux/direct/google-chrome-stable_
 ENV V_GOBUSTER_URL https://github.com/OJ/gobuster/releases/download/v3.2.0/gobuster_3.2.0_Linux_x86_64.tar.gz
 ENV V_FRIDA_VERSION 15.2.2
 ENV V_FRIDA_TOOLS_VERSION 11.0.0
+ENV V_WABT_URL https://github.com/WebAssembly/wabt/releases/download/1.0.30/wabt-1.0.30-ubuntu.tar.gz
 
 COPY scripts/apt-base.sh /usr/local/src/scripts/apt-base.sh
 
@@ -249,7 +250,8 @@ RUN parallel --verbose ::: /usr/local/src/scripts/jd-gui.sh \
     /usr/local/src/scripts/golang.sh \
     /usr/local/src/scripts/chepy.sh \
     /usr/local/src/scripts/alacritty.sh \
-    /usr/local/src/scripts/beef.sh
+    /usr/local/src/scripts/beef.sh \
+    /usr/local/src/scripts/wabt.sh
 
 # Single threaded because they rely on go install
 RUN /usr/local/src/scripts/gopls.sh \
