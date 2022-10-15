@@ -217,6 +217,7 @@ let g:scratch_persistence_file="/tmp/nvim_scratch_persistance"
 " ansible syntax highlighting
 au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
 
+" Auto decompile java .class files
 augr class
 au!
 au bufreadpost,filereadpost *.class %!/usr/local/bin/procyon %
@@ -224,6 +225,16 @@ au bufreadpost,filereadpost *.class set readonly
 au bufreadpost,filereadpost *.class set ft=java
 au bufreadpost,filereadpost *.class normal gg=G
 au bufreadpost,filereadpost *.class set nomodified
+augr END
+
+" Auto decompile wasm files to pseudocode. (note: could also use wasm2c but
+" that's uglier)
+augr wasm
+au!
+au bufreadpost,filereadpost *.wasm %!/usr/local/bin/wasm-decompile %
+au bufreadpost,filereadpost *.wasm set readonly
+au bufreadpost,filereadpost *.wasm set ft=c
+au bufreadpost,filereadpost *.wasm set nomodified
 augr END
 
 let g:gutentags_cache_dir = '~/.config/nvim/ctags/mytags/'
