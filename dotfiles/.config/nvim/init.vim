@@ -50,7 +50,7 @@ set undodir=/home/nonroot/.cache/nvim/undo
 set undofile
 
 " Remap redraw to <leader>r
-nmap <leader>r :redraw!<CR>jk
+nmap <leader>r <cmd>redraw!<CR>jk
 
 " Semi colon aliased to :
 nnoremap ; :
@@ -91,8 +91,8 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 
 
 " HEX MODE!!
-nmap <leader>hh :%!xxd<cr>
-nmap <leader>hu :%!xxd -r<cr>
+nmap <leader>hh <cmd>%!xxd<cr>
+nmap <leader>hu <cmd>%!xxd -r<cr>
 
 "turn on javascript snippets in typescript files
 au BufRead,BufNewFile *.ts set ft=typescript.javascript
@@ -181,8 +181,6 @@ let g:Guifont="DejaVu Sans Mono for Powerline:h13"
 " disable the online shortcut because it conflicts with <C-h> (move to left window)
 let g:php_manual_online_search_shortcut=''
 
-" Some autocomplete command? what is this?
-:inoremap # X#
 
 " ESC sends <ESC> key to terminal (good for nested vim). Press ESC ESC to
 " really escape.
@@ -211,7 +209,7 @@ nnoremap <silent> <leader>ts :execute "vert sp \| term"<cr>
 tnoremap <silent> <leader>tt :tabnew term:///$SHELL<cr>
 nnoremap <silent> <leader>tt :tabnew term://$SHELL<cr>
 
-nmap <leader>s :Scratch<cr>
+nmap <leader>s <cmd>Scratch<cr>
 let g:scratch_persistence_file="/tmp/nvim_scratch_persistance"
 
 " ansible syntax highlighting
@@ -249,9 +247,9 @@ let g:copilot_filetypes = {
     \   'yaml': v:true,
     \   'TelescopePrompt': v:false
     \ }
-" Map copilot panel to <M-cr>
-nnoremap <M-CR> :Copilot panel<CR>
-inoremap <M-CR> <ESC>:Copilot panel<CR>
+" Map copilot panel to <M-cr> and <C-l>
+nnoremap <M-CR> <cmd>Copilot panel<CR>
+inoremap <M-CR> <cmd>Copilot panel<CR>
 
 " Telescope
 " Using Lua functions
@@ -261,12 +259,12 @@ nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <C-t> <cmd>lua require('telescope.builtin').tags()<cr>
 
 " lazygit
-nnoremap <leader>gg :FloatermNew --name=lazygit --width=0.9 --height=0.9 --autoclose=2 lazygit<cr>
+nnoremap <leader>gg <cmd>FloatermNew --name=lazygit --width=0.9 --height=0.9 --autoclose=2 lazygit<cr>
 
 " Bring back FZF as the fuzzy file finder because I like it better
-map <C-o> :Files<CR>
+map <C-o> <cmd>Files<CR>
 
 " ,c to bring up ColorPicker
-nnoremap <silent> <leader>c :PickColor<CR>
+nnoremap <silent> <leader>c <cmd>PickColor<CR>
 
 lua require('config')
