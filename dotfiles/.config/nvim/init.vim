@@ -267,4 +267,7 @@ map <C-o> <cmd>Files<CR>
 " ,c to bring up ColorPicker
 nnoremap <silent> <leader>c <cmd>PickColor<CR>
 
+set listchars=tab:»·,trail:·,nbsp:␣,extends:»,precedes:«,eol:↲
+set list
+
 lua require('config')
