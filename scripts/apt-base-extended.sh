@@ -118,6 +118,7 @@ add-apt-repository ppa:ansible/ansible \
         htop \
         hydra \
         iputils-ping \
+        jq \
         ldap-utils \
         libclang-9-dev \
         libgl1-mesa-dri \
