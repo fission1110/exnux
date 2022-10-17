@@ -33,6 +33,7 @@ ENV V_GOBUSTER_URL https://github.com/OJ/gobuster/releases/download/v3.2.0/gobus
 ENV V_FRIDA_VERSION 15.2.2
 ENV V_FRIDA_TOOLS_VERSION 11.0.0
 ENV V_WABT_URL https://github.com/WebAssembly/wabt/releases/download/1.0.30/wabt-1.0.30-ubuntu.tar.gz
+ENV V_DEX2JAR_URL https://github.com/pxb1988/dex2jar/releases/download/v2.1/dex2jar-2.1.zip
 
 COPY scripts/apt-base.sh /usr/local/src/scripts/apt-base.sh
 
@@ -175,7 +176,8 @@ RUN export http_proxy=$APT_PROXY \
     && chsh -s $(which zsh) $USERNAME \
     && pip3 install pwntools \
     && pip3 install ipython \
-    && pip3 install jedi
+    && pip3 install jedi \
+    && pip3 install decompyle3
 
 # nvim
 RUN pip3 install neovim \
@@ -251,7 +253,8 @@ RUN parallel --verbose ::: /usr/local/src/scripts/jd-gui.sh \
     /usr/local/src/scripts/chepy.sh \
     /usr/local/src/scripts/alacritty.sh \
     /usr/local/src/scripts/beef.sh \
-    /usr/local/src/scripts/wabt.sh
+    /usr/local/src/scripts/wabt.sh \
+    /usr/local/src/scripts/dex2jar.sh
 
 # Single threaded because they rely on go install
 RUN /usr/local/src/scripts/gopls.sh \

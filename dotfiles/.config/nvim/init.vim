@@ -235,6 +235,30 @@ au bufreadpost,filereadpost *.wasm set ft=c
 au bufreadpost,filereadpost *.wasm set nomodified
 augr END
 
+augr *.pyc
+au!
+au bufreadpost,filereadpost *.pyc %!/usr/local/bin/decompyle3 %
+au bufreadpost,filereadpost *.pyc set readonly
+au bufreadpost,filereadpost *.pyc set ft=python
+au bufreadpost,filereadpost *.pyc set nomodified
+augr END
+
+augr *.pyo
+au!
+au bufreadpost,filereadpost *.pyo %!/usr/local/bin/decompyle3 %
+au bufreadpost,filereadpost *.pyo set readonly
+au bufreadpost,filereadpost *.pyo set ft=python
+au bufreadpost,filereadpost *.pyo set nomodified
+augr END
+
+augr *.pyd
+au!
+au bufreadpost,filereadpost *.pyd %!/usr/local/bin/decompyle3 %
+au bufreadpost,filereadpost *.pyd set readonly
+au bufreadpost,filereadpost *.pyd set ft=python
+au bufreadpost,filereadpost *.pyd set nomodified
+augr END
+
 let g:gutentags_cache_dir = '~/.config/nvim/ctags/mytags/'
 let g:gutentags_project_root = ['Makefile', '.git']
 
