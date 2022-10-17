@@ -68,9 +68,17 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" Easily resize windows
+" Resize with alt + hjkl instead of ctrl + w + hjkl
+nnoremap <M-j> :resize -2<CR>
+nnoremap <M-k> :resize +2<CR>
+nnoremap <M-h> :vertical resize -2<CR>
+nnoremap <M-l> :vertical resize +2<CR>
+
 " Easily move up and down pages
-noremap <M-j> <C-d>
-noremap <M-k> <C-u>
+" Use alt + u and alt + d to move up and down pages
+nnoremap <M-u> <C-u>
+nnoremap <M-d> <C-d>
 
 " python uses 4 spaces (PEP8) expandtab
 au FileType python setlocal ts=4 sw=4 smartindent expandtab
@@ -88,7 +96,6 @@ autocmd VimEnter * NERDTree | wincmd p
 let g:NERDTreeWinSize = 25
 let g:NERDTreeWinPos = "left"
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
 
 " HEX MODE!!
 nmap <leader>hh <cmd>%!xxd<cr>
@@ -110,10 +117,6 @@ au BufNewFile *.php set ft=php
 "turn on html snippets in cake template files
 au BufRead *.ctp set ft=php.html
 au BufNewFile *.ctp set ft=php.html
-
-
-"#############Ctrlp#############
-let g:ctrlp_working_path_mode = ''
 
 " My hack to the forked version of vim snipmate to ignore the
 " fact that the pumvisible() and use my snippets anyways.
@@ -159,8 +162,6 @@ let g:vdebug_features = {'max_depth': 10}
 
 
 "#############Python Stuff#############
-
-
 hi Normal ctermbg=NONE guibg=NONE
 hi NormalNC ctermbg=NONE guibg=NONE
 hi StatusLine ctermbg=NONE guibg=NONE
