@@ -28,15 +28,9 @@
 [submodule "dotfiles/.config/nvim/bundle/vdebug"]
 	path = dotfiles/.config/nvim/bundle/vdebug
 	url = https://github.com/vim-vdebug/vdebug.git
-[submodule "dotfiles/.config/nvim/bundle/vim-autoformat"]
-	path = dotfiles/.config/nvim/bundle/vim-autoformat
-	url = https://github.com/vim-autoformat/vim-autoformat.git
 [submodule "dotfiles/.config/nvim/bundle/vim-easygrep"]
 	path = dotfiles/.config/nvim/bundle/vim-easygrep
 	url = https://github.com/dkprice/vim-easygrep.git
-[submodule "dotfiles/.config/nvim/bundle/vim-foldsearch"]
-	path = dotfiles/.config/nvim/bundle/vim-foldsearch
-	url = https://github.com/embear/vim-foldsearch.git
 [submodule "dotfiles/.config/nvim/bundle/vim-fugitive"]
 	path = dotfiles/.config/nvim/bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
@@ -160,3 +154,6 @@
 [submodule "dotfiles/.config/nvim/bundle/color-picker.nvim"]
 	path = dotfiles/.config/nvim/bundle/color-picker.nvim
 	url = https://github.com/ziontee113/color-picker.nvim.git
+[submodule "dotfiles/.config/nvim/bundle/neoformat"]
+	path = dotfiles/.config/nvim/bundle/neoformat
+	url = https://github.com/sbdchd/neoformat.git

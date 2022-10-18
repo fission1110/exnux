@@ -261,6 +261,9 @@ RUN /usr/local/src/scripts/gopls.sh \
     && /usr/local/src/scripts/lemonade.sh \
     && /usr/local/src/scripts/lazygit.sh
 
+# Single threaded because it relies on apt, pip, npm, cargo, and go
+RUN /usr/local/src/scripts/formatters.sh
+
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
 
