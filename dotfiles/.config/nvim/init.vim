@@ -9,6 +9,8 @@ set smartcase		" Do smart case matching
 set nowrap	"Don't wrap long lines
 set hidden	"Hide edited buffers rather than quit them
 set termguicolors
+set listchars=tab:»·,trail:·,nbsp:␣,extends:»,precedes:«,eol:↲
+set list
 let g:terminal_scrollback_buffer_size = 100000 "Increase terminal scrollback buffer size
 colorscheme terafox
 syntax on
@@ -325,7 +327,25 @@ map <C-o> <cmd>Files<CR>
 " ,c to bring up ColorPicker
 nnoremap <silent> <leader>c <cmd>PickColor<CR>
 
-set listchars=tab:»·,trail:·,nbsp:␣,extends:»,precedes:«,eol:↲
-set list
+" <leader>o to send current line to ~/tools/openai.py and insert the result
+" below the current line
+function! OpenAI()
+    " read the visual selection into a variable
+    let l:selection = getline('v')
+    " if there is no visual selection, use the current line
+    if empty(l:selection)
+        let l:selection = getline('.')
+    endif
+    " send line to stdin of openai.py
+    let l:output = system('python3 ~/tools/openai_vim.py', l:selection)
+    " strip trailing whitespace
+    let l:output = substitute(l:output, '\s\+$', '', 'g')
+    " insert output below current line
+    call append(line('.') + 1, l:output)
+endfunction
+
+nnoremap <leader>o :call OpenAI()<CR>
+vnoremap <leader>o :call OpenAI()<CR>
+
 
 lua require('config')
