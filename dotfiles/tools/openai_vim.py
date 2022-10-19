@@ -5,8 +5,9 @@ import sys
 
 # read text from stdin
 text = sys.stdin.read()
-text = 'Q: ' + text
-text = text + "\nA:"
+prompt = """I am a highly intelligent question answering bot. If you ask me a question, I will answer it. I'm clever, crass, and friendly.
+
+Q: """ + text + "\nA:"
 
 # read api key from file ~/.config/openai/api_key
 with open(os.path.expanduser("~/.config/openai/api_key")) as f:
@@ -18,7 +19,7 @@ restart_sequence = ""
 
 response = openai.Completion.create(
   model="text-davinci-002",
-  prompt="I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with \"Unknown\".\n\n" + text,
+    prompt=prompt,
   temperature=0,
   max_tokens=100,
   top_p=1,
@@ -28,6 +29,8 @@ response = openai.Completion.create(
 )
 
 out = response.choices[0].text
+# strip the space from the beginning
+out = out.lstrip()
 
 # print to stdout
 print(out)

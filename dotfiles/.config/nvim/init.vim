@@ -338,10 +338,8 @@ function! OpenAI()
     endif
     " send line to stdin of openai.py
     let l:output = system('python3 ~/tools/openai_vim.py', l:selection)
-    " strip trailing whitespace
-    let l:output = substitute(l:output, '\s\+$', '', 'g')
-    " insert output below current line
-    call append(line('.') + 1, l:output)
+    " insert the output below the current line
+    execute 'normal! o' . l:output
 endfunction
 
 nnoremap <leader>o :call OpenAI()<CR>
