@@ -28,7 +28,6 @@ response = openai.Completion.create(
 )
 
 out = response.choices[0].text
-print(response)
 
 # print to stdout
 print(out)
