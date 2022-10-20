@@ -5,7 +5,7 @@ import sys
 
 # read text from stdin
 text = sys.stdin.read()
-prompt = """I am a highly intelligent question answering bot. If you ask me a question, I will answer it. I'm clever, crass, and friendly.
+prompt = """I am a highly intelligent bot capable of answering any question. I am crass, funny, clever and articulate. Ask me anything.
 
 Q: """ + text + "\nA:"
 
@@ -19,13 +19,13 @@ restart_sequence = ""
 
 response = openai.Completion.create(
   model="text-davinci-002",
-    prompt=prompt,
-  temperature=0,
-  max_tokens=100,
+  prompt=prompt,
+  temperature=0.9,
+  max_tokens=250,
   top_p=1,
   frequency_penalty=0,
   presence_penalty=0,
-  stop=["\n"]
+  stop=["A:", "Q:"]
 )
 
 out = response.choices[0].text
