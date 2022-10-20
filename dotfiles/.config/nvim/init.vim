@@ -327,23 +327,9 @@ map <C-o> <cmd>Files<CR>
 " ,c to bring up ColorPicker
 nnoremap <silent> <leader>c <cmd>PickColor<CR>
 
-" <leader>o to send current line to ~/tools/openai.py and insert the result
-" below the current line
-function! OpenAI()
-    " read the visual selection into a variable
-    let l:selection = getline('v')
-    " if there is no visual selection, use the current line
-    if empty(l:selection)
-        let l:selection = getline('.')
-    endif
-    " send line to stdin of openai.py
-    let l:output = system('python3 ~/tools/openai_vim.py', l:selection)
-    " insert the output below the current line
-    execute 'normal! o' . l:output
-endfunction
 
-nnoremap <leader>o :call OpenAI()<CR>
-vnoremap <leader>o :call OpenAI()<CR>
+nnoremap <leader>o <cmd>%! ~/tools/openai_vim.py<CR>
+vnoremap <leader>o <cmd>'<,'>! ~/tools/openai_vim.py<CR>
 
 
 lua require('config')

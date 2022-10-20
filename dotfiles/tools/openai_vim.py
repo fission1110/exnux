@@ -4,10 +4,10 @@ import openai
 import sys
 
 # read text from stdin
-text = sys.stdin.read()
-prompt = """I am a highly intelligent bot capable of answering any question. I am crass, funny, clever and articulate. Ask me anything.
+prompt = sys.stdin.read()
 
-Q: """ + text + "\nA:"
+# strip trailing newline
+prompt = prompt.strip()
 
 # read api key from file ~/.config/openai/api_key
 with open(os.path.expanduser("~/.config/openai/api_key")) as f:
@@ -24,13 +24,10 @@ response = openai.Completion.create(
   max_tokens=250,
   top_p=1,
   frequency_penalty=0,
-  presence_penalty=0,
-  stop=["A:", "Q:"]
+  presence_penalty=0
 )
 
 out = response.choices[0].text
-# strip the space from the beginning
-out = out.lstrip()
 
 # print to stdout
-print(out)
+print(prompt + out, end="")
