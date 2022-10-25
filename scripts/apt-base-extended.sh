@@ -45,6 +45,7 @@ add-apt-repository ppa:ansible/ansible \
         automake \
         libtool \
         bison \
+        imagemagick \
        `# nodejs` \
         libcurl4-openssl-dev \
         gcc-9-base \
