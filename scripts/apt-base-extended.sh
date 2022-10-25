@@ -80,6 +80,7 @@ add-apt-repository ppa:ansible/ansible \
         bash-completion \
         binutils \
         binwalk \
+        breeze-icon-theme \
         byobu \
         cpio \
         dc \
