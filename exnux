@@ -57,7 +57,7 @@ case "$CMD" in
     ;;
     start)
         $0 start-headless
-        docker-compose exec exnux /usr/bin/byobu
+        docker-compose exec -e TERM=${TERM} exnux /usr/bin/byobu
     ;;
     start-gui)
         $0 start-headless
