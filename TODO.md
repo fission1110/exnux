@@ -9,3 +9,14 @@
 - Fix permissions across host/vm mounts. Not sure of a good solution for this one.
     - Mounting /etc/passwd and /etc/group not a great option because all the things built inside of the Dockerfile will need to be chmoded (slow, balloons the image)
     - Changing the uid/gid isn't a great option for the same reason
+- Add XDG variables and follow XDG standard
+- Maybe find a way to get snap packages working.
+- Find a way to get dbus running inside the container
+- exif tool when opening image files in vim
+- add AI tools (pytorch, numpy, pandas, tensorflow, scikit, etc)
+- handle jar/apk files with procyon in vim
+- Split out dotfiles into a sub-repo. Find a better way to handle cache files.
+- Add an entrypoint script that handles some of the things in the exnux bash script
+- Clean up the config.lua
+- Port init.vim to lua scripts. Have one file with consistent keybindings.
+- Split up apt-gets into specific tool scripts (without breaking parallal) to make it easier to get dependancies and add/remove tools
