@@ -284,9 +284,12 @@ require('telescope').setup {
       '--smart-case',
       '--hidden',
     },
+    history = {
+      path = '~/.cache/nvim/.telescope_history',
+      limit = 1000,
+    },
   },
 }
-
 
 
 

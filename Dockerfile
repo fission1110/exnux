@@ -35,6 +35,7 @@ ENV V_FRIDA_TOOLS_VERSION 11.0.0
 ENV V_WABT_URL https://github.com/WebAssembly/wabt/releases/download/1.0.30/wabt-1.0.30-ubuntu.tar.gz
 ENV V_DEX2JAR_URL https://github.com/pxb1988/dex2jar/releases/download/v2.1/dex2jar-2.1.zip
 ENV V_RUST_ANALYZER_URL https://github.com/rust-lang/rust-analyzer/releases/download/2022-10-24/rust-analyzer-x86_64-unknown-linux-gnu.gz
+ENV V_LUAROCKS_URL https://luarocks.org/releases/luarocks-3.9.1.tar.gz
 
 COPY scripts/apt-base.sh /usr/local/src/scripts/apt-base.sh
 
@@ -256,7 +257,8 @@ RUN parallel --verbose ::: /usr/local/src/scripts/jd-gui.sh \
     /usr/local/src/scripts/beef.sh \
     /usr/local/src/scripts/wabt.sh \
     /usr/local/src/scripts/dex2jar.sh \
-    /usr/local/src/scripts/rust.sh
+    /usr/local/src/scripts/rust.sh \
+    /usr/local/src/scripts/luarocks.sh
 
 # Single threaded because they rely on go install
 RUN /usr/local/src/scripts/gopls.sh \

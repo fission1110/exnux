@@ -157,3 +157,6 @@
 [submodule "dotfiles/.config/nvim/bundle/neoformat"]
 	path = dotfiles/.config/nvim/bundle/neoformat
 	url = https://github.com/sbdchd/neoformat.git
+[submodule "dotfiles/.config/nvim/bundle/telescope-smart-history.nvim"]
+	path = dotfiles/.config/nvim/bundle/telescope-smart-history.nvim
+	url = https://github.com/nvim-telescope/telescope-smart-history.nvim.git
