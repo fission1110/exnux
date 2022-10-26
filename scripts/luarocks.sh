@@ -1,6 +1,6 @@
 mkdir -p /usr/local/src/luarocks \
     && cd /usr/local/src/luarocks \
-    && wget -o /usr/local/src/luarocks/luarocks.tar.gz ${LUAROCKS_URL} \
+    && wget -O /usr/local/src/luarocks/luarocks.tar.gz ${V_LUAROCKS_URL} \
     && tar -xzf luarocks.tar.gz \
     && cd luarocks-* \
     && ./configure \
