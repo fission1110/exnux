@@ -127,6 +127,8 @@ add-apt-repository ppa:ansible/ansible \
         libgl1-mesa-glx \
         libsndfile1-dev \
         ltrace \
+        lua5.3 \
+        liblua5.3-dev \
         lz4 \
         lzip \
         lzop \

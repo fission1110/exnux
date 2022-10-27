@@ -163,11 +163,15 @@ RUN chmod +x /usr/local/src/scripts/phpactor.sh \
 ################################################
 FROM base AS base-extended
 
+ENV PATH=$PATH:/home/$USERNAME/.cargo/bin
 COPY scripts/apt-base-extended.sh /usr/local/src/scripts/apt-base-extended.sh
+COPY scripts/rust.sh /usr/local/src/scripts/rust.sh
 RUN chmod +x /usr/local/src/scripts/apt-base-extended.sh \
     && export http_proxy=$APT_PROXY \
     && /usr/local/src/scripts/apt-base-extended.sh \
-    && unset http_proxy
+    && unset http_proxy \
+    && chmod +x /usr/local/src/scripts/rust.sh \
+    && /usr/local/src/scripts/rust.sh
 
 RUN export http_proxy=$APT_PROXY \
     && apt-get update -y \
@@ -229,7 +233,6 @@ RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer \
 COPY --from=john-build /usr/local/src/john /usr/local/src/john
 
 ENV PATH $PATH:/usr/local/src/john/run
-ENV PATH=$PATH:/home/$USERNAME/.cargo/bin
 ENV PATH $PATH:/home/$USERNAME/go/bin
 
 COPY scripts/* /usr/local/src/scripts/
@@ -257,7 +260,6 @@ RUN parallel --verbose ::: /usr/local/src/scripts/jd-gui.sh \
     /usr/local/src/scripts/beef.sh \
     /usr/local/src/scripts/wabt.sh \
     /usr/local/src/scripts/dex2jar.sh \
-    /usr/local/src/scripts/rust.sh \
     /usr/local/src/scripts/luarocks.sh
 
 # Single threaded because they rely on go install
@@ -267,8 +269,8 @@ RUN /usr/local/src/scripts/gopls.sh \
 
 # Single threaded because it relies on apt, pip, npm, cargo, and go
 RUN /usr/local/src/scripts/formatters.sh \
-    && /usr/local/src/scripts/openai.sh
-
+    && /usr/local/src/scripts/openai.sh \
+    && /usr/local/src/scripts/cli-rice.sh
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
 
