@@ -264,10 +264,14 @@ augr END
 
 augr *.jp{e}g
 au!
-au bufreadpost,filereadpost * %!/usr/bin/exiftool %
-au bufreadpost,filereadpost * set readonly
-au bufreadpost,filereadpost * set ft=config
-au bufreadpost,filereadpost * set nomodified
+au bufreadpost,filereadpost *.jpg %!/usr/bin/exiftool %
+au bufreadpost,filereadpost *.jpg set readonly
+au bufreadpost,filereadpost *.jpg set ft=config
+au bufreadpost,filereadpost *.jpg set nomodified
+au bufreadpost,filereadpost *.jpeg %!/usr/bin/exiftool %
+au bufreadpost,filereadpost *.jpeg set readonly
+au bufreadpost,filereadpost *.jpeg set ft=config
+au bufreadpost,filereadpost *.jpeg set nomodified
 augr END
 augr *.gif
 au!
