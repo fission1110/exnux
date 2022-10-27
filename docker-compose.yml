@@ -16,11 +16,16 @@ services:
       XAUTHORITY: "${XAUTHORITY}" # X11
       _JAVA_OPTIONS: "${_JAVA_OPTIONS}" # for JAVA scaling issues (_JAVA_OPTIONS="-Dsun.java2d.uiScale=2.0" in .env to scale UI)
       TERM: "${TERM}" # for tmux
+      DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/1000/bus" # for DBUS
+      XDG_RUNTIME_DIR: "/run/user/1000"
     volumes:
-      # Mount x11 and docker socket
+      # Mount x11, docker, and dbus socket
       - "${XAUTHORITY}:/home/${USERNAME}/.Xauthority"
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
       - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${XDG_RUNTIME_DIR}/bus:/run/user/1000/bus"
+      - "/run/dbus/system_bus_socket:/run/dbus/system_bus_socket"
+      - "${XDG_RUNTIME_DIR}/pulse:/run/user/1000/pulse"
 
       # Mount home directory
       - "/:/home/${USERNAME}/root"
