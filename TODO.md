@@ -2,7 +2,7 @@
 - Attempt to reduce size of image (currently ~12g) without compromising functionality
 - Clean up neovim config and think out hotkeys better
 - Find a better way to host/load completed image so we don't need to recompile on all systems
-- Maybe switch to a modern plugin management system for vim plugins 
+- Maybe switch to a modern plugin management system for vim plugins
 - Test sound or find a better way to implement sound
 - Maybe integrate postgres into the image so we don't need two containers
     - Or at least put it on a non standard port
@@ -12,7 +12,6 @@
 - Add XDG variables and follow XDG standard
 - Maybe find a way to get snap packages working.
 - Find a way to get dbus running inside the container
-- exif tool when opening image files in vim
 - add AI tools (pytorch, numpy, pandas, tensorflow, scikit, etc)
 - handle jar/apk files with procyon in vim
 - Split out dotfiles into a sub-repo. Find a better way to handle cache files.

@@ -262,6 +262,28 @@ au bufreadpost,filereadpost *.pyd set ft=python
 au bufreadpost,filereadpost *.pyd set nomodified
 augr END
 
+augr *.jp{e}g
+au!
+au bufreadpost,filereadpost * %!/usr/bin/exiftool %
+au bufreadpost,filereadpost * set readonly
+au bufreadpost,filereadpost * set ft=config
+au bufreadpost,filereadpost * set nomodified
+augr END
+augr *.gif
+au!
+au bufreadpost,filereadpost *.gif %!/usr/bin/exiftool %
+au bufreadpost,filereadpost *.gif set readonly
+au bufreadpost,filereadpost *.gif set ft=config
+au bufreadpost,filereadpost *.gif set nomodified
+augr END
+augr *.png
+au!
+au bufreadpost,filereadpost *.png %!/usr/bin/exiftool %
+au bufreadpost,filereadpost *.png set readonly
+au bufreadpost,filereadpost *.png set ft=config
+au bufreadpost,filereadpost *.png set nomodified
+augr END
+
 let g:gutentags_cache_dir = '~/.config/nvim/ctags/mytags/'
 let g:gutentags_project_root = ['Makefile', '.git']
 
