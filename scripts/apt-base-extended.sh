@@ -85,6 +85,7 @@ add-apt-repository ppa:ansible/ansible \
         cpio \
         dc \
         dialog \
+        dmenu \
         dnsutils \
         elfutils \
         exiftool \

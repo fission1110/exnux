@@ -7,3 +7,4 @@ bind-key -T copy-mode-vi 'Escape' send-keys -X cancel
 bind-key -T copy-mode-vi 'v' send-keys -X begin-selection
 bind-key -T copy-mode-vi 'y' send-keys -X copy-selection
 bind-key -T copy-mode-vi C-v send-keys -X begin-selection \; send-keys -X rectangle-toggle
+bind-key -n C-d run-shell "/bin/bash -c '$(dmenu_path | dmenu "$@") &> /dev/null & disown'"
