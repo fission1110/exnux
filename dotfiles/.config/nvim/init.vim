@@ -44,11 +44,11 @@ set fileencodings=utf-8 "Force utf8
 
 "stop stupid .swp files from showing up ever. If you need them, they're in
 "~/.cache/swp
-set backupdir=/home/nonroot/.cache/nvim/swp,.
-set directory=/home/nonroot/.cache/nvim/swp,.
+set backupdir=/home/$USERNAME/.cache/nvim/swp,.
+set directory=/home/$USERNAME/.cache/nvim/swp,.
 
 " persistent undo
-set undodir=/home/nonroot/.cache/nvim/undo
+set undodir=/home/$USERNAME/.cache/nvim/undo
 set undofile
 
 " Remap redraw to <leader>r
@@ -137,7 +137,7 @@ let g:vdebug_options = {
 \    "on_close" : 'detach',
 \    "break_on_open" : 0,
 \    "ide_key" : '',
-\    "path_maps" : {'/code' : '/home/nonroot/code'},
+\    "path_maps" : {'/code' : '/home/$USERNAME/code'},
 \    "debug_window_level" : 0,
 \    "debug_file_level" : 0,
 \    "continuous_mode" : 1,

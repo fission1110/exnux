@@ -237,6 +237,10 @@ ENV PATH $PATH:/home/$USERNAME/go/bin
 COPY scripts/* /usr/local/src/scripts/
 RUN chmod +x /usr/local/src/scripts/*.sh
 
+RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install cargo-cache \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo cache -a
+
+
 # Single threaded because they rely on dpkg run lock
 RUN /usr/local/src/scripts/radare2.sh \
     && /usr/local/src/scripts/iaito.sh \

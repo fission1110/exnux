@@ -1,6 +1,7 @@
 #!/bin/bash
 
-sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install exa bat procs tokei
+sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install exa bat procs tokei \
+    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo cache -a
 
 # btop++
 mkdir -p /usr/local/src/btop
