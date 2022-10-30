@@ -28,7 +28,6 @@ ENV V_LUA_LANGUAGE_SERVER_URL https://github.com/sumneko/lua-language-server/rel
 ENV V_BEEF_BRANCH v0.5.4.0
 ENV V_GOLANG_URL https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
 ENV V_FFUF_URL https://github.com/ffuf/ffuf/releases/download/v1.5.0/ffuf_1.5.0_linux_amd64.tar.gz
-ENV V_GOOGLE_CHROME_URL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 ENV V_GOBUSTER_URL https://github.com/OJ/gobuster/releases/download/v3.2.0/gobuster_3.2.0_Linux_x86_64.tar.gz
 ENV V_FRIDA_VERSION 15.2.2
 ENV V_FRIDA_TOOLS_VERSION 11.0.0
@@ -242,7 +241,7 @@ RUN chmod +x /usr/local/src/scripts/*.sh
 RUN /usr/local/src/scripts/radare2.sh \
     && /usr/local/src/scripts/iaito.sh \
     && /usr/local/src/scripts/nvim.sh \
-    && /usr/local/src/scripts/google-chrome.sh
+    && /usr/local/src/scripts/chromium.sh
 
 # These are multi-threaded
 RUN parallel --verbose ::: /usr/local/src/scripts/jd-gui.sh \
@@ -288,6 +287,8 @@ RUN usermod -a -G audio $USERNAME \
 # pwninit
 RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install pwninit
 
+RUN mkdir -p /run/user/1000 \
+    && chown $USERNAME /run/user/1000
 
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME

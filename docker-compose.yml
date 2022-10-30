@@ -46,7 +46,7 @@ services:
       # Mount other directories
       - "./cache/mytags:/home/${USERNAME}/.config/nvim/ctags/mytags"
       - "./cache/.config/github-copilot/hosts.json:/home/${USERNAME}/.config/github-copilot/hosts.json"
-      - "./cache/.config/google-chrome:/home/${USERNAME}/.config/google-chrome"
+      - "./cache/.config/chromium:/home/${USERNAME}/.config/chromium"
       - "./cache/treesitter/parser:/home/${USERNAME}/.config/nvim/bundle/nvim-treesitter/parser/"
       - "./cache/treesitter/parser-info:/home/${USERNAME}/.config/nvim/bundle/nvim-treesitter/parser-info/"
       - "./cache/.config/lazygit:/home/${USERNAME}/.config/lazygit/"

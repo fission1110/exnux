@@ -17,7 +17,7 @@ export USERNAME=nonroot
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
-CACHE_DIR_LIST="/cache /cache/nvim /cache/nvim/swp /cache/nvim/undo /cache/mytags /cache/.cache/radare2 /cache/treesitter/ /cache/treesitter/parser /cache/treesitter/parser-info /cache/.msf4 /cache/.config/github-copilot /cache/.config/google-chrome /cache/.config/lazygit /cache/.config/zsh /cache/.config/gdb"
+CACHE_DIR_LIST="/cache /cache/nvim /cache/nvim/swp /cache/nvim/undo /cache/mytags /cache/.cache/radare2 /cache/treesitter/ /cache/treesitter/parser /cache/treesitter/parser-info /cache/.msf4 /cache/.config/github-copilot /cache/.config/chromium /cache/.config/lazygit /cache/.config/zsh /cache/.config/gdb"
 CACHE_FILE_LIST="/cache/.bash_history /cache/.cache/radare2/history /cache/.msf4/history /cache/.config/github-copilot/hosts.json"
 
 
