@@ -9,6 +9,7 @@ services:
     stdin_open: true # -i
     tty: true # -t
     network_mode: "host" # YOLO. Network is not isolated.
+    shm_size: "2gb" # for chromium
     environment:
       LC_ALL: "C.UTF-8"
       LANG: "C.UTF-8"
