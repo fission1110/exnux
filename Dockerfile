@@ -268,7 +268,7 @@ RUN /usr/local/src/scripts/gopls.sh \
 
 # Single threaded because it relies on apt, pip, npm, cargo, and go
 RUN /usr/local/src/scripts/formatters.sh \
-    && /usr/local/src/scripts/openai.sh \
+    && /usr/local/src/scripts/ai-tools.sh \
     && /usr/local/src/scripts/cli-rice.sh
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
