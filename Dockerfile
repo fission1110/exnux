@@ -22,7 +22,7 @@ ENV V_JD_GUI_URL https://github.com/java-decompiler/jd-gui/releases/download/v1.
 ENV V_PROCYON_URL https://github.com/mstrobel/procyon/releases/download/v0.6.0/procyon-decompiler-0.6.0.jar
 ENV V_KALI_WORDLIST_URL https://github.com/3ndG4me/KaliLists/archive/refs/heads/master.tar.gz
 ENV V_DOCKER_COMPOSE_URL https://github.com/docker/compose/releases/download/v2.11.2/docker-compose-linux-x86_64
-ENV V_BURPSUIT_URL https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.8.5&type=Jar
+ENV V_BURPSUIT_URL https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.9.5&type=Jar
 ENV V_ZAP_URL https://github.com/zaproxy/zaproxy/releases/download/v2.11.1/ZAP_2.11.1_Linux.tar.gz
 ENV V_LUA_LANGUAGE_SERVER_URL https://github.com/sumneko/lua-language-server/releases/download/3.5.6/lua-language-server-3.5.6-linux-x64.tar.gz
 ENV V_BEEF_BRANCH v0.5.4.0
