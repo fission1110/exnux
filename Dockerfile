@@ -274,6 +274,9 @@ RUN /usr/local/src/scripts/gopls.sh \
 RUN /usr/local/src/scripts/formatters.sh \
     && /usr/local/src/scripts/ai-tools.sh \
     && /usr/local/src/scripts/cli-rice.sh
+
+RUN /usr/local/src/scripts/postgres.sh
+
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
 

@@ -3,15 +3,12 @@
 - Clean up neovim config and think out hotkeys better
 - Find a better way to host/load completed image so we don't need to recompile on all systems
 - Maybe switch to a modern plugin management system for vim plugins
-- Maybe integrate postgres into the image so we don't need two containers
-    - Or at least put it on a non standard port
 - Fix permissions across host/vm mounts. Not sure of a good solution for this one.
     - Mounting /etc/passwd and /etc/group not a great option because all the things built inside of the Dockerfile will need to be chmoded (slow, balloons the image)
     - Changing the uid/gid isn't a great option for the same reason
-- Add XDG variables and follow XDG standard
 - handle jar/apk files with procyon in vim
 - Split out dotfiles into a sub-repo. Find a better way to handle cache files.
-- Add an entrypoint script that handles some of the things in the exnux bash script
 - Clean up the config.lua
 - Port init.vim to lua scripts. Have one file with consistent keybindings.
 - Split up apt-gets into specific tool scripts (without breaking parallal) to make it easier to get dependancies and add/remove tools
+- Cache the metasploit database or create the database on the entrypoint

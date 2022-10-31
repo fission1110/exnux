@@ -145,6 +145,7 @@ add-apt-repository ppa:ansible/ansible \
         p0f \
         parallel \
         patchelf \
+        postgresql \
         postgresql-client \
         pv \
         python3-venv \

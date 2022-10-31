@@ -46,7 +46,7 @@ case "$CMD" in
             touch -a $SCRIPT_DIR/$CACHE_FILE
         done
 
-        docker-compose up --no-recreate -d exnux msf-postgres
+        docker-compose up --no-recreate -d exnux
         docker-compose exec -T -u "0:0" exnux groupmod -g $(getent group docker | awk -F: '{print $3}') docker
 
         # Change uid and gid to match host os
