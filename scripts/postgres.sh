@@ -6,7 +6,7 @@ POSTGRES_PATH=/usr/lib/postgresql/12/bin
 sudo mkdir -p $MSF_POSTGRES
 sudo chown $POSTGRES_USER:$POSTGRES_USER $MSF_POSTGRES
 sudo -u postgres $POSTGRES_PATH/initdb $MSF_POSTGRES
-sudo -u postgres /bin/bash -c 'echo "port = 9999" >> $MSF_POSTGRES/postgresql.conf'
+sudo -u postgres /bin/bash -c 'echo "port = 9999" >> '$MSF_POSTGRES'/postgresql.conf'
 sudo mkdir -p /var/run/postgresql
 sudo chown $POSTGRES_USER:$POSTGRES_USER /var/run/postgresql
 sudo -u $POSTGRES_USER $POSTGRES_PATH/pg_ctl -D $MSF_POSTGRES -l $MSF_POSTGRES/postgres.log start
