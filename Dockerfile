@@ -192,13 +192,13 @@ COPY --from=john-build /usr/local/src/john /usr/local/src/john
 ENV PATH $PATH:/usr/local/src/john/run
 ENV PATH $PATH:/home/$USERNAME/go/bin
 
-RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install cargo-cache \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo cache -a
-
 RUN mkdir -p /usr/local/src/scripts/
 
 COPY scripts/entrypoint.sh /usr/local/src/scripts/
 COPY scripts/postgres.sh /usr/local/src/scripts/
+
+COPY scripts/cargo-binstall.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/cargo-binstall.sh
 
 COPY scripts/gobuster.sh /usr/local/src/scripts/
 COPY scripts/docker-compose.sh /usr/local/src/scripts/
@@ -213,6 +213,8 @@ COPY scripts/chepy.sh /usr/local/src/scripts/
 COPY scripts/wabt.sh /usr/local/src/scripts/
 COPY scripts/dex2jar.sh /usr/local/src/scripts/
 COPY scripts/luarocks.sh /usr/local/src/scripts/
+COPY scripts/ai-tools.sh /usr/local/src/scripts/
+
 
 # These are multi-threaded
 RUN parallel --verbose --halt-on-error=2 ::: \
@@ -228,15 +230,8 @@ RUN parallel --verbose --halt-on-error=2 ::: \
     /usr/local/src/scripts/chepy.sh \
     /usr/local/src/scripts/wabt.sh \
     /usr/local/src/scripts/dex2jar.sh \
-    /usr/local/src/scripts/luarocks.sh
-
-# cargo
-COPY scripts/cli-rice.sh /usr/local/src/scripts/
-RUN /usr/local/src/scripts/cli-rice.sh
-
-# pip
-COPY scripts/ai-tools.sh /usr/local/src/scripts/
-RUN /usr/local/src/scripts/ai-tools.sh
+    /usr/local/src/scripts/luarocks.sh \
+    /usr/local/src/scripts/ai-tools.sh `# pip`
 
 # dpkg
 COPY scripts/radare2.sh /usr/local/src/scripts/
@@ -248,17 +243,16 @@ RUN /usr/local/src/scripts/radare2.sh \
 COPY scripts/alacritty.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/alacritty.sh
 
+# bundle
+COPY scripts/beef.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/beef.sh
+
 # apt, pip, npm, cargo, and go
 COPY scripts/formatters.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/formatters.sh
 
-# cargo
-COPY scripts/pwninit.sh /usr/local/src/scripts/
-RUN /usr/local/src/scripts/pwninit.sh
-
-# bundle
-COPY scripts/beef.sh /usr/local/src/scripts/
-RUN /usr/local/src/scripts/beef.sh
+COPY scripts/cli-rice.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/cli-rice.sh
 
 # dpkg
 COPY scripts/chromium.sh /usr/local/src/scripts/
@@ -267,6 +261,10 @@ RUN /usr/local/src/scripts/chromium.sh
 # go
 COPY scripts/lazygit.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/lazygit.sh
+
+# cargo
+COPY scripts/pwninit.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/pwninit.sh
 
 # go
 COPY scripts/gopls.sh /usr/local/src/scripts/

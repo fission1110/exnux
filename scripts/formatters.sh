@@ -29,8 +29,7 @@ pip3 install \
 
 npm install -g prettier shfmt
 
-sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install stylua rustfmt \
-    && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo cache -a
+sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo binstall --no-confirm stylua rustfmt
 
 go install github.com/klauspost/asmfmt/cmd/asmfmt@latest \
     && go clean --cache
