@@ -1,3 +1,3 @@
 #!/bin/bash
-/usr/local/src/scripts/postgres.sh
+/usr/local/src/scripts/postgres.sh & disown
 /bin/bash

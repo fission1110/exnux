@@ -194,9 +194,6 @@ ENV PATH $PATH:/home/$USERNAME/go/bin
 
 RUN mkdir -p /usr/local/src/scripts/
 
-COPY scripts/entrypoint.sh /usr/local/src/scripts/
-COPY scripts/postgres.sh /usr/local/src/scripts/
-
 COPY scripts/cargo-binstall.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/cargo-binstall.sh
 
@@ -299,6 +296,9 @@ RUN usermod -a -G audio $USERNAME \
 
 RUN mkdir -p /run/user/1000 \
     && chown $USERNAME /run/user/1000
+
+COPY scripts/entrypoint.sh /usr/local/src/scripts/
+COPY scripts/postgres.sh /usr/local/src/scripts/
 
 WORKDIR /home/$USERNAME
 ENV HOME /home/$USERNAME

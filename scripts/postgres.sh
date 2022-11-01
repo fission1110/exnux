@@ -3,12 +3,12 @@ MSF_POSTGRES=/home/postgres/msf-postgres
 POSTGRES_USER=postgres
 POSTGRES_PATH=/usr/lib/postgresql/12/bin
 
-mkdir -p $MSF_POSTGRES
-chown $POSTGRES_USER:$POSTGRES_USER $MSF_POSTGRES
+sudo mkdir -p $MSF_POSTGRES
+sudo chown $POSTGRES_USER:$POSTGRES_USER $MSF_POSTGRES
 sudo -u postgres $POSTGRES_PATH/initdb $MSF_POSTGRES
-echo "port = 9999" >> $MSF_POSTGRES/postgresql.conf
-mkdir -p /var/run/postgresql
-chown $POSTGRES_USER:$POSTGRES_USER /var/run/postgresql
+sudo -u postgres /bin/bash -c 'echo "port = 9999" >> $MSF_POSTGRES/postgresql.conf'
+sudo mkdir -p /var/run/postgresql
+sudo chown $POSTGRES_USER:$POSTGRES_USER /var/run/postgresql
 sudo -u $POSTGRES_USER $POSTGRES_PATH/pg_ctl -D $MSF_POSTGRES -l $MSF_POSTGRES/postgres.log start
 # wait for postgres to start
 sleep 5
