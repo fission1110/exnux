@@ -1,3 +1,4 @@
+#!/bin/bash
 # asm asmfmt
 # (c, c#, c++) clang-format
 # (cmake) cmake_format

@@ -55,7 +55,7 @@ services:
       - "/dev/dri" # GPU
       - "/dev/snd" # Sound
       - "/dev/video0:/dev/video0" # Webcam
-    command: "/bin/bash /usr/local/src/scripts/entrypoint.sh"
+    command: "/usr/local/src/scripts/entrypoint.sh"
   apt-cacher-ng:
     container_name: "apt-cacher-ng"
     image: "sameersbn/apt-cacher-ng:3.3-20200524"

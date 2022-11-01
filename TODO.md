@@ -11,4 +11,3 @@
 - Clean up the config.lua
 - Port init.vim to lua scripts. Have one file with consistent keybindings.
 - Split up apt-gets into specific tool scripts (without breaking parallal) to make it easier to get dependancies and add/remove tools
-- Cache the metasploit database or create the database on the entrypoint

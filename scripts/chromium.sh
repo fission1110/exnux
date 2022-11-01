@@ -1,3 +1,4 @@
+#!/bin/bash
 add-apt-repository ppa:system76/pop
 apt-get install -y chromium libavcodec-extra
 update-alternatives --config x-www-browser /usr/bin/chromium

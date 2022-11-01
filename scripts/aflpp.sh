@@ -1,3 +1,6 @@
+#!/bin/bash
+
+V_AFLPP_BRANCH=stable
 mkdir -p /usr/local/src/AFLplusplus \
     && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 20 \
     && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 20 \

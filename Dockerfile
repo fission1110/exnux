@@ -5,41 +5,11 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ARG APT_PROXY
 
-ENV V_NODE_URL https://deb.nodesource.com/setup_14.x
 ENV V_RBENV_URL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer
-ENV V_AFLPP_BRANCH stable
-ENV V_METASPLOIT_BRANCH 6.2.20
-ENV V_FZF_BRANCH 0.34.0
-ENV V_PWNDBG_BRANCH 2022.08.30
-ENV V_GHIDRA_URL https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.1.5_build/ghidra_10.1.5_PUBLIC_20220726.zip
-ENV V_JOHN_BRANCH bleeding-jumbo
-ENV V_RADARE2_URL https://github.com/radareorg/radare2/releases/download/5.7.8/radare2_5.7.8_amd64.deb
-ENV V_RADARE2_DEV_URL https://github.com/radareorg/radare2/releases/download/5.7.8/radare2-dev_5.7.8_amd64.deb
-ENV V_IAITO_URL https://github.com/radareorg/iaito/releases/download/5.7.0/iaito_5.7.0_amd64.deb
-ENV V_NVIM_URL https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-linux64.deb
-ENV V_WEBSOCAT_URL https://github.com/vi/websocat/releases/download/v1.11.0/websocat.x86_64-unknown-linux-musl
-ENV V_JD_GUI_URL https://github.com/java-decompiler/jd-gui/releases/download/v1.6.6/jd-gui-1.6.6.deb
-ENV V_PROCYON_URL https://github.com/mstrobel/procyon/releases/download/v0.6.0/procyon-decompiler-0.6.0.jar
-ENV V_KALI_WORDLIST_URL https://github.com/3ndG4me/KaliLists/archive/refs/heads/master.tar.gz
-ENV V_DOCKER_COMPOSE_URL https://github.com/docker/compose/releases/download/v2.11.2/docker-compose-linux-x86_64
-ENV V_BURPSUIT_URL https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.9.5&type=Jar
-ENV V_ZAP_URL https://github.com/zaproxy/zaproxy/releases/download/v2.11.1/ZAP_2.11.1_Linux.tar.gz
-ENV V_LUA_LANGUAGE_SERVER_URL https://github.com/sumneko/lua-language-server/releases/download/3.5.6/lua-language-server-3.5.6-linux-x64.tar.gz
-ENV V_BEEF_BRANCH v0.5.4.0
-ENV V_GOLANG_URL https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
-ENV V_FFUF_URL https://github.com/ffuf/ffuf/releases/download/v1.5.0/ffuf_1.5.0_linux_amd64.tar.gz
-ENV V_GOBUSTER_URL https://github.com/OJ/gobuster/releases/download/v3.2.0/gobuster_3.2.0_Linux_x86_64.tar.gz
-ENV V_FRIDA_VERSION 15.2.2
-ENV V_FRIDA_TOOLS_VERSION 11.0.0
-ENV V_WABT_URL https://github.com/WebAssembly/wabt/releases/download/1.0.30/wabt-1.0.30-ubuntu.tar.gz
-ENV V_DEX2JAR_URL https://github.com/pxb1988/dex2jar/releases/download/v2.1/dex2jar-2.1.zip
-ENV V_RUST_ANALYZER_URL https://github.com/rust-lang/rust-analyzer/releases/download/2022-10-24/rust-analyzer-x86_64-unknown-linux-gnu.gz
-ENV V_LUAROCKS_URL https://luarocks.org/releases/luarocks-3.9.1.tar.gz
 
 COPY scripts/apt-base.sh /usr/local/src/scripts/apt-base.sh
 
-RUN chmod +x /usr/local/src/scripts/apt-base.sh \
-    && export http_proxy=$APT_PROXY \
+RUN export http_proxy=$APT_PROXY \
     && /usr/local/src/scripts/apt-base.sh \
     && unset http_proxy \
     && npm install frida
@@ -64,15 +34,13 @@ FROM base AS aflpp-build
 
 COPY scripts/apt-aflpp.sh /usr/local/src/scripts/apt-aflpp.sh
 
-RUN chmod +x /usr/local/src/scripts/apt-aflpp.sh \
-    && export http_proxy=$APT_PROXY \
+RUN export http_proxy=$APT_PROXY \
     && /usr/local/src/scripts/apt-aflpp.sh \
     && unset http_proxy
 
 # build environment should be the newest the distro offers for afl
 COPY scripts/aflpp.sh /usr/local/src/scripts/aflpp.sh
-RUN chmod +x /usr/local/src/scripts/aflpp.sh \
-    && /usr/local/src/scripts/aflpp.sh
+RUN /usr/local/src/scripts/aflpp.sh
 
 
 ################################################
@@ -83,14 +51,12 @@ RUN chmod +x /usr/local/src/scripts/aflpp.sh \
 FROM base AS metasploit-build
 
 COPY scripts/apt-metasploit.sh /usr/local/src/scripts/apt-metasploit.sh
-RUN chmod +x /usr/local/src/scripts/apt-metasploit.sh \
-    && export http_proxy=$APT_PROXY \
+RUN export http_proxy=$APT_PROXY \
     && /usr/local/src/scripts/apt-metasploit.sh \
     && unset http_proxy
 
 COPY scripts/metasploit.sh /usr/local/src/scripts/metasploit.sh
-RUN chmod +x /usr/local/src/scripts/metasploit.sh \
-    && /usr/local/src/scripts/metasploit.sh
+RUN /usr/local/src/scripts/metasploit.sh
 
 
 ################################################
@@ -101,8 +67,7 @@ RUN chmod +x /usr/local/src/scripts/metasploit.sh \
 FROM base AS fzf-build
 
 COPY scripts/fzf.sh /usr/local/src/scripts/fzf.sh
-RUN chmod +x /usr/local/src/scripts/fzf.sh \
-    && /usr/local/src/scripts/fzf.sh
+RUN /usr/local/src/scripts/fzf.sh
 
 ################################################
 #
@@ -112,8 +77,7 @@ RUN chmod +x /usr/local/src/scripts/fzf.sh \
 FROM base AS pwndbg-build
 
 COPY scripts/pwndbg.sh /usr/local/src/scripts/pwndbg.sh
-RUN chmod +x /usr/local/src/scripts/pwndbg.sh \
-    && /usr/local/src/scripts/pwndbg.sh
+RUN /usr/local/src/scripts/pwndbg.sh
 
 ################################################
 #
@@ -123,8 +87,7 @@ RUN chmod +x /usr/local/src/scripts/pwndbg.sh \
 FROM base AS ghidra-build
 
 COPY scripts/ghidra.sh /usr/local/src/scripts/ghidra.sh
-RUN chmod +x /usr/local/src/scripts/ghidra.sh \
-    && /usr/local/src/scripts/ghidra.sh
+RUN /usr/local/src/scripts/ghidra.sh
 
 ################################################
 #
@@ -135,14 +98,12 @@ FROM base AS john-build
 
 COPY scripts/apt-john.sh /usr/local/src/scripts/apt-john.sh
 
-RUN chmod +x /usr/local/src/scripts/apt-john.sh \
-    && export http_proxy=$APT_PROXY \
+RUN export http_proxy=$APT_PROXY \
     && /usr/local/src/scripts/apt-john.sh \
     && unset http_proxy
 
 COPY scripts/john.sh /usr/local/src/scripts/john.sh
-RUN chmod +x /usr/local/src/scripts/john.sh \
-    && /usr/local/src/scripts/john.sh
+RUN /usr/local/src/scripts/john.sh
 
 ################################################
 #
@@ -152,8 +113,7 @@ RUN chmod +x /usr/local/src/scripts/john.sh \
 FROM base AS phpactor-build
 
 COPY scripts/phpactor.sh /usr/local/src/scripts/phpactor.sh
-RUN chmod +x /usr/local/src/scripts/phpactor.sh \
-    && /usr/local/src/scripts/phpactor.sh
+RUN /usr/local/src/scripts/phpactor.sh
 
 ################################################
 #
@@ -165,11 +125,9 @@ FROM base AS base-extended
 ENV PATH=$PATH:/home/$USERNAME/.cargo/bin
 COPY scripts/apt-base-extended.sh /usr/local/src/scripts/apt-base-extended.sh
 COPY scripts/rust.sh /usr/local/src/scripts/rust.sh
-RUN chmod +x /usr/local/src/scripts/apt-base-extended.sh \
-    && export http_proxy=$APT_PROXY \
+RUN export http_proxy=$APT_PROXY \
     && /usr/local/src/scripts/apt-base-extended.sh \
     && unset http_proxy \
-    && chmod +x /usr/local/src/scripts/rust.sh \
     && /usr/local/src/scripts/rust.sh
 
 RUN export http_proxy=$APT_PROXY \
@@ -234,21 +192,26 @@ COPY --from=john-build /usr/local/src/john /usr/local/src/john
 ENV PATH $PATH:/usr/local/src/john/run
 ENV PATH $PATH:/home/$USERNAME/go/bin
 
-COPY scripts/* /usr/local/src/scripts/
-RUN chmod +x /usr/local/src/scripts/*.sh
-
 RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install cargo-cache \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo cache -a
 
-
-# Single threaded because they rely on dpkg run lock
-RUN /usr/local/src/scripts/radare2.sh \
-    && /usr/local/src/scripts/iaito.sh \
-    && /usr/local/src/scripts/nvim.sh \
-    && /usr/local/src/scripts/chromium.sh
+RUN mkdir -p /usr/local/src/scripts/
+COPY scripts/gobuster.sh /usr/local/src/scripts/
+COPY scripts/docker-compose.sh /usr/local/src/scripts/
+COPY scripts/burpsuit.sh /usr/local/src/scripts/
+COPY scripts/zap.sh /usr/local/src/scripts/
+COPY scripts/lua-language-server.sh /usr/local/src/scripts/
+COPY scripts/ffuf.sh /usr/local/src/scripts/
+COPY scripts/websocat.sh /usr/local/src/scripts/
+COPY scripts/procyon.sh /usr/local/src/scripts/
+COPY scripts/golang.sh /usr/local/src/scripts/
+COPY scripts/chepy.sh /usr/local/src/scripts/
+COPY scripts/wabt.sh /usr/local/src/scripts/
+COPY scripts/dex2jar.sh /usr/local/src/scripts/
+COPY scripts/luarocks.sh /usr/local/src/scripts/
 
 # These are multi-threaded
-RUN parallel --verbose ::: /usr/local/src/scripts/jd-gui.sh \
+RUN parallel --verbose --halt-on-error=2 ::: \
     /usr/local/src/scripts/gobuster.sh \
     /usr/local/src/scripts/docker-compose.sh \
     /usr/local/src/scripts/burpsuit.sh \
@@ -259,23 +222,63 @@ RUN parallel --verbose ::: /usr/local/src/scripts/jd-gui.sh \
     /usr/local/src/scripts/procyon.sh \
     /usr/local/src/scripts/golang.sh \
     /usr/local/src/scripts/chepy.sh \
-    /usr/local/src/scripts/alacritty.sh \
-    /usr/local/src/scripts/beef.sh \
     /usr/local/src/scripts/wabt.sh \
     /usr/local/src/scripts/dex2jar.sh \
     /usr/local/src/scripts/luarocks.sh
 
-# Single threaded because they rely on go install
-RUN /usr/local/src/scripts/gopls.sh \
-    && /usr/local/src/scripts/lemonade.sh \
-    && /usr/local/src/scripts/lazygit.sh
+# cargo
+COPY scripts/cli-rice.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/cli-rice.sh
 
-# Single threaded because it relies on apt, pip, npm, cargo, and go
-RUN /usr/local/src/scripts/formatters.sh \
-    && /usr/local/src/scripts/ai-tools.sh \
-    && /usr/local/src/scripts/cli-rice.sh
+# pip
+COPY scripts/ai-tools.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/ai-tools.sh
 
-RUN /usr/local/src/scripts/postgres.sh
+# dpkg
+COPY scripts/radare2.sh /usr/local/src/scripts/
+COPY scripts/iaito.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/radare2.sh \
+    && /usr/local/src/scripts/iaito.sh
+
+# cargo
+COPY scripts/alacritty.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/alacritty.sh
+
+# apt, pip, npm, cargo, and go
+COPY scripts/formatters.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/formatters.sh
+
+# cargo
+COPY scripts/pwninit.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/pwninit.sh
+
+# bundle
+COPY scripts/beef.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/beef.sh
+
+# dpkg
+COPY scripts/chromium.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/chromium.sh
+
+# go
+COPY scripts/lazygit.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/lazygit.sh
+
+# go
+COPY scripts/gopls.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/gopls.sh
+
+# dpkg
+COPY scripts/nvim.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/nvim.sh
+
+# go
+COPY scripts/lemonade.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/lemonade.sh
+
+# dpkg
+COPY scripts/jd-gui.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/jd-gui.sh
 
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
@@ -291,8 +294,6 @@ RUN groupadd wireshark \
 RUN usermod -a -G audio $USERNAME \
     && usermod -a -G video $USERNAME
 
-# pwninit
-RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install pwninit
 
 RUN mkdir -p /run/user/1000 \
     && chown $USERNAME /run/user/1000
@@ -315,4 +316,4 @@ RUN  mkdir -p ~/.config/nvim/ctags/mytags \
     && nvim --headless +UpdateRemotePlugins +qa \
     && nvim --headless +TSUpdate +qa
 
-CMD ["/usr/bin/byobu"]
+CMD ["/usr/local/src/scripts/entrypoint.sh"]

@@ -1,3 +1,4 @@
+#!/bin/bash
 add-apt-repository ppa:ansible/ansible \
     && apt-get update -y \
     && apt-get install -y \

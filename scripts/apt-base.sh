@@ -1,3 +1,8 @@
+#!/bin/bash
+V_NODE_URL=https://deb.nodesource.com/setup_14.x
+V_FRIDA_VERSION=15.2.2
+V_FRIDA_TOOLS_VERSION=11.0.0
+
 apt-get update -y \
     && apt-get upgrade -y \
     && apt-get update -y \

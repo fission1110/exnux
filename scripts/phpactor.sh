@@ -1,3 +1,4 @@
+#!/bin/bash
 # composer
 cd /usr/local/bin \
     && wget -O composer-setup.php https://getcomposer.org/installer \
