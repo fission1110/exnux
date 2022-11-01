@@ -196,6 +196,10 @@ RUN sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install ca
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo cache -a
 
 RUN mkdir -p /usr/local/src/scripts/
+
+COPY scripts/entrypoint.sh /usr/local/src/scripts/
+COPY scripts/postgres.sh /usr/local/src/scripts/
+
 COPY scripts/gobuster.sh /usr/local/src/scripts/
 COPY scripts/docker-compose.sh /usr/local/src/scripts/
 COPY scripts/burpsuit.sh /usr/local/src/scripts/
