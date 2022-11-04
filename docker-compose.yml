@@ -52,6 +52,7 @@ services:
       - "./cache/treesitter/parser-info:/home/${USERNAME}/.config/nvim/bundle/nvim-treesitter/parser-info/"
       - "./cache/.config/lazygit:/home/${USERNAME}/.config/lazygit/"
       - "./cache/.msf4/db/:/home/postgres/msf-postgres/"
+      - "./cache/.cache/vimb:/home/${USERNAME}/.cache/vimb/"
     devices:
       - "/dev/dri" # GPU
       - "/dev/snd" # Sound
