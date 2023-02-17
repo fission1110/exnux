@@ -106,7 +106,6 @@ add-apt-repository ppa:ansible/ansible \
         fonts-liberation \
         fonts-mlym \
         fonts-noto-cjk \
-        fonts-noto-color-emoji \
         fonts-opensymbol \
         fonts-orya \
         fonts-smc \

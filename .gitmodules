@@ -160,3 +160,6 @@
 [submodule "dotfiles/.config/nvim/bundle/telescope-smart-history.nvim"]
 	path = dotfiles/.config/nvim/bundle/telescope-smart-history.nvim
 	url = https://github.com/nvim-telescope/telescope-smart-history.nvim.git
+[submodule "dotfiles/.config/nvim/bundle/leap.nvim"]
+	path = dotfiles/.config/nvim/bundle/leap.nvim
+	url = https://github.com/ggandor/leap.nvim.git
