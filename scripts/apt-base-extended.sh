@@ -114,6 +114,7 @@ add-apt-repository ppa:ansible/ansible \
         fonts-ubuntu \
         fonts-ubuntu-console \
         fonts-ubuntu-title \
+        unifont \
         foremost \
         ftp \
         git-gui \
