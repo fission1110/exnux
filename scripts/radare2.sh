@@ -11,5 +11,5 @@ mkdir -p /usr/local/src/radare2 \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm init \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm update \
 `#    && r2pm -gi r2dec` \
-    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2ghidra \
-    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2frida
+    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2ghidra
+    #&& sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2frida

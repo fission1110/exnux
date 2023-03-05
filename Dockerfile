@@ -279,8 +279,8 @@ RUN /usr/local/src/scripts/lemonade.sh
 COPY scripts/jd-gui.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/jd-gui.sh
 
-COPY scripts/vimb.sh /usr/local/src/scripts/
-RUN /usr/local/src/scripts/vimb.sh
+#COPY scripts/vimb.sh /usr/local/src/scripts/
+#RUN /usr/local/src/scripts/vimb.sh
 
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
