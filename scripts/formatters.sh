@@ -25,7 +25,7 @@ pip3 install \
     black \
     cmakelang \
     prettydiff \
-    sqlfmt
+    sqlparse
 
 npm install -g prettier shfmt
 
