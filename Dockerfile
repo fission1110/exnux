@@ -6,6 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ARG APT_PROXY
 
 ENV V_RBENV_URL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer
+WORKDIR /home/$USERNAME
 
 COPY scripts/apt-base.sh /usr/local/src/scripts/apt-base.sh
 
@@ -310,7 +311,7 @@ USER $USERNAME
 
 # dotfiles
 ENV PATH=$PATH:/home/$USERNAME/tools
-COPY --chown=$USERNAME dotfiles ./
+COPY --chown=$USERNAME dotfiles /home/$USERNAME
 
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions /home/$USERNAME/.oh-my-zsh/plugins/zsh-autosuggestions
 

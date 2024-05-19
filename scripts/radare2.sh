@@ -9,7 +9,7 @@ mkdir -p /usr/local/src/radare2 \
     && rm -rf /usr/local/src/radare2 \
     && update-alternatives --install /usr/bin/python python /usr/bin/python3 20 \
     && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm init \
-    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm update \
+    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm update
 `#    && r2pm -gi r2dec` \
-    && sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2ghidra
+    #&& sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2ghidra
     #&& sudo -E -u $USERNAME "HOME=/home/$USERNAME" r2pm -i r2frida
