@@ -310,3 +310,5 @@ require("color-picker").setup({ -- for changing icons & mappings
 	["border_highlight_group"] = "FloatBorder", -- default
   ["text_highlight_group"] = "Normal", --default
 })
+
+require('leap').create_default_mappings()
