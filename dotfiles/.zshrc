@@ -107,7 +107,7 @@ PATH=$HOME/.rbenv/bin:/usr/local/src/rbenv/.rbenv/shims:$PATH
 bindkey -v
 
 alias vvim=/usr/bin/vim
-alias vim=/usr/bin/nvim
+alias vim=/usr/local/bin/nvim
 alias cat="bat"
 alias ls="exa"
 alias l="exa -l"
