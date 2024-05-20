@@ -163,33 +163,9 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local servers = { 'pyright', 'tsserver', 'clangd', 'tailwindcss', 'phpactor', 'gopls', 'sumneko_lua', 'rust_analyzer' }
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local servers = { 'pyright', 'tsserver', 'clangd', 'tailwindcss', 'phpactor', 'gopls', 'rust_analyzer' }
 for _, lsp in pairs(servers) do
-  if(lsp == 'sumneko_lua') then
-    require('lspconfig')[lsp].setup {
-      on_attach = on_attach,
-      flags = {
-        -- This will be the default in neovim 0.7+
-        debounce_text_changes = 150,
-      },
-      capabilities = capabilities,
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      settings = {
-        Lua = {
-          workspace = {
-            library = vim.api.nvim_get_runtime_file("", true),
-          },
-          diagnostics = {
-            -- Get the language server to recognize the `vim` global
-            globals = {'vim'},
-          },
-        }
-      }
-    }
-  else
     require('lspconfig')[lsp].setup {
       on_attach = on_attach,
       flags = {
@@ -198,7 +174,6 @@ for _, lsp in pairs(servers) do
       },
       capabilities = capabilities,
     }
-  end
 end
 -- ---------
 -- nvim-cmp

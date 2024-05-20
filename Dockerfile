@@ -202,7 +202,6 @@ COPY scripts/gobuster.sh /usr/local/src/scripts/
 COPY scripts/docker-compose.sh /usr/local/src/scripts/
 COPY scripts/burpsuit.sh /usr/local/src/scripts/
 COPY scripts/zap.sh /usr/local/src/scripts/
-COPY scripts/lua-language-server.sh /usr/local/src/scripts/
 COPY scripts/ffuf.sh /usr/local/src/scripts/
 COPY scripts/websocat.sh /usr/local/src/scripts/
 COPY scripts/procyon.sh /usr/local/src/scripts/
@@ -220,7 +219,6 @@ RUN parallel --verbose --halt-on-error=2 ::: \
     /usr/local/src/scripts/docker-compose.sh \
     /usr/local/src/scripts/burpsuit.sh \
     /usr/local/src/scripts/zap.sh \
-    /usr/local/src/scripts/lua-language-server.sh \
     /usr/local/src/scripts/ffuf.sh \
     /usr/local/src/scripts/websocat.sh \
     /usr/local/src/scripts/procyon.sh \
