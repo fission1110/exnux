@@ -13,9 +13,6 @@
 [submodule "dotfiles/.config/nvim/bundle/plantuml-syntax"]
 	path = dotfiles/.config/nvim/bundle/plantuml-syntax
 	url = https://github.com/aklt/plantuml-syntax.git
-[submodule "dotfiles/.config/nvim/bundle/scratch.vim"]
-	path = dotfiles/.config/nvim/bundle/scratch.vim
-	url = https://github.com/mtth/scratch.vim.git
 [submodule "dotfiles/.config/nvim/bundle/syntastic"]
 	path = dotfiles/.config/nvim/bundle/syntastic
 	url = https://github.com/vim-syntastic/syntastic.git
