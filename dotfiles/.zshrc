@@ -109,8 +109,8 @@ bindkey -v
 alias vvim=/usr/bin/vim
 alias vim=/usr/local/bin/nvim
 alias cat="bat"
-alias ls="exa"
-alias l="exa -l"
-alias ll="exa -l"
-alias la="exa -la"
+alias ls="exa -g --git"
+alias l="exa -lg --git"
+alias ll="exa -lg --git"
+alias la="exa -lag"
 eval "$(rbenv init - zsh)"
