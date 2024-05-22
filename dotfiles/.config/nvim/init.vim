@@ -309,7 +309,7 @@ nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <C-t> <cmd>lua require('telescope.builtin').tags()<cr>
 
 " neoformat enabled for languages
-let g:neoformat_enabled_javascript = ['prettier']
+let g:neoformat_enabled_javascript = ['prettier-eslint']
 let g:neoformat_enabled_typescript = ['prettier']
 let g:neoformat_enabled_html = ['prettier']
 let g:neoformat_enabled_css = ['prettier']

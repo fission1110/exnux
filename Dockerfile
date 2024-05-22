@@ -233,10 +233,6 @@ COPY scripts/iaito.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/radare2.sh \
     && /usr/local/src/scripts/iaito.sh
 
-# go npm
-COPY scripts/lsp.sh /usr/local/src/scripts/
-RUN /usr/local/src/scripts/lsp.sh
-
 # cargo
 COPY scripts/alacritty.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/alacritty.sh
@@ -278,6 +274,10 @@ RUN /usr/local/src/scripts/jd-gui.sh
 
 #COPY scripts/vimb.sh /usr/local/src/scripts/
 #RUN /usr/local/src/scripts/vimb.sh
+
+# go npm apt
+COPY scripts/lsp.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/lsp.sh
 
 # fix ansible
 RUN pip3 install markupsafe==2.0.1

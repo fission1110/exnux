@@ -24,8 +24,8 @@ mkdir /usr/local/src/rust-analyzer \
     && ln -s /usr/local/src/rust-analyzer/rust-analyzer /usr/local/bin/rust-analyzer
 
 # npm
-# typescript-language-server, bash-language-server, vscode-langservers-extracted (html, cssls), ansible-language-server
-npm install -g typescript typescript-language-server bash-language-server vscode-langservers-extracted @ansible/ansible-language-server
+# typescript-language-server, bash-language-server, vscode-langservers-extracted (html, cssls, eslint), ansible-language-server
+npm install -g typescript typescript-language-server bash-language-server vscode-langservers-extracted @ansible/ansible-language-server eslint@8.57.0 prettier-eslint prettier-eslint-cli
 
 # pip apt
 # ansible, ansible-lint
