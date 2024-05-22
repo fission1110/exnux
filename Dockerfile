@@ -146,10 +146,8 @@ RUN export http_proxy=$APT_PROXY \
 # nvim
 RUN pip3 install neovim \
     && npm install -g neovim \
-    && npm install -g typescript typescript-language-server bash-language-server vscode-langservers-extracted \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install tree-sitter-cli \
-    && pip3 install libclang \
-    && pip3 install pyright
+    && pip3 install libclang
 
 ################################################
 #
@@ -210,7 +208,6 @@ COPY scripts/chepy.sh /usr/local/src/scripts/
 COPY scripts/wabt.sh /usr/local/src/scripts/
 COPY scripts/dex2jar.sh /usr/local/src/scripts/
 COPY scripts/luarocks.sh /usr/local/src/scripts/
-COPY scripts/lua_ls.sh /usr/local/src/scripts/
 COPY scripts/ai-tools.sh /usr/local/src/scripts/
 
 
@@ -228,7 +225,6 @@ RUN parallel --verbose --halt-on-error=2 ::: \
     /usr/local/src/scripts/wabt.sh \
     /usr/local/src/scripts/dex2jar.sh \
     /usr/local/src/scripts/luarocks.sh \
-    /usr/local/src/scripts/lua_ls.sh \
     /usr/local/src/scripts/ai-tools.sh `# pip`
 
 # dpkg
@@ -236,6 +232,10 @@ COPY scripts/radare2.sh /usr/local/src/scripts/
 COPY scripts/iaito.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/radare2.sh \
     && /usr/local/src/scripts/iaito.sh
+
+# go npm
+COPY scripts/lsp.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/lsp.sh
 
 # cargo
 COPY scripts/alacritty.sh /usr/local/src/scripts/
@@ -263,10 +263,6 @@ RUN /usr/local/src/scripts/lazygit.sh
 # cargo
 COPY scripts/pwninit.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/pwninit.sh
-
-# go
-COPY scripts/gopls.sh /usr/local/src/scripts/
-RUN /usr/local/src/scripts/gopls.sh
 
 # dpkg
 COPY scripts/nvim.sh /usr/local/src/scripts/

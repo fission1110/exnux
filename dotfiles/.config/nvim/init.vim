@@ -215,9 +215,6 @@ nnoremap <silent> <leader>tt :tabnew term://$SHELL<cr>
 nmap <leader>s <cmd>Scratch<cr>
 let g:scratch_persistence_file="/tmp/nvim_scratch_persistance"
 
-" ansible syntax highlighting
-au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
-
 " Auto decompile java .class files
 augr class
 au!

@@ -165,8 +165,9 @@ end
 -- map buffer local keybindings when the language server attaches
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local servers = { 'pyright', 'tsserver', 'clangd', 'html', 'cssls', 'lua_ls', 'phpactor', 'gopls', 'rust_analyzer' }
+local lspconfig = require('lspconfig')
 for _, lsp in pairs(servers) do
-    require('lspconfig')[lsp].setup {
+    lspconfig[lsp].setup {
       on_attach = on_attach,
       flags = {
         -- This will be the default in neovim 0.7+
@@ -175,6 +176,16 @@ for _, lsp in pairs(servers) do
       capabilities = capabilities,
     }
 end
+
+lspconfig.ansiblels.setup{
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  filetypes = { "yaml", "ansible" },
+  root_dir = lspconfig.util.root_pattern("playbooks", "roles"),
+  capabilities = capabilities,
+}
 -- ---------
 -- nvim-cmp
 -- ---------
@@ -287,3 +298,12 @@ require("color-picker").setup({ -- for changing icons & mappings
 })
 
 require('leap').create_default_mappings()
+
+-- Set filetype to yaml.ansible for ansible files
+vim.filetype.add({
+  pattern = {
+    ['*/playbooks/*.yml'] = 'yaml.ansible',
+    ['*/playbooks/*.yaml'] = 'yaml.ansible',
+    ['*/roles/*/tasks/*.yml'] = 'yaml.ansible'
+  }
+})

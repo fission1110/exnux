@@ -88,6 +88,7 @@ export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 PATH=$PATH:$HOME/.composer/vendor/bin
 PATH=$HOME/.rbenv/bin:/usr/local/src/rbenv/.rbenv/shims:$PATH
+PATH=$HOME/.local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
  # Preferred editor for local and remote sessions

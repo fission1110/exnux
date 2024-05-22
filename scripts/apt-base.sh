@@ -29,8 +29,9 @@ apt-get update -y \
         pigz \
         pixz \
         pkg-config \
-        python3 \
-        python3-dev \
+        python3.9 \
+        python3.9-dev \
+        python3.9-venv \
         python3-pip \
         python3-requests \
         python3-setuptools \

@@ -1,6 +1,5 @@
 #!/bin/bash
-add-apt-repository ppa:ansible/ansible \
-    && apt-get update -y \
+apt-get update -y \
     && apt-get install -y \
       `# ghidra` \
         fontconfig \
@@ -24,7 +23,6 @@ add-apt-repository ppa:ansible/ansible \
         libxcb-xfixes0-dev \
         libxkbcommon-dev \
         pkg-config \
-        python3 \
       `# BeEF` \
         curl \
         git \
@@ -74,7 +72,6 @@ add-apt-repository ppa:ansible/ansible \
       `# everything else` \
         alsa-base \
         alsa-utils \
-        ansible \
         apktool \
         apulse \
         autopsy \
@@ -149,7 +146,6 @@ add-apt-repository ppa:ansible/ansible \
         postgresql \
         postgresql-client \
         pv \
-        python3-venv \
         ripgrep \
         sleuthkit \
         snmp \
