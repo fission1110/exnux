@@ -1,5 +1,5 @@
 #!/bin/bash
-V_NODE_URL=https://deb.nodesource.com/setup_16.x
+V_NODE_URL=https://deb.nodesource.com/setup_20.x
 V_FRIDA_VERSION=16.0.2
 V_FRIDA_TOOLS_VERSION=12.0.1
 
