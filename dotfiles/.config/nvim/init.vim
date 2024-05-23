@@ -302,8 +302,8 @@ let g:copilot_filetypes = {
 nnoremap <C-p> <cmd>Copilot panel<CR>
 inoremap <C-p> <cmd>Copilot panel<CR>
 "
-nnoremap <C-i> <cmd>let b:copilot_enabled = 1<CR>
-inoremap <C-i> <cmd>let b:copilot_enabled = 1<CR>
+nnoremap <C-e> <cmd>let b:copilot_enabled = 1<CR>
+inoremap <C-e> <cmd>let b:copilot_enabled = 1<CR>
 "" Disable copilot by default
 let b:copilot_enabled = 0
 autocmd BufNewFile,BufRead * let b:copilot_enabled = 0
