@@ -120,14 +120,6 @@ au BufNewFile *.php set ft=php
 au BufRead *.ctp set ft=php.html
 au BufNewFile *.ctp set ft=php.html
 
-" My hack to the forked version of vim snipmate to ignore the
-" fact that the pumvisible() and use my snippets anyways.
-let g:snipmateIgnorePum = 1
-let g:snipMate = get(g:, 'snipMate', {}) "
-let g:snipMate.snippet_version = 0
-let g:snipMate.scope_aliases = {}
-let g:snipMate.scope_aliases['php'] = 'php'
-
 inoremap <C-l> <C-x><C-o>
 
 let g:vdebug_options = {
