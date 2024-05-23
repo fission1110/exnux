@@ -298,8 +298,17 @@ let g:copilot_filetypes = {
     \   'TelescopePrompt': v:false
     \ }
 " Map copilot panel to <M-cr> and <C-l>
-nnoremap <M-CR> <cmd>Copilot panel<CR>
-inoremap <M-CR> <cmd>Copilot panel<CR>
+"
+nnoremap <C-p> <cmd>Copilot panel<CR>
+inoremap <C-p> <cmd>Copilot panel<CR>
+"
+nnoremap <C-i> <cmd>let b:copilot_enabled = 1<CR>
+inoremap <C-i> <cmd>let b:copilot_enabled = 1<CR>
+"" Disable copilot by default
+let b:copilot_enabled = 0
+autocmd BufNewFile,BufRead * let b:copilot_enabled = 0
+
+
 
 " Telescope
 " Using Lua functions
