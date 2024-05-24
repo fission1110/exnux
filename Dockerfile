@@ -279,6 +279,9 @@ RUN /usr/local/src/scripts/jd-gui.sh
 COPY scripts/lsp.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/lsp.sh
 
+COPY scripts/fonts.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/fonts.sh
+
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
 

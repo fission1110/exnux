@@ -111,7 +111,7 @@ alias vvim=/usr/bin/vim
 alias vim=/usr/local/bin/nvim
 alias cat="bat"
 alias ls="exa -g --git"
-alias l="exa -lg --git"
-alias ll="exa -lg --git"
-alias la="exa -lag"
+alias l="exa -lg --git --icons"
+alias ll="exa -lg --git --icons"
+alias la="exa -lag --icons"
 eval "$(rbenv init - zsh)"

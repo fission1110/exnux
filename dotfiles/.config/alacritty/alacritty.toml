@@ -37,19 +37,19 @@ TERM = "xterm-256color"
 size = 11
 
 [font.bold]
-family = "DejaVu Sans Mono"
+family = "DejaVuSansM Nerd Font Mono"
 style = "Bold"
 
 [font.bold_italic]
-family = "DejaVu Sans Mono"
-style = "Bold Italic"
+family = "DejaVuSansM Nerd Font Mono"
+style = "Bold Oblique"
 
 [font.italic]
-family = "DejaVu Sans Mono"
-style = "Italic"
+family = "DejaVuSansM Nerd Font Mono"
+style = "Oblique"
 
 [font.normal]
-family = "DejaVu Sans Mono"
+family = "DejaVuSansM Nerd Font Mono"
 style = "Book"
 
 [window]

@@ -36,7 +36,10 @@ set tabstop=4
 
 filetype plugin on
 
-let mapleader="," "Set the leader key
+" Set scroll offset to 5 lines
+set scrolloff=5
+
+let mapleader=" " "Set the leader key
 
 set relativenumber
 set nu "Show line numbers
