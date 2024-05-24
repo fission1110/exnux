@@ -19,6 +19,7 @@ services:
       TERM: "${TERM}" # for tmux
       DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/1000/bus" # for DBUS
       XDG_RUNTIME_DIR: "/run/user/1000"
+      SSH_TTY: "${SSH_TTY:-}"
     volumes:
       # Mount x11, docker, and dbus socket
       - "${XAUTHORITY}:/home/${USERNAME}/.Xauthority"
