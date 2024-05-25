@@ -282,6 +282,9 @@ RUN /usr/local/src/scripts/lsp.sh
 COPY scripts/fonts.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/fonts.sh
 
+COPY scripts/dap.sh /usr/local/src/scripts/
+RUN /usr/local/src/scripts/dap.sh
+
 # fix ansible
 RUN pip3 install markupsafe==2.0.1
 

@@ -10,9 +10,6 @@
 [submodule "dotfiles/.config/nvim/bundle/nvim-typescript"]
 	path = dotfiles/.config/nvim/bundle/nvim-typescript
 	url = https://github.com/mhartington/nvim-typescript.git
-[submodule "dotfiles/.config/nvim/bundle/plantuml-syntax"]
-	path = dotfiles/.config/nvim/bundle/plantuml-syntax
-	url = https://github.com/aklt/plantuml-syntax.git
 [submodule "dotfiles/.config/nvim/bundle/syntastic"]
 	path = dotfiles/.config/nvim/bundle/syntastic
 	url = https://github.com/vim-syntastic/syntastic.git
@@ -22,9 +19,6 @@
 [submodule "dotfiles/.config/nvim/bundle/typescript-vim"]
 	path = dotfiles/.config/nvim/bundle/typescript-vim
 	url = https://github.com/leafgarland/typescript-vim.git
-[submodule "dotfiles/.config/nvim/bundle/vdebug"]
-	path = dotfiles/.config/nvim/bundle/vdebug
-	url = https://github.com/vim-vdebug/vdebug.git
 [submodule "dotfiles/.config/nvim/bundle/vim-easygrep"]
 	path = dotfiles/.config/nvim/bundle/vim-easygrep
 	url = https://github.com/dkprice/vim-easygrep.git
@@ -79,9 +73,6 @@
 [submodule "dotfiles/.config/nvim/bundle/vim-addon-mw-utils"]
 	path = dotfiles/.config/nvim/bundle/vim-addon-mw-utils
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
-[submodule "dotfiles/.config/nvim/bundle/vim-snipmate"]
-	path = dotfiles/.config/nvim/bundle/vim-snipmate
-	url = https://github.com/garbas/vim-snipmate.git
 [submodule "dotfiles/.config/nvim/bundle/vim-visual-star-search"]
 	path = dotfiles/.config/nvim/bundle/vim-visual-star-search
 	url = https://github.com/nelstrom/vim-visual-star-search.git
@@ -157,3 +148,24 @@
 [submodule "dotfiles/tools/exploitdb"]
 	path = dotfiles/tools/exploitdb
 	url = https://gitlab.com/exploit-database/exploitdb
+[submodule "dotfiles/.config/nvim/bundle/nvim-dap-ui"]
+	path = dotfiles/.config/nvim/bundle/nvim-dap-ui
+	url = https://github.com/rcarriga/nvim-dap-ui.git
+[submodule "dotfiles/.config/nvim/bundle/nvim-dap"]
+	path = dotfiles/.config/nvim/bundle/nvim-dap
+	url = https://github.com/mfussenegger/nvim-dap.git
+[submodule "dotfiles/.config/nvim/bundle/nvim-dap-python"]
+	path = dotfiles/.config/nvim/bundle/nvim-dap-python
+	url = https://github.com/mfussenegger/nvim-dap-python.git
+[submodule "dotfiles/.config/nvim/bundle/nvim-dap-go"]
+	path = dotfiles/.config/nvim/bundle/nvim-dap-go
+	url = https://github.com/leoluz/nvim-dap-go.git
+[submodule "dotfiles/.config/nvim/bundle/telescope-dap.nvim"]
+	path = dotfiles/.config/nvim/bundle/telescope-dap.nvim
+	url = https://github.com/nvim-telescope/telescope-dap.nvim.git
+[submodule "dotfiles/.config/nvim/bundle/nvim-dap-projects"]
+	path = dotfiles/.config/nvim/bundle/nvim-dap-projects
+	url = https://github.com/ldelossa/nvim-dap-projects.git
+[submodule "dotfiles/.config/nvim/bundle/nvim-dap-virtual-text"]
+	path = dotfiles/.config/nvim/bundle/nvim-dap-virtual-text
+	url = https://github.com/theHamsta/nvim-dap-virtual-text.git

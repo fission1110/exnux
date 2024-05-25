@@ -17,6 +17,19 @@ require('lualine').setup({
     }
 })
 
+require'cmp'.setup.cmdline(':', {
+  sources = {
+    { name = 'cmdline' }
+  }
+})
+
+require'cmp'.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+
 -- ---------
 -- treesitter
 -- ---------
@@ -267,7 +280,8 @@ cmp.setup.cmdline(':', {
 })
 
 -- telescope ignore patterns
-require('telescope').setup {
+local telescope = require("telescope")
+telescope.setup {
   defaults = {
     file_ignore_patterns = { "node_modules", ".git", "exploits", "shellcodes" },
     hidden = true,
@@ -342,3 +356,59 @@ end
 -- Call set_clipboard_provider on bufenter
 vim.cmd("autocmd BufEnter * lua set_clipboard_provider()")
 
+--- Setup dap
+local dap = require('dap')
+local dapui = require('dapui')
+local dappython = require('dap-python')
+local dapgo = require('dap-go')
+local nvim_dap_virtual_text = require("nvim-dap-virtual-text")
+
+nvim_dap_virtual_text.setup()
+dapui.setup()
+dappython.setup()
+dapgo.setup()
+
+dap.listeners.before.attach.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+  dapui.close()
+end
+
+-- Search for nvim-dap.lua in the current directory and all parent directories
+require('nvim-dap-projects').search_project_config()
+
+telescope.load_extension('dap')
+
+
+vim.api.nvim_set_keymap('n', '<leader>dc', '<cmd>lua require"dap".continue()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>db', '<cmd>lua require"dap".toggle_breakpoint()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dr', '<cmd>lua require"dap".repl.open()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dj', '<cmd>lua require"dap".step_over()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dl', '<cmd>lua require"dap".step_into()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dh', '<cmd>lua require"dap".step_out()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ds', '<cmd>lua require"dap".stop()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>di', '<cmd>lua require"dap".disconnect()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dd', '<cmd>lua require"dap".toggle_breakpoint()<CR>', { noremap = true, silent = true })
+
+
+dap.adapters.php = {
+  type = 'executable',
+  command = 'node',
+  args = { '/usr/local/src/vscode-php-debug/out/phpDebug.js' }
+}
+
+dap.configurations.php = {
+  {
+    type = 'php',
+    request = 'launch',
+    name = 'Listen for Xdebug',
+    port = 9000
+  }
+}
