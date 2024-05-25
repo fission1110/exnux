@@ -169,3 +169,6 @@
 [submodule "dotfiles/.config/nvim/bundle/nvim-dap-virtual-text"]
 	path = dotfiles/.config/nvim/bundle/nvim-dap-virtual-text
 	url = https://github.com/theHamsta/nvim-dap-virtual-text.git
+[submodule "dotfiles/.config/nvim/bundle/telescope-github.nvim"]
+	path = dotfiles/.config/nvim/bundle/telescope-github.nvim
+	url = https://github.com/nvim-telescope/telescope-github.nvim.git
