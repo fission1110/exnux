@@ -365,7 +365,25 @@ local dapgo = require('dap-go')
 local nvim_dap_virtual_text = require("nvim-dap-virtual-text")
 
 nvim_dap_virtual_text.setup()
-dapui.setup()
+dapui.setup({
+  -- Set icons to characters that are more likely to work in every terminal.
+  --    Feel free to remove or use ones that you like more! :)
+  --    Don't feel like these are good choices.
+  icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+  controls = {
+    icons = {
+      pause = '⏸',
+      play = '▶',
+      step_into = '⏎',
+      step_over = '⏭',
+      step_out = '⏮',
+      step_back = 'b',
+      run_last = '▶▶',
+      terminate = '⏹',
+      disconnect = '⏏',
+    },
+  },
+})
 dappython.setup()
 dapgo.setup()
 
@@ -373,13 +391,30 @@ dap.listeners.before.attach.dapui_config = function()
   dapui.open()
 end
 dap.listeners.before.launch.dapui_config = function()
+  -- Hide NerdTree
+  vim.cmd("NERDTreeClose")
+  -- Open DAP UI
   dapui.open()
+  -- Set keymaps
+  vim.api.nvim_set_keymap('n', 'J', '<cmd>lua require"dap".step_over()<CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 'L', '<cmd>lua require"dap".step_into()<CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 'H', '<cmd>lua require"dap".step_out()<CR>', { noremap = true, silent = true })
 end
 dap.listeners.before.event_terminated.dapui_config = function()
+
+  -- Unmap keymaps
+  vim.api.nvim_del_keymap('n', 'J')
+  vim.api.nvim_del_keymap('n', 'L')
+  vim.api.nvim_del_keymap('n', 'H')
   dapui.close()
 end
 dap.listeners.before.event_exited.dapui_config = function()
   dapui.close()
+end
+
+dap.listeners.after.event_terminated.dapui_config = function()
+  -- Show NERDTree and resize it
+  vim.cmd("NERDTree")
 end
 
 -- Search for nvim-dap.lua in the current directory and all parent directories
@@ -388,14 +423,7 @@ require('nvim-dap-projects').search_project_config()
 telescope.load_extension('dap')
 
 
-vim.api.nvim_set_keymap('n', '<leader>dc', '<cmd>lua require"dap".continue()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>db', '<cmd>lua require"dap".toggle_breakpoint()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>dr', '<cmd>lua require"dap".repl.open()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>dj', '<cmd>lua require"dap".step_over()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>dl', '<cmd>lua require"dap".step_into()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>dh', '<cmd>lua require"dap".step_out()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ds', '<cmd>lua require"dap".stop()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>di', '<cmd>lua require"dap".disconnect()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>db', '<cmd>lua require"dap".continue()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>dd', '<cmd>lua require"dap".toggle_breakpoint()<CR>', { noremap = true, silent = true })
 
 
