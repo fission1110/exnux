@@ -280,6 +280,53 @@ au bufreadpost,filereadpost *.png set ft=config
 au bufreadpost,filereadpost *.png set nomodified
 augr END
 
+" viml function
+function! ExtractZipFileAndDecompile(zipfile)
+    " Zipfile looks like zipfile://path/to/file.zip::path/to/file.class
+    " Extract the zipfile and classfile
+    let zipfileabs = substitute(a:zipfile, 'zipfile://', '', '')
+    let zipfile = substitute(zipfileabs, '::.*', '', '')
+    let classfile = substitute(zipfileabs, '.*::', '', '')
+
+    echo 'ExtractZipFileAndDecompile: ' . zipfile . ' ' . classfile
+
+    " Extract the class file
+    let tmpfile = tempname() . '.class'
+    let cmd = 'unzip -p ' . zipfile . ' ' . classfile . ' > ' . tmpfile
+    call system(cmd)
+
+    " Decompile the class file
+    let cmd = '/usr/local/bin/procyon ' . tmpfile
+    let decompiled = system(cmd)
+
+    " Remove the temporary file
+    call delete(tmpfile)
+
+    " Create a new window and set the buffer to the decompiled class file
+    let buf = bufnr('%')
+    let win = bufwinnr(buf)
+    let newwin = win + 1
+    execute 'new'
+    setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+    call setline(1, split(decompiled, '\n'))
+    setlocal nomodified
+    setlocal filetype=java
+    " minimize the window
+    wincmd _
+
+    " Go back to the original window (so zip.vim can finish opening the file)
+    " Wish we could kill the window but that doesn't work
+    execute win . 'wincmd w'
+endfunction
+
+" Have to do this on BufReadCmd because BufReadPost doesn't work for zip files
+" Files are opened with e zipfile://path/to/file.zip::path/to/file.class
+" This is super hacky but it works (sorta)
+au bufreadcmd  zipfile://*.class call ExtractZipFileAndDecompile(expand('<afile>'))
+
+
+
+
 let g:gutentags_cache_dir = '~/.config/nvim/ctags/mytags/'
 let g:gutentags_project_root = ['Makefile', '.git']
 
