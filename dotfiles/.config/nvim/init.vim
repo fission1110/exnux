@@ -47,8 +47,8 @@ set fileencodings=utf-8 "Force utf8
 
 "stop stupid .swp files from showing up ever. If you need them, they're in
 "~/.cache/swp
-set backupdir=/home/$USERNAME/.cache/nvim/swp,.
-set directory=/home/$USERNAME/.cache/nvim/swp,.
+set backupdir=/home/$USERNAME/.cache/nvim/swp//,.
+set directory=/home/$USERNAME/.cache/nvim/swp//,.
 
 " persistent undo
 set undodir=/home/$USERNAME/.cache/nvim/undo
