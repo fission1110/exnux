@@ -408,5 +408,7 @@ vnoremap <leader>o <cmd>'<,'>! ~/tools/openai_vim.py<CR>
 nnoremap <leader>i <cmd>%! ~/tools/dalle_vim.py<CR>
 vnoremap <leader>i <cmd>'<,'>! ~/tools/dalle_vim.py<CR>
 
+nnoremap <leader>n <cmd>NERDTreeToggle<CR>
+
 
 lua require('config')

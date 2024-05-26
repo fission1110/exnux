@@ -177,7 +177,7 @@ end
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-local servers = { 'pyright', 'tsserver', 'clangd', 'html', 'cssls', 'lua_ls', 'phpactor', 'gopls', 'rust_analyzer'}
+local servers = { 'pyright', 'tsserver', 'clangd', 'html', 'cssls', 'phpactor', 'gopls', 'rust_analyzer'}
 local lspconfig = require('lspconfig')
 for _, lsp in pairs(servers) do
     lspconfig[lsp].setup {
@@ -189,6 +189,28 @@ for _, lsp in pairs(servers) do
       capabilities = capabilities,
     }
 end
+
+lspconfig.lua_ls.setup({
+  on_attach = on_attach,
+  flags = {
+    -- This will be the default in neovim 0.7+
+    debounce_text_changes = 150,
+  },
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = {'vim'},
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+    },
+  },
+})
 
 lspconfig.ansiblels.setup{
   on_attach = on_attach,
@@ -484,3 +506,10 @@ dap.configurations.rust = {
     end,
   }
 }
+
+--- Set leap hl colors
+--- LeapMatch, LeapLabelPrimary, LeapLabelSecondary
+vim.cmd("highlight link LeapMatch Todo")
+vim.cmd("highlight link LeapLabelPrimary Error")
+vim.cmd("highlight link LeapLabelSecondary CurSearch")
+
