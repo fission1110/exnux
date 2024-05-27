@@ -68,10 +68,10 @@ nnoremap } <C-i>
 cmap w!! SudaWrite
 
 " Easily jump around windows
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
 
 " Easily resize windows
 " Resize with alt + hjkl instead of ctrl + w + hjkl
@@ -122,8 +122,6 @@ au BufNewFile *.php set ft=php
 "turn on html snippets in cake template files
 au BufRead *.ctp set ft=php.html
 au BufNewFile *.ctp set ft=php.html
-
-inoremap <C-l> <C-x><C-o>
 
 let g:vdebug_options = {
 \    "port" : 9000,
@@ -344,8 +342,8 @@ let g:copilot_filetypes = {
 nnoremap <C-p> <cmd>Copilot panel<CR>
 inoremap <C-p> <cmd>Copilot panel<CR>
 "
-nnoremap <C-e> <cmd>let b:copilot_enabled = 1<CR>
-inoremap <C-e> <cmd>let b:copilot_enabled = 1<CR>
+nnoremap <C-q> <cmd>let b:copilot_enabled = 1<CR>
+inoremap <C-q> <cmd>let b:copilot_enabled = 1<CR>
 "" Disable copilot by default
 let b:copilot_enabled = 0
 autocmd BufNewFile,BufRead * let b:copilot_enabled = 0

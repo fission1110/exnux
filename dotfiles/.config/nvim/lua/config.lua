@@ -1,6 +1,7 @@
 vim.cmd("call pathogen#infect()")
 require('ex_lsp')
 require('ex_lualine')
+require('ex_ls')
 require('ex_cmp')
 require('ex_ts')
 require('ex_dap')

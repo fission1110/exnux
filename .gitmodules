@@ -172,3 +172,9 @@
 [submodule "dotfiles/.config/nvim/bundle/telescope-github.nvim"]
 	path = dotfiles/.config/nvim/bundle/telescope-github.nvim
 	url = https://github.com/nvim-telescope/telescope-github.nvim.git
+[submodule "dotfiles/.config/nvim/bundle/LuaSnip"]
+	path = dotfiles/.config/nvim/bundle/LuaSnip
+	url = https://github.com/L3MON4D3/LuaSnip.git
+[submodule "dotfiles/.config/nvim/bundle/cmp_luasnip"]
+	path = dotfiles/.config/nvim/bundle/cmp_luasnip
+	url = https://github.com/saadparwaiz1/cmp_luasnip.git
