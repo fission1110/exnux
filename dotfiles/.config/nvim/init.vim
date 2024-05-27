@@ -406,5 +406,10 @@ vnoremap <leader>i <cmd>'<,'>! ~/tools/dalle_vim.py<CR>
 
 nnoremap <leader>n <cmd>NERDTreeToggle<CR>
 
+" Execute inline
+au FileType python vnoremap <leader>e <cmd>'<,'>!python<CR>
+au FileType javascript vnoremap <leader>e <cmd>'<,'>!node<CR>
+au FileType bash vnoremap <leader>e <cmd>'<,'>!bash<CR>
+
 
 lua require('config')
