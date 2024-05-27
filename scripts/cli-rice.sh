@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo binstall --no-confirm exa bat procs tokei \
+sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo binstall --no-confirm exa bat procs tokei zoxide \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo cache -a
 
 # btop++

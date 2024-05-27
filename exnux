@@ -34,7 +34,8 @@ CACHE_DIR_LIST=('/cache'
     '/cache/.config/zsh'
     '/cache/.config/gdb'
     '/cache/.msf4/db'
-    '/cache/.cache/vimb')
+    '/cache/.cache/vimb'
+    '/cache/.cache/zoxide')
 
 CACHE_FILE_LIST=("/cache/.bash_history"
     "/cache/.cache/radare2/history"

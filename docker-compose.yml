@@ -55,6 +55,7 @@ services:
       - "./cache/.config/lazygit:/home/${USERNAME}/.config/lazygit/"
       - "./cache/.msf4/db/:/home/postgres/msf-postgres/"
       - "./cache/.cache/vimb:/home/${USERNAME}/.cache/vimb/"
+      - "./cache/.cache/zoxide:/home/${USERNAME}/.cache/zoxide/"
     devices:
       - "/dev/dri" # GPU
       - "/dev/snd" # Sound

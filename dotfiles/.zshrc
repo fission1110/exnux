@@ -116,3 +116,5 @@ alias l="exa -lg --git --icons"
 alias ll="exa -lg --git --icons"
 alias la="exa -lag --icons"
 eval "$(rbenv init - zsh)"
+export _ZO_DATA_DIR=$HOME/.cache/zoxide
+eval "$(zoxide init zsh)"

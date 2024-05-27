@@ -54,6 +54,9 @@ set directory=/home/$USERNAME/.cache/nvim/swp//,.
 set undodir=/home/$USERNAME/.cache/nvim/undo
 set undofile
 
+set shada=!,'1000,<50,s10,h "Save the session
+set shadafile=/home/$USERNAME/.cache/nvim/shada
+
 " Remap redraw to <leader>r
 nmap <leader>r <cmd>redraw!<CR>jk
 
