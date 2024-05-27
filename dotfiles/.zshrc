@@ -82,6 +82,7 @@ source $ZSH/oh-my-zsh.sh
 bindkey '^l' autosuggest-accept
 bindkey '^n' history-search-forward
 bindkey '^p' history-search-backward
+bindkey '^o' fzf-file-widget
 
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
