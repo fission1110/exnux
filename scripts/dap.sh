@@ -16,3 +16,6 @@ apt-get -y install lldb-9
 git clone https://github.com/xdebug/vscode-php-debug.git /usr/local/src/vscode-php-debug \
     && cd /usr/local/src/vscode-php-debug \
     && npm install && npm run build
+
+# Install ansibug
+/usr/local/src/ansible/bin/pip install ansibug

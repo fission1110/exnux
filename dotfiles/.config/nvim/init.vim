@@ -34,8 +34,6 @@ set expandtab shiftwidth=4 softtabstop=4
 " You stay in control of your tabstop setting.
 set tabstop=4
 
-filetype plugin on
-
 " Set scroll offset to 5 lines
 set scrolloff=5
 

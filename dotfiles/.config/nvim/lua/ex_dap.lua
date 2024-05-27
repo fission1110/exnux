@@ -44,9 +44,18 @@ end
 dap.listeners.before.event_terminated.dapui_config = function()
 
   -- Unmap keymaps
-  vim.api.nvim_del_keymap('n', 'J')
-  vim.api.nvim_del_keymap('n', 'L')
-  vim.api.nvim_del_keymap('n', 'H')
+  -- if J is mapped
+  if vim.api.nvim_buf_get_keymap(0, 'n', 'J') then
+    vim.api.nvim_del_keymap('n', 'J')
+  end
+  -- if L is mapped
+  if vim.api.nvim_buf_get_keymap(0, 'n', 'L') then
+    vim.api.nvim_del_keymap('n', 'L')
+  end
+  -- if H is mapped
+  if vim.api.nvim_buf_get_keymap(0, 'n', 'H') then
+    vim.api.nvim_del_keymap('n', 'H')
+  end
   dapui.close()
 end
 dap.listeners.before.event_exited.dapui_config = function()
@@ -81,11 +90,13 @@ dap.configurations.php = {
     port = 9000
   }
 }
+
 dap.adapters.lldb = {
   type = 'executable',
   command = '/usr/bin/lldb-vscode-9', -- adjust as needed, must be absolute path
   name = 'lldb'
 }
+
 dap.configurations.cpp = {
   {
     name = 'Launch',
@@ -102,7 +113,15 @@ dap.configurations.cpp = {
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = {
   {
-    -- ... the previous config goes here ...,
+    name = 'Launch',
+    type = 'lldb',
+    request = 'launch',
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
     initCommands = function()
       -- Find out where to look for the pretty printer Python module
       local rustc_sysroot = vim.fn.trim(vim.fn.system('rustc --print sysroot'))
@@ -123,4 +142,19 @@ dap.configurations.rust = {
       return commands
     end,
   }
+}
+
+dap.adapters.ansible = {
+  type = 'executable',
+  command = '/usr/local/src/ansible/bin/python',
+  args = { '-m', 'ansibug', 'dap' },
+}
+
+dap.configurations["yaml.ansible"] = {
+  {
+    type = 'ansible',
+    request = 'launch',
+    name = 'Debug Playbook',
+    playbook = "${file}",
+  },
 }

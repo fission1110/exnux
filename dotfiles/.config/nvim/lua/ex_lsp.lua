@@ -78,12 +78,15 @@ vim.filetype.add({
     ['*/roles/*/tasks/*.yml'] = 'yaml.ansible'
   }
 })
+
+vim.cmd('autocmd BufNewFile,BufRead */playbooks/*.yml setfiletype yaml.ansible')
+vim.cmd('autocmd BufNewFile,BufRead */playbooks/*.yaml setfiletype yaml.ansible')
 lspconfig.ansiblels.setup{
   on_attach = on_attach,
   flags = {
     debounce_text_changes = 150,
   },
-  filetypes = { "yaml", "ansible" },
+  filetypes = { "yaml.ansible" },
   root_dir = lspconfig.util.root_pattern("playbooks", "roles"),
   capabilities = capabilities,
 }
