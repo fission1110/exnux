@@ -1,5 +1,5 @@
 #!/bin/bash
-V_BINSTALL_URL=https://github.com/cargo-bins/cargo-binstall/releases/download/v0.16.0/cargo-binstall-x86_64-unknown-linux-gnu.tgz
+V_BINSTALL_URL=https://github.com/cargo-bins/cargo-binstall/releases/download/v1.6.8/cargo-binstall-x86_64-unknown-linux-gnu.tgz
 
 mkdir /usr/local/src/cargo-binstall
 wget -O /usr/local/src/cargo-binstall/cargo-binstall.tgz $V_BINSTALL_URL
