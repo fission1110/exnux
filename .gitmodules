@@ -178,3 +178,6 @@
 [submodule "dotfiles/.config/nvim/bundle/cmp_luasnip"]
 	path = dotfiles/.config/nvim/bundle/cmp_luasnip
 	url = https://github.com/saadparwaiz1/cmp_luasnip.git
+[submodule "dotfiles/.config/nvim/bundle/keyseer.nvim"]
+	path = dotfiles/.config/nvim/bundle/keyseer.nvim
+	url = https://github.com/jokajak/keyseer.nvim.git
