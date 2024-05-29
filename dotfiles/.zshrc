@@ -90,6 +90,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 PATH=$PATH:$HOME/.composer/vendor/bin
 PATH=$HOME/.rbenv/bin:/usr/local/src/rbenv/.rbenv/shims:$PATH
 PATH=$HOME/.local/bin:$PATH
+PATH=$PATH:/usr/local/src/ansible/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
  # Preferred editor for local and remote sessions

@@ -40,7 +40,7 @@ add-apt-repository ppa:deadsnakes/ppa \
 
 # ansible conflicts with python3-yaml, so we need to install ansible and ansible-lint in a venv
 # Then we need to create symlinks to the binaries in /usr/local/bin
-python3.10 -m venv /usr/local/src/ansible \
+python3.10 -m venv --upgrade-deps /usr/local/src/ansible \
     && /usr/local/src/ansible/bin/pip install --upgrade pip \
     && /usr/local/src/ansible/bin/pip install ansible ansible-dev-tools \
     && cd /usr/local/src/ansible/bin \
