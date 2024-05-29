@@ -45,17 +45,11 @@ dap.listeners.before.event_terminated.dapui_config = function()
 
   -- Unmap keymaps
   -- if J is mapped
-  if vim.api.nvim_buf_get_keymap(0, 'n', 'J') then
-    vim.api.nvim_del_keymap('n', 'J')
-  end
+  vim.api.nvim_del_keymap('n', 'J')
   -- if L is mapped
-  if vim.api.nvim_buf_get_keymap(0, 'n', 'L') then
-    vim.api.nvim_del_keymap('n', 'L')
-  end
+  vim.api.nvim_del_keymap('n', 'L')
   -- if H is mapped
-  if vim.api.nvim_buf_get_keymap(0, 'n', 'H') then
-    vim.api.nvim_del_keymap('n', 'H')
-  end
+  vim.api.nvim_del_keymap('n', 'H')
   dapui.close()
 end
 dap.listeners.before.event_exited.dapui_config = function()
@@ -152,9 +146,9 @@ dap.adapters.ansible = {
 
 dap.configurations["yaml.ansible"] = {
   {
-    type = 'ansible',
-    request = 'launch',
-    name = 'Debug Playbook',
+    type = "ansible",
+    request = "launch",
+    name = "Debug playbook",
     playbook = "${file}",
-  },
+  }
 }
