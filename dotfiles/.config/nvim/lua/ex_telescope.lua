@@ -27,10 +27,16 @@ telescope.setup {
           after_action = function(selection)
             -- get the window number
             local winnr = vim.api.nvim_get_current_win()
+            -- Run :NERDTree.IsOpen() to check if NERDTree is open
+            local nerdtreeopen = vim.api.nvim_eval('NERDTree.IsOpen()')
             -- CD to the selected directory
             vim.cmd('NERDTreeCWD')
             -- Set focus back to the window
             vim.api.nvim_set_current_win(winnr)
+            if nerdtreeopen ~= 1 then
+              vim.cmd('NERDTreeClose')
+            end
+
           end
         },
       },

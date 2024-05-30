@@ -31,8 +31,11 @@ dapgo.setup()
 dap.listeners.before.attach.dapui_config = function()
   dapui.open()
 end
+local nerdtreeopen = 0
 dap.listeners.before.launch.dapui_config = function()
   -- Hide NerdTree
+  -- Remember if NERDTree is open
+  nerdtreeopen = vim.api.nvim_eval('NERDTree.IsOpen()')
   vim.cmd("NERDTreeClose")
   -- Open DAP UI
   dapui.open()
@@ -58,7 +61,9 @@ end
 
 dap.listeners.after.event_terminated.dapui_config = function()
   -- Show NERDTree and resize it
-  vim.cmd("NERDTree")
+  if nerdtreeopen == 1 then
+    vim.cmd("NERDTree")
+  end
 end
 
 -- Search for nvim-dap.lua in the current directory and all parent directories
