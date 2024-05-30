@@ -1,7 +1,10 @@
 
 -- If $SSH_TTY is set, use lemonade as the clipboard provider. Check on every bufenter
 function set_clipboard_provider ()
-  if os.getenv("SSH_TTY") then
+  -- Stat the file ~/.ssh_connected to see if it exists
+  local f = io.open(os.getenv("HOME") .. "/.ssh_connected", "r")
+  local ssh_connected = f ~= nil
+  if ssh_connected then
     vim.g.clipboard = {
       name = "lemonade",
       copy = {
