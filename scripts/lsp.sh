@@ -42,9 +42,7 @@ add-apt-repository ppa:deadsnakes/ppa \
 # Then we need to create symlinks to the binaries in /usr/local/bin
 python3.10 -m venv --upgrade-deps /usr/local/src/ansible \
     && /usr/local/src/ansible/bin/pip install --upgrade pip \
-    && /usr/local/src/ansible/bin/pip install ansible ansible-dev-tools \
-    && cd /usr/local/src/ansible/bin \
-    && find ansible* | xargs -I {} ln -s /usr/local/src/ansible/bin/{} /usr/local/bin/{}
+    && /usr/local/src/ansible/bin/pip install ansible ansible-dev-tools
 
 # pyright
 pip3 install pyright
