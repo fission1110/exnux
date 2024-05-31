@@ -10,9 +10,6 @@
 [submodule "dotfiles/.config/nvim/bundle/nvim-typescript"]
 	path = dotfiles/.config/nvim/bundle/nvim-typescript
 	url = https://github.com/mhartington/nvim-typescript.git
-[submodule "dotfiles/.config/nvim/bundle/syntastic"]
-	path = dotfiles/.config/nvim/bundle/syntastic
-	url = https://github.com/vim-syntastic/syntastic.git
 [submodule "dotfiles/.config/nvim/bundle/tlib_vim"]
 	path = dotfiles/.config/nvim/bundle/tlib_vim
 	url = https://github.com/tomtom/tlib_vim.git

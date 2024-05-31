@@ -29,13 +29,13 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>gx', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ff', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ff', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-local servers = { 'pyright', 'tsserver', 'clangd', 'html', 'cssls', 'phpactor', 'gopls', 'rust_analyzer'}
+local servers = { 'pyright', 'tsserver', 'clangd', 'html', 'cssls', 'intelephense', 'gopls', 'rust_analyzer'}
 local lspconfig = require('lspconfig')
 for _, lsp in pairs(servers) do
     lspconfig[lsp].setup {
@@ -79,8 +79,8 @@ vim.filetype.add({
   }
 })
 
-vim.cmd('autocmd BufNewFile,BufRead */playbooks/*.yml setfiletype yaml.ansible')
-vim.cmd('autocmd BufNewFile,BufRead */playbooks/*.yaml setfiletype yaml.ansible')
+vim.cmd('autocmd BufNewFile,BufRead */playbooks/**.yml setfiletype yaml.ansible | echom "hit set ft yaml.ansible"')
+vim.cmd('autocmd BufNewFile,BufRead */playbooks/**.yaml setfiletype yaml.ansible | echom "hit set ft yaml.ansible"')
 lspconfig.ansiblels.setup{
   on_attach = on_attach,
   flags = {

@@ -370,7 +370,7 @@ let g:neoformat_enabled_xml = ['prettydiff']
 
 let g:neoformat_enabled_rust = ['rustfmt']
 let g:neoformat_enabled_go = ['gofmt']
-let g:neoformat_enabled_php = ['phpcbf']
+"let g:neoformat_enabled_php = ['phpcbf']
 let g:neoformat_enabled_python = ['black']
 let g:neoformat_enabled_java = ['uncrustify']
 let g:neoformat_enabled_lua = ['stylua']
