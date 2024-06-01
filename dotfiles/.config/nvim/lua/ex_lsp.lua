@@ -40,20 +40,12 @@ local lspconfig = require('lspconfig')
 for _, lsp in pairs(servers) do
     lspconfig[lsp].setup {
       on_attach = on_attach,
-      flags = {
-        -- This will be the default in neovim 0.7+
-        debounce_text_changes = 150,
-      },
       capabilities = capabilities,
     }
 end
 
 lspconfig.lua_ls.setup({
   on_attach = on_attach,
-  flags = {
-    -- This will be the default in neovim 0.7+
-    debounce_text_changes = 150,
-  },
   capabilities = capabilities,
   settings = {
     Lua = {
@@ -83,20 +75,12 @@ vim.cmd('autocmd BufNewFile,BufRead */playbooks/**.yml setfiletype yaml.ansible 
 vim.cmd('autocmd BufNewFile,BufRead */playbooks/**.yaml setfiletype yaml.ansible | echom "hit set ft yaml.ansible"')
 lspconfig.ansiblels.setup{
   on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  filetypes = { "yaml.ansible" },
   root_dir = lspconfig.util.root_pattern("playbooks", "roles"),
   capabilities = capabilities,
 }
 
 lspconfig.eslint.setup({
       on_attach = on_attach,
-      flags = {
-        -- This will be the default in neovim 0.7+
-        debounce_text_changes = 150,
-      },
       settings = {
       },
       capabilities = capabilities,
@@ -104,10 +88,6 @@ lspconfig.eslint.setup({
 lspconfig.diagnosticls.setup({
   cmd = {"diagnostic-languageserver", "--stdio", "--log-level", "3"},
   on_attach = on_attach,
-  flags = {
-    -- This will be the default in neovim 0.7+
-    debounce_text_changes = 150,
-  },
   capabilities = capabilities,
   filetypes = {"python"},
   init_options = {
