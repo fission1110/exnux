@@ -181,3 +181,6 @@
 [submodule "dotfiles/.config/nvim/bundle/telescope-zoxide"]
 	path = dotfiles/.config/nvim/bundle/telescope-zoxide
 	url = https://github.com/jvgrootveld/telescope-zoxide.git
+[submodule "dotfiles/.config/nvim/bundle/vim-devicons"]
+	path = dotfiles/.config/nvim/bundle/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons.git
