@@ -101,3 +101,23 @@ lspconfig.eslint.setup({
       },
       capabilities = capabilities,
 })
+lspconfig.diagnosticls.setup({
+  cmd = {"diagnostic-languageserver", "--stdio", "--log-level", "3"},
+  on_attach = on_attach,
+  flags = {
+    -- This will be the default in neovim 0.7+
+    debounce_text_changes = 150,
+  },
+  capabilities = capabilities,
+  filetypes = {"python"},
+  init_options = {
+    formatters = {
+      autopep8 = {
+        command = "autopep8",
+        args = { "-" },
+      },
+    },
+    formatFiletypes = { python = "autopep8" }
+  }
+
+})
