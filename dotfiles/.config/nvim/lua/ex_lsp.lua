@@ -3,7 +3,7 @@
 -- ---------
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
+local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
@@ -24,7 +24,8 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>gk', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl',
+    '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
@@ -35,13 +36,13 @@ end
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-local servers = { 'pyright', 'tsserver', 'clangd', 'html', 'cssls', 'intelephense', 'gopls', 'rust_analyzer'}
+local servers = { 'pyright', 'tsserver', 'clangd', 'html', 'cssls', 'intelephense', 'gopls', 'rust_analyzer' }
 local lspconfig = require('lspconfig')
 for _, lsp in pairs(servers) do
-    lspconfig[lsp].setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-    }
+  lspconfig[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
 end
 
 lspconfig.lua_ls.setup({
@@ -53,7 +54,7 @@ lspconfig.lua_ls.setup({
         version = 'LuaJIT',
       },
       diagnostics = {
-        globals = {'vim'},
+        globals = { 'vim' },
       },
       workspace = {
         library = vim.api.nvim_get_runtime_file("", true),
@@ -73,23 +74,23 @@ vim.filetype.add({
 
 vim.cmd('autocmd BufNewFile,BufRead */playbooks/**.yml setfiletype yaml.ansible | echom "hit set ft yaml.ansible"')
 vim.cmd('autocmd BufNewFile,BufRead */playbooks/**.yaml setfiletype yaml.ansible | echom "hit set ft yaml.ansible"')
-lspconfig.ansiblels.setup{
+lspconfig.ansiblels.setup {
   on_attach = on_attach,
   root_dir = lspconfig.util.root_pattern("playbooks", "roles"),
   capabilities = capabilities,
 }
 
 lspconfig.eslint.setup({
-      on_attach = on_attach,
-      settings = {
-      },
-      capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+  },
+  capabilities = capabilities,
 })
 lspconfig.diagnosticls.setup({
-  cmd = {"diagnostic-languageserver", "--stdio", "--log-level", "3"},
+  cmd = { "diagnostic-languageserver", "--stdio", "--log-level", "3" },
   on_attach = on_attach,
   capabilities = capabilities,
-  filetypes = {"python"},
+  filetypes = { "python" },
   init_options = {
     formatters = {
       autopep8 = {

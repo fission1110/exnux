@@ -1,4 +1,3 @@
-
 -- telescope ignore patterns
 local telescope = require("telescope")
 telescope.setup {
@@ -36,7 +35,6 @@ telescope.setup {
             if nerdtreeopen ~= 1 then
               vim.cmd('NERDTreeClose')
             end
-
           end
         },
       },

@@ -9,5 +9,3 @@ require('ex_telescope')
 require('ex_colorpicker')
 require('ex_leap')
 require('ex_clipboard')
-
-
