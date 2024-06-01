@@ -33,18 +33,30 @@ local function getTabStatusline()
   return getExpandTab() .. "  " .. vim.bo.shiftwidth
 end
 
-
-require('lualine').setup({
+require("lualine").setup({
   options = {
     globalstatus = true,
-    theme = 'terafox'
+    theme = "terafox",
   },
   sections = {
-    lualine_a = { 'mode' },
-    lualine_b = { 'branch', 'diff', 'diagnostics', getActiveLsp },
-    lualine_c = { { 'filename', file_status = true, path = 1 } },
-    lualine_x = { getTabStatusline, 'encoding', 'filetype' },
-    lualine_y = { 'progress' },
-    lualine_z = { 'location' }
-  }
+    lualine_a = { "mode" },
+    lualine_b = {
+      "branch",
+      "diff",
+      {
+        "diagnostics",
+        symbols = {
+          error = " ", -- nerdfont xe654
+          warn = " ", -- xf529
+          info = " ", -- nerdfont xf05a
+          hint = " ", -- nerdfont xf059
+        },
+      },
+      getActiveLsp,
+    },
+    lualine_c = { { "filename", file_status = true, path = 1 } },
+    lualine_x = { getTabStatusline, "encoding", "filetype" },
+    lualine_y = { "progress" },
+    lualine_z = { "location" },
+  },
 })
