@@ -4,7 +4,7 @@
 local function getActiveLsp()
   local bufnr = vim.api.nvim_get_current_buf()
   local clients = vim.lsp.get_clients({ bufnr = bufnr })
-  local prefix = " "
+  local prefix = "󰚥 "
   local client_names = ""
   if next(clients) == nil then
     return ""
@@ -12,14 +12,27 @@ local function getActiveLsp()
 
   for _, client in pairs(clients) do
     if client.name ~= "GitHub Copilot" then
-      client_names = client_names .. client.name .. " "
+      client_names = client_names .. prefix .. client.name .. " "
     end
   end
   if client_names == "" then
     return ""
   end
-  return prefix .. client_names
+  return client_names
 end
+
+local function getExpandTab()
+  if vim.bo.expandtab then
+    return "󱁐"
+  else
+    return ""
+  end
+end
+
+local function getTabStatusline()
+  return getExpandTab() .. "  " .. vim.bo.shiftwidth
+end
+
 
 require('lualine').setup({
   options = {
@@ -30,7 +43,7 @@ require('lualine').setup({
     lualine_a = { 'mode' },
     lualine_b = { 'branch', 'diff', 'diagnostics', getActiveLsp },
     lualine_c = { { 'filename', file_status = true, path = 1 } },
-    lualine_x = { 'encoding', 'filetype' },
+    lualine_x = { getTabStatusline, 'encoding', 'filetype' },
     lualine_y = { 'progress' },
     lualine_z = { 'location' }
   }
