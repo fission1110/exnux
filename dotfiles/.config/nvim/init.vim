@@ -20,19 +20,11 @@ set clipboard+=unnamedplus " copy to system clipboard
 set smartindent	"When creating a new line in a block it will put the cursor in the correct place
 set autoindent	"When creating a new line in a block it will put the cursor in the correct place
 
-" Try to auto detect and use the indentation of a file when opened.
-autocmd BufRead * DetectIndent
 
 " Otherwise use file type specific indentation. E.g. tabs for Makefiles
 " and 4 spaces for Python. This is optional.
 filetype plugin indent on
 
-" Set a fallback here in case detection fails and there is no file type
-" plugin available. You can also omit this, then Vim defaults to tabs.
-set expandtab shiftwidth=4 softtabstop=4
-
-" You stay in control of your tabstop setting.
-set tabstop=4
 
 " Set scroll offset to 5 lines
 set scrolloff=5
