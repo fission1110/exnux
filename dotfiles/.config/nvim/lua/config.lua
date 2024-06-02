@@ -9,6 +9,7 @@ require('ex_telescope')
 require('ex_colorpicker')
 require('ex_leap')
 require('ex_clipboard')
+require('ex_reverse_eng')
 require('ex_lualine')
 
 -- Keybind reload init.vim
