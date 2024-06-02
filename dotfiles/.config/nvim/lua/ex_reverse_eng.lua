@@ -119,7 +119,7 @@ local function jar()
 end
 
 vim.api.nvim_create_autocmd({ 'BufReadCmd' }, {
-  pattern = '*.class',
+  pattern = 'zipfile://*.class',
   callback = jar
 })
 
