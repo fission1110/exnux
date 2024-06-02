@@ -46,3 +46,10 @@ telescope.load_extension('dap')
 telescope.load_extension('zoxide')
 
 vim.api.nvim_set_keymap('n', '<leader>z', '<cmd>Telescope zoxide list<cr>', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', '<C-f>', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-t>', '<cmd>lua require("telescope.builtin").tags()<cr>', { noremap = true, silent = true })
+
+-- Use fzf rather than telescope for find files
+vim.api.nvim_set_keymap("", "<C-o>", "<cmd>Files<cr>", { noremap = true, silent = true })
