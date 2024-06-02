@@ -43,7 +43,7 @@ local function pyc()
 end
 
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
-  pattern = {'*.pyc', '*.pyo', '*.pyd'},
+  pattern = { '*.pyc', '*.pyo', '*.pyd' },
   callback = pyc
 })
 
@@ -57,7 +57,7 @@ local function img()
 end
 
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
-  pattern = {'*.jpg', '*.jpeg', '*.png', '*.gif', '*.bmp', '*.tiff', '*.webp'},
+  pattern = { '*.jpg', '*.jpeg', '*.png', '*.gif', '*.bmp', '*.tiff', '*.webp' },
   callback = img
 })
 
@@ -69,14 +69,96 @@ local function elf()
   vim.bo.buftype = 'nofile'
   vim.bo.swapfile = false
   vim.bo.filetype = 'nasm'
-
 end
 
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
-  pattern = {'*.o', '*.so', '*.ko', '*.elf', '*.bin'},
+  pattern = { '*.o', '*.so', '*.ko', '*.elf', '*.bin' },
   callback = elf
 })
 
+local function deb()
+  -- Auto open the deb file
+  local metainfo = vim.fn.systemlist('/usr/bin/dpkg-deb -I ' .. vim.fn.expand('%:p'))
+  local files = vim.fn.systemlist('/usr/bin/dpkg-deb -c ' .. vim.fn.expand('%:p'))
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, metainfo)
+  -- Add file list
+  vim.api.nvim_buf_set_lines(0, #metainfo + 1, -1, false, files)
+  vim.bo.readonly = true
+  vim.bo.modifiable = false
+  vim.bo.buftype = 'nofile'
+  vim.bo.swapfile = false
+  vim.bo.filetype = 'deb'
+end
+
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
+  pattern = '*.deb',
+  callback = deb
+})
+
+local function rpm()
+  -- Auto open the rpm file
+  local metainfo = vim.fn.systemlist('/usr/bin/rpm -qip ' .. vim.fn.expand('%:p'))
+  local files = vim.fn.systemlist('/usr/bin/rpm -qlp ' .. vim.fn.expand('%:p'))
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, metainfo)
+  -- Add file list
+  vim.api.nvim_buf_set_lines(0, #metainfo + 1, -1, false, files)
+  vim.bo.readonly = true
+  vim.bo.modifiable = false
+  vim.bo.buftype = 'nofile'
+  vim.bo.swapfile = false
+  vim.bo.filetype = 'rpm'
+end
+
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
+  pattern = '*.rpm',
+  callback = rpm
+})
+
+local function pdf()
+  -- Auto open the pdf file
+  vim.cmd('%!/bin/pdftotext -htmlmeta % -')
+  vim.bo.readonly = true
+  vim.bo.modifiable = false
+  vim.bo.buftype = 'nofile'
+  vim.bo.swapfile = false
+  vim.bo.filetype = 'html'
+end
+
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
+  pattern = '*.pdf',
+  callback = pdf
+})
+
+local function sqlite()
+  -- Auto open the sqlite file
+  vim.cmd('%!/usr/bin/sqlite3 % .dump')
+  vim.bo.readonly = true
+  vim.bo.modifiable = false
+  vim.bo.buftype = 'nofile'
+  vim.bo.swapfile = false
+  vim.bo.filetype = 'sql'
+end
+
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
+  pattern = { '*.sqlite', '*.db', '*.sqlite3' },
+  callback = sqlite
+})
+
+local function pcap()
+  -- Auto open the pcap file
+  -- Show wireshark gui columns
+  vim.cmd('%!/usr/bin/tshark -o \'gui.column.format:"No.","\\%m","Time","\\%t","Source","\\%s","Destination","\\%d","Protocol","\\%p","Length","\\%L","Info","\\%i"\' -r %')
+  vim.bo.readonly = true
+  vim.bo.modifiable = false
+  vim.bo.buftype = 'nofile'
+  vim.bo.swapfile = false
+  vim.bo.filetype = 'pcap'
+end
+
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
+  pattern = { '*.pcap', '*.cap', '*.pcapng' },
+  callback = pcap
+})
 
 local function jar()
   -- This one is a bit more complicated, we need to extract the .class files from the jar file
@@ -96,7 +178,7 @@ local function jar()
   vim.cmd('!unzip -p ' .. jar_filename .. ' ' .. class_filename .. ' > ' .. tmpname)
 
   -- Auto decompile the class file
-  local decompiled = vim.system({'/usr/local/bin/procyon', tmpname}, { text = true }):wait()
+  local decompiled = vim.system({ '/usr/local/bin/procyon', tmpname }, { text = true }):wait()
 
   -- Create a new buffer and display the decompiled code
   local bufnr = vim.fn.bufnr('%')
@@ -122,7 +204,3 @@ vim.api.nvim_create_autocmd({ 'BufReadCmd' }, {
   pattern = 'zipfile://*.class',
   callback = jar
 })
-
-
-
-

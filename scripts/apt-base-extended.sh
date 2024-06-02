@@ -143,15 +143,18 @@ apt-get update -y \
         p0f \
         parallel \
         patchelf \
+        pdftohtml \
         postgresql \
         postgresql-client \
         pv \
         ripgrep \
+        rpm \
         sleuthkit \
         snmp \
         socat \
         strace \
         tcpdump \
+        tshark \
         tmux \
         virt-manager \
         x2goclient \
