@@ -329,25 +329,6 @@ let g:gutentags_project_root = ['Makefile', '.git']
 " Causes hangs for some reason
 let g:gutentags_generate_on_write = 0
 
-" Copilot
-" enable copilot for yaml files
-let g:copilot_filetypes = {
-    \   'yaml': v:true,
-    \   'TelescopePrompt': v:false
-    \ }
-" Map copilot panel to <M-cr> and <C-l>
-"
-nnoremap <C-p> <cmd>Copilot panel<CR>
-inoremap <C-p> <cmd>Copilot panel<CR>
-"
-nnoremap <C-q> <cmd>let b:copilot_enabled = 1<CR>
-inoremap <C-q> <cmd>let b:copilot_enabled = 1<CR>
-"" Disable copilot by default
-let b:copilot_enabled = 0
-autocmd BufNewFile,BufRead * let b:copilot_enabled = 0
-
-
-
 " Telescope
 " Using Lua functions
 "nnoremap <C-o> <cmd>lua require('telescope.builtin').find_files()<cr>
@@ -395,7 +376,7 @@ nnoremap <leader>gg <cmd>FloatermNew --name=lazygit --width=0.9 --height=0.9 --a
 map <C-o> <cmd>Files<CR>
 
 " ,c to bring up ColorPicker
-nnoremap <silent> <leader>c <cmd>PickColor<CR>
+nnoremap <silent> <leader>cp <cmd>PickColor<CR>
 
 
 nnoremap <leader>o <cmd>%! ~/tools/openai_vim.py<CR>

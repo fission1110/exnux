@@ -52,6 +52,7 @@ require("lualine").setup({
           hint = " ", -- nerdfont xf059
         },
       },
+      CopilotStatusIcon,
       getActiveLsp,
     },
     lualine_c = { { "filename", file_status = true, path = 1 } },
