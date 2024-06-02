@@ -1,7 +1,7 @@
 -- ---------
 -- treesitter
 -- ---------
-require 'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup({
   -- A list of parser names, or "all"
   ensure_installed = { "bash", "c", "c_sharp", "clojure", "cmake", "comment", "commonlisp", "cpp", "css", "dart", "dockerfile", "elm", "fortran", "go", "gomod", "graphql", "hack", "haskell", "html", "http", "java", "javascript", "jsdoc", "json", "json5", "jsonc", "julia", "kotlin", "latex", "llvm", "lua", "make", "markdown", "ninja", "pascal", "perl", "php", "python", "r", "regex", "ruby", "rust", "scala", "scheme", "scss", "swift", "typescript", "verilog", "vim", "vue", "yaml" },
 
@@ -27,16 +27,16 @@ require 'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
-}
+})
 -- ---------
 -- treesitter context
 -- ---------
 require 'treesitter-context'.setup {
-  enable = true,           -- Enable this plugin (Can be enabled/disabled later via commands)
-  max_lines = 0,           -- How many lines the window should span. Values <= 0 mean no limit.
-  trim_scope = 'outer',    -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-  min_window_height = 0,   -- Minimum editor window height to enable context. Values <= 0 mean no limit.
-  patterns = {             -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+  enable = true,         -- Enable this plugin (Can be enabled/disabled later via commands)
+  max_lines = 0,         -- How many lines the window should span. Values <= 0 mean no limit.
+  trim_scope = 'outer',  -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+  min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+  patterns = {           -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
     -- For all filetypes
     -- Note that setting an entry here replaces all other patterns for this entry.
     -- By setting the 'default' entry below, you can control which nodes you want to
@@ -101,8 +101,8 @@ require 'treesitter-context'.setup {
   -- [!] The options below are exposed but shouldn't require your attention,
   --     you can safely ignore them.
 
-  zindex = 20,       -- The Z-index of the context window
-  mode = 'cursor',   -- Line used to calculate context. Choices: 'cursor', 'topline'
+  zindex = 20,     -- The Z-index of the context window
+  mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
   -- Separator between context and content. Should be a single character string, like '-'.
   -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
   separator = nil,
