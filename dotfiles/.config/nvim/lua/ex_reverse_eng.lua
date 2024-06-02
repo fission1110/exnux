@@ -61,6 +61,22 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
   callback = img
 })
 
+local function elf()
+  -- Auto open the elf file
+  vim.cmd('%!/usr/bin/objdump -M intel --visualize-jumps --disassemble-all  %')
+  vim.bo.readonly = true
+  vim.bo.modifiable = false
+  vim.bo.buftype = 'nofile'
+  vim.bo.swapfile = false
+  vim.bo.filetype = 'nasm'
+
+end
+
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
+  pattern = {'*.o', '*.so', '*.ko', '*.elf', '*.bin'},
+  callback = elf
+})
+
 
 local function jar()
   -- This one is a bit more complicated, we need to extract the .class files from the jar file
