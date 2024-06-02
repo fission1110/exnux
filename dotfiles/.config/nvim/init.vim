@@ -386,3 +386,12 @@ au FileType bash vnoremap <leader>e <cmd>'<,'>!bash<CR>
 
 
 lua require('config')
+" Try to auto detect and use the indentation of a file when opened.
+autocmd BufRead * DetectIndent
+
+" Set a fallback here in case detection fails and there is no file type
+" plugin available. You can also omit this, then Vim defaults to tabs.
+set expandtab shiftwidth=4 softtabstop=4
+
+" You stay in control of your tabstop setting.
+set tabstop=4
