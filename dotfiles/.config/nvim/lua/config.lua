@@ -10,3 +10,12 @@ require('ex_colorpicker')
 require('ex_leap')
 require('ex_clipboard')
 require('ex_lualine')
+
+-- Keybind reload init.vim
+local function reloadVim()
+  vim.cmd('so ~/.config/nvim/init.vim')
+  for _, file in ipairs(vim.fn.glob('~/.config/nvim/lua/*.lua', 0, 1)) do
+    vim.cmd('luafile ' .. file)
+  end
+end
+vim.keymap.set('n', '<leader>r', reloadVim, { noremap = true, silent = true, expr = true })
