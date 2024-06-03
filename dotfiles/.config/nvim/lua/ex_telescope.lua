@@ -1,5 +1,6 @@
 -- telescope ignore patterns
 local telescope = require("telescope")
+local ex_tmux = require("ex_tmux")
 telescope.setup {
   defaults = {
     file_ignore_patterns = { "node_modules", ".git", "exploits", "shellcodes" },
@@ -35,6 +36,7 @@ telescope.setup {
             if nerdtreeopen ~= 1 then
               vim.cmd('NERDTreeClose')
             end
+            ex_tmux.ReloadTmuxName()
           end
         },
       },

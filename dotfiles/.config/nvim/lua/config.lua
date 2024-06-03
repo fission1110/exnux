@@ -132,6 +132,7 @@ vim.o.tabstop = 4
 -- and 4 spaces for Python. This is optional.
 vim.cmd('filetype plugin indent on')
 
+require('ex_tmux')
 require('ex_lsp')
 require('ex_copilot')
 require('ex_ls')
