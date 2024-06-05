@@ -1,10 +1,9 @@
 -- ---------
 -- treesitter
 -- ---------
-require 'nvim-treesitter.configs'.setup({
+require('nvim-treesitter.configs').setup({
   -- A list of parser names, or "all"
-  ensure_installed = { "bash", "c", "c_sharp", "clojure", "cmake", "comment", "commonlisp", "cpp", "css", "dart", "dockerfile", "elm", "fortran", "go", "gomod", "graphql", "hack", "haskell", "html", "http", "java", "javascript", "jsdoc", "json", "json5", "jsonc", "julia", "kotlin", "latex", "llvm", "lua", "make", "markdown", "ninja", "pascal", "perl", "php", "python", "r", "regex", "ruby", "rust", "scala", "scheme", "scss", "swift", "typescript", "tsv", "verilog", "vim", "vue", "yaml" },
-
+  ensure_installed = "all",
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
 
