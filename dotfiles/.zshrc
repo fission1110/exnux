@@ -93,12 +93,18 @@ PATH=$HOME/.local/bin:$PATH
 PATH=$PATH:/usr/local/src/ansible/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
- # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='nvim'
- fi
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+ export EDITOR='vim'
+else
+ export EDITOR='nvim'
+fi
+
+ssh () {
+    tmux rename-window "ssh $*"
+    command ssh "$@"
+    tmux rename-window "$(basename $SHELL)"
+}
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
