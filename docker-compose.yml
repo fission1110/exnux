@@ -23,11 +23,10 @@ services:
     volumes:
       # Mount x11, docker, and dbus socket
       - "${XAUTHORITY}:/home/${USERNAME}/.Xauthority"
+      - "${XDG_RUNTIME_DIR}:/run/user/1000/"
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "${XDG_RUNTIME_DIR}/bus:/run/user/1000/bus"
       - "/run/dbus/system_bus_socket:/run/dbus/system_bus_socket"
-      - "${XDG_RUNTIME_DIR}/pulse:/run/user/1000/pulse"
 
       # Mount home directory
       - "/:/home/${USERNAME}/root"
@@ -47,7 +46,7 @@ services:
 
       # Mount other directories
       - "./cache/mytags:/home/${USERNAME}/.config/nvim/ctags/mytags"
-      - "./cache/.config/github-copilot/hosts.json:/home/${USERNAME}/.config/github-copilot/hosts.json"
+      - "./cache/.config/github-copilot/:/home/${USERNAME}/.config/github-copilot/"
       - "./cache/.config/gh/:/home/${USERNAME}/.config/gh/"
       - "./cache/.config/chromium:/home/${USERNAME}/.config/chromium"
       - "./cache/treesitter/parser:/home/${USERNAME}/.config/nvim/bundle/nvim-treesitter/parser/"
