@@ -30,7 +30,9 @@ e asm.describe = true
 
 e scr.utf8 = true
 e scr.utf8.curvy = true
-e scr.truecolor = 1
+
+# Truecolor
+e scr.color = 3
 
 # Theme terafox
 ec trap rgb:e85c51
