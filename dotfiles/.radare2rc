@@ -35,13 +35,16 @@ e scr.truecolor = 1
 # Theme terafox
 ec trap rgb:e85c51
 
+ec fname rgb:73a3b7
+ec call rgb:73a3b7
+ec ucall rgb:73a3b7
+
 ec other rgb:e6eaea
 ec input rgb:e6eaea
 ec comment rgb:6d7f8b
+ec ai.exec rgb:6d7f8b
 ec usrcmt rgb:c8c8c8
 ec num rgb:ff9664
-ec call rgb:73a3b7
-ec ucall rgb:73a3b7
 ec help rgb:d96f3e
 
 ec flow rgb:7aa4a1
@@ -56,11 +59,13 @@ ec ai.read rgb:8eb2af
 ec jmp rgb:7aa4a1
 ec ret rgb:7aa4a1
 ec cjmp rgb:8eb2af
-ec b0x00 rgb:e85c51
-ec b0xff rgb:c54e45
 ec push rgb:89aeb8
 ec pop rgb:89aeb8
 ec btext rgb:89aeb8
+ec nop rgb:425e5e
+
+ec b0x00 rgb:e85c51
+ec b0xff rgb:c54e45
 
 ec math rgb:ff9664
 ec cmp rgb:ff9664
@@ -70,3 +75,4 @@ ec args rgb:8eb2af
 ec var rgb:8eb2af
 ec var.name rgb:8eb2af
 ec var.type rgb:fda47f
+ec var.addr rgb:8eb2af
