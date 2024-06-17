@@ -29,7 +29,7 @@ if not vim.g.ex_tmux_loaded then
   })
 
   -- On vim close, set the tmux name to the name of the shell
-  vim.api.nvim_create_autocmd({ 'QuitPre' }, {
+  vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
     callback = function()
       require("ex_tmux").UndoTmuxName()
     end,
