@@ -30,19 +30,19 @@ npm install -g typescript typescript-language-server bash-language-server vscode
 # pip apt
 # ansible, ansible-lint
 # Python is too old in Ubuntu 20.04, so we need to install Python 3.10
-add-apt-repository ppa:deadsnakes/ppa \
- && add-apt-repository ppa:ansible/ansible \
-    && apt-get update -y \
-    && apt-get install -y \
-        python3.10 \
-        python3.10-dev \
-        python3.10-venv
+#add-apt-repository ppa:deadsnakes/ppa \
+# && add-apt-repository ppa:ansible/ansible \
+#    && apt-get update -y \
+#    && apt-get install -y \
+#        python3.10 \
+#        python3.10-dev \
+#        python3.10-venv
 
 # ansible conflicts with python3-yaml, so we need to install ansible and ansible-lint in a venv
 # Then we need to create symlinks to the binaries in /usr/local/bin
-python3.10 -m venv --upgrade-deps /usr/local/src/ansible \
-    && /usr/local/src/ansible/bin/pip install --upgrade pip \
-    && /usr/local/src/ansible/bin/pip install ansible ansible-dev-tools
+#python -m venv --upgrade-deps /usr/local/src/ansible \
+#    && /usr/local/src/ansible/bin/pip install --upgrade pip \
+#    && /usr/local/src/ansible/bin/pip install ansible ansible-dev-tools
 
 # pyright
-pip3 install pyright
+pip3 install --break-system-packages pyright

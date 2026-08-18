@@ -3,16 +3,16 @@ apt-get update -y \
     && apt-get install -y \
       `# afl++` \
         bison \
-        clang-11 \
+        clang-18 \
         flex \
-        g++-10 \
-        gcc-10 \
-        gcc-10-plugin-dev \
+        g++ \
+        gcc \
+        gcc-14-plugin-dev \
         libpixman-1-dev \
-        libstdc++-10-dev \
-        llvm-11 \
-        llvm-11-dev \
-        llvm-11-tools \
+        libstdc++-14-dev \
+        llvm-18 \
+        llvm-18-dev \
+        llvm-18-tools \
         autoconf \
         automake \
         pkg-config \

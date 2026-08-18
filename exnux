@@ -45,7 +45,7 @@ CACHE_FILE_LIST=("/cache/.bash_history"
 case "$CMD" in
     init)
         sudo apt-get install docker.io git curl
-        sudo curl -SL https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+        sudo curl -SL https://github.com/docker/compose/releases/download/v5.4.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
     ;;
     build)

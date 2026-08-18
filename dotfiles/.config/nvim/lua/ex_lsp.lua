@@ -34,15 +34,15 @@ end
 -- map buffer local keybindings when the language server attaches
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local servers = { 'pyright', 'clangd', 'html', 'cssls', 'intelephense', 'gopls', 'rust_analyzer' }
-local lspconfig = require('lspconfig')
 for _, lsp in pairs(servers) do
-  lspconfig[lsp].setup {
+  vim.lsp.config(lsp, {
     on_attach = on_attach,
     capabilities = capabilities,
-  }
+  })
+  vim.lsp.enable(lsp)
 end
 
-lspconfig.lua_ls.setup({
+vim.lsp.config('lua_ls', {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
@@ -59,6 +59,7 @@ lspconfig.lua_ls.setup({
     },
   },
 })
+vim.lsp.enable('lua_ls')
 
 -- Set filetype to yaml.ansible for ansible files
 vim.filetype.add({
@@ -71,24 +72,21 @@ vim.filetype.add({
 
 vim.cmd('autocmd BufNewFile,BufRead */playbooks/**.yml setfiletype yaml.ansible | echom "hit set ft yaml.ansible"')
 vim.cmd('autocmd BufNewFile,BufRead */playbooks/**.yaml setfiletype yaml.ansible | echom "hit set ft yaml.ansible"')
-lspconfig.ansiblels.setup {
-  on_attach = on_attach,
-  root_dir = lspconfig.util.root_pattern("playbooks", "roles"),
-  capabilities = capabilities,
-}
 
-lspconfig.tsserver.setup({
+vim.lsp.config('tsserver', {
   on_attach = on_attach,
   capabilities = capabilities,
 })
+vim.lsp.enable('tsserver')
 
-lspconfig.eslint.setup({
+vim.lsp.config('eslint', {
   on_attach = on_attach,
   settings = {
   },
   capabilities = capabilities,
 })
-lspconfig.diagnosticls.setup({
+vim.lsp.enable('eslint')
+vim.lsp.config('diagnosticls', {
   cmd = { "diagnostic-languageserver", "--stdio" },
   on_attach = on_attach,
   capabilities = capabilities,
@@ -108,3 +106,4 @@ lspconfig.diagnosticls.setup({
   }
 
 })
+vim.lsp.enable('diagnosticls')

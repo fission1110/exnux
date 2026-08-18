@@ -21,7 +21,7 @@ apt-get update -y \
         uncrustify \
         php-pear
 
-pip3 install \
+pip3 install --break-system-packages \
     black \
     cmakelang \
     prettydiff \

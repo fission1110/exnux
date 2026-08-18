@@ -29,12 +29,11 @@ apt-get update -y \
         pigz \
         pixz \
         pkg-config \
-        python3.9 \
-        python3.9-dev \
-        python3.9-venv \
+        python3-full \
         python3-pip \
-        python3-requests \
-        python3-setuptools \
+        python3-venv \
+        python3-dev \
+        python3-ipython \
         software-properties-common \
         sudo \
         unzip \
@@ -50,7 +49,6 @@ apt-get update -y \
     && curl -sL "${V_NODE_URL}" | sudo -E bash - \
     && sudo apt-get install -y nodejs \
     && unset http_proxy \
-    && pip3 install --upgrade pip \
-    && pip3 install frida==$V_FRIDA_VERSION \
-    && pip3 install frida-tools==$V_FRIDA_TOOLS_VERSION \
+    && pip install --break-system-packages frida==$V_FRIDA_VERSION \
+    && pip install --break-system-packages frida-tools==$V_FRIDA_TOOLS_VERSION \
     && npm install frida

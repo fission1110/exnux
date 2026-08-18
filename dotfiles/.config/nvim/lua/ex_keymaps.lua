@@ -1,7 +1,7 @@
 -- Keybind reload init.vim
 local function reloadVim()
   vim.cmd('so ~/.config/nvim/init.vim')
-  for _, file in ipairs(vim.fn.glob('~/.config/nvim/lua/*.lua', 0, 1)) do
+  for _, file in ipairs(vim.fn.glob('~/.config/nvim/lua/*.lua', false, true)) do
     vim.cmd('luafile ' .. file)
   end
 end

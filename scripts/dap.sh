@@ -18,4 +18,4 @@ git clone https://github.com/xdebug/vscode-php-debug.git /usr/local/src/vscode-p
     && npm install && npm run build
 
 # Install ansibug
-/usr/local/src/ansible/bin/pip install ansibug
+#/usr/local/src/ansible/bin/pip install ansibug

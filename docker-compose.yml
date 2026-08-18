@@ -20,9 +20,10 @@ services:
       DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/1000/bus" # for DBUS
       XDG_RUNTIME_DIR: "/run/user/1000"
       SSH_TTY: "${SSH_TTY:-}"
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
     volumes:
       # Mount x11, docker, and dbus socket
-      - "${XAUTHORITY}:/home/${USERNAME}/.Xauthority"
+      #- "${XAUTHORITY}:/home/${USERNAME}/.Xauthority"
       - "${XDG_RUNTIME_DIR}:/run/user/1000/"
       - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -55,6 +56,9 @@ services:
       - "./cache/.msf4/db/:/home/postgres/msf-postgres/"
       - "./cache/.cache/vimb:/home/${USERNAME}/.cache/vimb/"
       - "./cache/.cache/zoxide:/home/${USERNAME}/.cache/zoxide/"
+
+      # Debug
+      - "./dotfiles/.config/nvim/:/home/${USERNAME}/.config/nvim/"
     devices:
       - "/dev/dri" # GPU
       - "/dev/snd" # Sound

@@ -1,23 +1,20 @@
-FROM ubuntu:focal AS base
+FROM ubuntu:noble AS base
 
 ENV LC_ALL en_US.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
-
-ARG APT_PROXY
 
 ENV V_RBENV_URL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer
 WORKDIR /home/$USERNAME
 
 COPY scripts/apt-base.sh /usr/local/src/scripts/apt-base.sh
 
-RUN export http_proxy=$APT_PROXY \
-    && /usr/local/src/scripts/apt-base.sh \
-    && unset http_proxy \
-    && npm install frida
-
+    #&& npm install frida
+RUN /usr/local/src/scripts/apt-base.sh
 ENV USERNAME=nonroot
-RUN useradd -m $USERNAME \
+
+RUN usermod -l $USERNAME -d /home/$USERNAME -m ubuntu \
     && usermod -a -G sudo $USERNAME \
+    && groupmod -n $USERNAME ubuntu \
     && echo "$USERNAME       ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
     && chmod 0400 /etc/sudoers.d/$USERNAME
 
@@ -34,30 +31,24 @@ RUN wget -O- "${V_RBENV_URL}" | sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home
 FROM base AS aflpp-build
 
 COPY scripts/apt-aflpp.sh /usr/local/src/scripts/apt-aflpp.sh
+RUN /usr/local/src/scripts/apt-aflpp.sh
 
-RUN export http_proxy=$APT_PROXY \
-    && /usr/local/src/scripts/apt-aflpp.sh \
-    && unset http_proxy
-
-# build environment should be the newest the distro offers for afl
 COPY scripts/aflpp.sh /usr/local/src/scripts/aflpp.sh
 RUN /usr/local/src/scripts/aflpp.sh
 
-
+#TODO: Update this to pull from the latest
 ################################################
 #
 #    metasploit-build
 #
 ################################################
-FROM base AS metasploit-build
-
-COPY scripts/apt-metasploit.sh /usr/local/src/scripts/apt-metasploit.sh
-RUN export http_proxy=$APT_PROXY \
-    && /usr/local/src/scripts/apt-metasploit.sh \
-    && unset http_proxy
-
-COPY scripts/metasploit.sh /usr/local/src/scripts/metasploit.sh
-RUN /usr/local/src/scripts/metasploit.sh
+#FROM base AS metasploit-build
+#
+#COPY scripts/apt-metasploit.sh /usr/local/src/scripts/apt-metasploit.sh
+#RUN /usr/local/src/scripts/apt-metasploit.sh
+#
+#COPY scripts/metasploit.sh /usr/local/src/scripts/metasploit.sh
+#RUN /usr/local/src/scripts/metasploit.sh
 
 
 ################################################
@@ -99,9 +90,7 @@ FROM base AS john-build
 
 COPY scripts/apt-john.sh /usr/local/src/scripts/apt-john.sh
 
-RUN export http_proxy=$APT_PROXY \
-    && /usr/local/src/scripts/apt-john.sh \
-    && unset http_proxy
+RUN /usr/local/src/scripts/apt-john.sh
 
 COPY scripts/john.sh /usr/local/src/scripts/john.sh
 RUN /usr/local/src/scripts/john.sh
@@ -126,28 +115,23 @@ FROM base AS base-extended
 ENV PATH=$PATH:/home/$USERNAME/.cargo/bin
 COPY scripts/apt-base-extended.sh /usr/local/src/scripts/apt-base-extended.sh
 COPY scripts/rust.sh /usr/local/src/scripts/rust.sh
-RUN export http_proxy=$APT_PROXY \
-    && /usr/local/src/scripts/apt-base-extended.sh \
-    && unset http_proxy \
+RUN /usr/local/src/scripts/apt-base-extended.sh \
     && /usr/local/src/scripts/rust.sh
 
-RUN export http_proxy=$APT_PROXY \
-    && apt-get update -y \
+RUN  apt-get update -y \
     && echo 'y\ny' | unminimize \
-    && unset http_proxy \
     && usermod -aG docker $USERNAME \
     && ln -s $(which fdfind) /usr/local/bin/fd \
     && chsh -s $(which zsh) $USERNAME \
-    && pip3 install pwntools \
-    && pip3 install ipython \
-    && pip3 install jedi \
-    && pip3 install decompyle3
+    && pip install --break-system-packages pwntools \
+    && pip install --break-system-packages jedi \
+    && pip install --break-system-packages decompyle3
 
 # nvim
-RUN pip3 install neovim \
+RUN pip install --break-system-packages neovim \
     && npm install -g neovim \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install tree-sitter-cli \
-    && pip3 install libclang
+    && pip install --break-system-packages libclang
 
 ################################################
 #
@@ -156,9 +140,10 @@ RUN pip3 install neovim \
 ################################################
 FROM base-extended AS base-final
 
+#TODO: Update this to pull from the latest
 # metasploit
-COPY --from=metasploit-build --chown=$USERNAME /usr/local/src/metasploit-framework /usr/local/src/metasploit-framework
-COPY --from=metasploit-build --chown=$USERNAME /home/$USERNAME/.rbenv /home/$USERNAME/.rbenv
+#COPY --from=metasploit-build --chown=$USERNAME /usr/local/src/metasploit-framework /usr/local/src/metasploit-framework
+#COPY --from=metasploit-build --chown=$USERNAME /home/$USERNAME/.rbenv /home/$USERNAME/.rbenv
 
 # aflpp
 COPY --from=aflpp-build /usr/local/src/build /usr/local/src/AFLplusplus/build
@@ -166,9 +151,7 @@ RUN cp -rf /usr/local/src/AFLplusplus/build/* / \
     && rm -r /usr/local/src/AFLplusplus
 
 # fzf for nvim zsh
-COPY --from=fzf-build /usr/local/src/fzf /usr/local/src/fzf
-RUN cd /usr/local/src/fzf \
-    && ./install --bin
+COPY --from=fzf-build /usr/local/src/fzf/bin/* /usr/local/bin/
 
 # pwndbg for gdb
 COPY --from=pwndbg-build --chown=$USERNAME /usr/local/src/pwndbg /usr/local/src/pwndbg
@@ -211,22 +194,25 @@ COPY scripts/luarocks.sh /usr/local/src/scripts/
 COPY scripts/ai-tools.sh /usr/local/src/scripts/
 
 
+#TODO: Fix ai-tools
+#TODO: Fix chepy
+#    /usr/local/src/scripts/chepy.sh \
 # These are multi-threaded
 RUN parallel --verbose --halt-on-error=2 ::: \
     /usr/local/src/scripts/gobuster.sh \
     /usr/local/src/scripts/docker-compose.sh \
     /usr/local/src/scripts/burpsuit.sh \
-    /usr/local/src/scripts/zap.sh \
     /usr/local/src/scripts/ffuf.sh \
     /usr/local/src/scripts/websocat.sh \
     /usr/local/src/scripts/procyon.sh \
     /usr/local/src/scripts/golang.sh \
-    /usr/local/src/scripts/chepy.sh \
     /usr/local/src/scripts/wabt.sh \
     /usr/local/src/scripts/dex2jar.sh \
+    /usr/local/src/scripts/zap.sh \
     /usr/local/src/scripts/luarocks.sh \
     /usr/local/src/scripts/ai-tools.sh `# pip`
 
+#TODO: Update this to latest release
 # dpkg
 COPY scripts/radare2.sh /usr/local/src/scripts/
 COPY scripts/iaito.sh /usr/local/src/scripts/
@@ -245,6 +231,8 @@ RUN /usr/local/src/scripts/beef.sh
 COPY scripts/formatters.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/formatters.sh
 
+#ENV ENTR_INOTIFY_WORKAROUND=true
+# ^ For docker on mac or WSL to get inotify to work for entr
 COPY scripts/cli-rice.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/cli-rice.sh
 
@@ -288,8 +276,9 @@ RUN /usr/local/src/scripts/dap.sh
 COPY scripts/gh.sh /usr/local/src/scripts/
 RUN /usr/local/src/scripts/gh.sh
 
+# TODO: Check this isn't required anymore
 # fix ansible
-RUN pip3 install markupsafe==2.0.1
+#RUN pip3 install markupsafe==2.0.1
 
 # fix wireshark
 RUN groupadd wireshark \
@@ -320,6 +309,7 @@ COPY --chown=$USERNAME dotfiles /home/$USERNAME
 
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions /home/$USERNAME/.oh-my-zsh/plugins/zsh-autosuggestions
 
+ENV USER=$USERNAME
 # nvim
 RUN  mkdir -p ~/.config/nvim/ctags/mytags \
     && .config/nvim/bundle/nvim-typescript/install.sh \

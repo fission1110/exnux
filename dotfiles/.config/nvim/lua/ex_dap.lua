@@ -5,7 +5,7 @@ local dappython = require('dap-python')
 local dapgo = require('dap-go')
 local nvim_dap_virtual_text = require("nvim-dap-virtual-text")
 
-nvim_dap_virtual_text.setup()
+nvim_dap_virtual_text.setup({})
 dapui.setup({
   -- Set icons to characters that are more likely to work in every terminal.
   --    Feel free to remove or use ones that you like more! :)
@@ -29,7 +29,7 @@ dappython.setup()
 dapgo.setup()
 
 dap.listeners.before.attach.dapui_config = function()
-  dapui.open()
+  dapui.open({})
 end
 local nerdtreeopen = 0
 dap.listeners.before.launch.dapui_config = function()
@@ -38,7 +38,7 @@ dap.listeners.before.launch.dapui_config = function()
   nerdtreeopen = vim.api.nvim_eval('NERDTree.IsOpen()')
   vim.cmd("NERDTreeClose")
   -- Open DAP UI
-  dapui.open()
+  dapui.open({})
   -- Set keymaps
   vim.api.nvim_set_keymap('n', 'J', '<cmd>lua require"dap".step_over()<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', 'L', '<cmd>lua require"dap".step_into()<CR>', { noremap = true, silent = true })
@@ -53,10 +53,10 @@ dap.listeners.before.event_terminated.dapui_config = function()
   vim.api.nvim_del_keymap('n', 'L')
   -- if H is mapped
   vim.api.nvim_del_keymap('n', 'H')
-  dapui.close()
+  dapui.close({})
 end
 dap.listeners.before.event_exited.dapui_config = function()
-  dapui.close()
+  dapui.close({})
 end
 
 dap.listeners.after.event_terminated.dapui_config = function()

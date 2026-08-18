@@ -121,9 +121,6 @@
 [submodule "dotfiles/.config/nvim/bundle/ansible-vim"]
 	path = dotfiles/.config/nvim/bundle/ansible-vim
 	url = https://github.com/pearofducks/ansible-vim.git
-[submodule "dotfiles/.config/nvim/bundle/copilot.vim"]
-	path = dotfiles/.config/nvim/bundle/copilot.vim
-	url = https://github.com/github/copilot.vim
 [submodule "dotfiles/.config/nvim/bundle/nvim-treesitter-context"]
 	path = dotfiles/.config/nvim/bundle/nvim-treesitter-context
 	url = https://github.com/nvim-treesitter/nvim-treesitter-context.git
@@ -141,7 +138,7 @@
 	url = https://github.com/nvim-telescope/telescope-smart-history.nvim.git
 [submodule "dotfiles/.config/nvim/bundle/leap.nvim"]
 	path = dotfiles/.config/nvim/bundle/leap.nvim
-	url = https://github.com/ggandor/leap.nvim.git
+	url = https://codeberg.org/andyg/leap.nvim
 [submodule "dotfiles/tools/exploitdb"]
 	path = dotfiles/tools/exploitdb
 	url = https://gitlab.com/exploit-database/exploitdb
@@ -184,3 +181,12 @@
 [submodule "dotfiles/.config/nvim/bundle/vim-devicons"]
 	path = dotfiles/.config/nvim/bundle/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons.git
+[submodule "dotfiles/.config/nvim/bundle/nvim-nio"]
+	path = dotfiles/.config/nvim/bundle/nvim-nio
+	url = https://github.com/nvim-neotest/nvim-nio
+[submodule "dotfiles/.config/nvim/bundle/codecompanion.nvim"]
+	path = dotfiles/.config/nvim/bundle/codecompanion.nvim
+	url = https://github.com/olimorris/codecompanion.nvim.git
+[submodule "dotfiles/.config/nvim/bundle/copilot.vim"]
+	path = dotfiles/.config/nvim/bundle/copilot.vim
+	url = https://github.com/github/copilot.vim.git

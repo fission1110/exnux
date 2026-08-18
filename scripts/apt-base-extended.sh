@@ -15,7 +15,13 @@ apt-get update -y \
         libgvc6 \
         libqt5svg5 \
         libuuid1 \
-        qt5-default \
+	qttools5-dev \
+	qttools5-dev-tools \
+	qtbase5-dev \
+	qtchooser \
+	qt5-qmake \
+	qtbase5-dev-tools \
+	libqt5svg5-dev \
       `# alacritty` \
         cmake \
         libfontconfig1-dev \
@@ -121,9 +127,9 @@ apt-get update -y \
         iputils-ping \
         jq \
         ldap-utils \
-        libclang-9-dev \
+        libclang-20-dev \
         libgl1-mesa-dri \
-        libgl1-mesa-glx \
+        libglx-mesa0 \
         libsndfile1-dev \
         ltrace \
         lua5.3 \
