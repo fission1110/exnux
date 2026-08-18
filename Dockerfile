@@ -3,13 +3,22 @@ FROM ubuntu:noble AS base
 ENV LC_ALL en_US.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 
+# Keep all Python packages separate from Ubuntu system Python. Putting the
+# virtual environment first on PATH makes it active for every subsequent RUN,
+# script, and shell started by the eventual container user.
+ENV VIRTUAL_ENV=/opt/venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+ENV PIP_REQUIRE_VIRTUALENV=true
+
 ENV V_RBENV_URL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer
 WORKDIR /home/$USERNAME
 
 COPY scripts/apt-base.sh /usr/local/src/scripts/apt-base.sh
 
-    #&& npm install frida
-RUN /usr/local/src/scripts/apt-base.sh
+RUN /usr/local/src/scripts/apt-base.sh \
+    && python3 -m venv "$VIRTUAL_ENV" \
+    && . "$VIRTUAL_ENV/bin/activate" \
+    && python -m pip install --upgrade pip
 ENV USERNAME=nonroot
 
 RUN usermod -l $USERNAME -d /home/$USERNAME -m ubuntu \
@@ -123,15 +132,15 @@ RUN  apt-get update -y \
     && usermod -aG docker $USERNAME \
     && ln -s $(which fdfind) /usr/local/bin/fd \
     && chsh -s $(which zsh) $USERNAME \
-    && pip install --break-system-packages pwntools \
-    && pip install --break-system-packages jedi \
-    && pip install --break-system-packages decompyle3
+    && python -m pip install pwntools \
+    && python -m pip install jedi \
+    && python -m pip install decompyle3
 
 # nvim
-RUN pip install --break-system-packages neovim \
+RUN python -m pip install neovim \
     && npm install -g neovim \
     && sudo -E -u $USERNAME -s "PATH=$PATH" "HOME=/home/$USERNAME" cargo install tree-sitter-cli \
-    && pip install --break-system-packages libclang
+    && python -m pip install libclang
 
 ################################################
 #

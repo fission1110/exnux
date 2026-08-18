@@ -1,7 +1,5 @@
 #!/bin/bash
 V_NODE_URL=https://deb.nodesource.com/setup_20.x
-V_FRIDA_VERSION=16.0.2
-V_FRIDA_TOOLS_VERSION=12.3.0
 
 apt-get update -y \
     && apt-get upgrade -y \
@@ -48,7 +46,4 @@ apt-get update -y \
         php-xml \
     && curl -sL "${V_NODE_URL}" | sudo -E bash - \
     && sudo apt-get install -y nodejs \
-    && unset http_proxy \
-    && pip install --break-system-packages frida==$V_FRIDA_VERSION \
-    && pip install --break-system-packages frida-tools==$V_FRIDA_TOOLS_VERSION \
-    && npm install frida
+    && unset http_proxy

@@ -26,6 +26,8 @@ mkdir /usr/local/src/rust-analyzer \
 # npm
 # typescript-language-server, bash-language-server, vscode-langservers-extracted (html, cssls, eslint), ansible-language-server
 npm install -g typescript typescript-language-server bash-language-server vscode-langservers-extracted @ansible/ansible-language-server eslint@8.57.0 prettier-eslint prettier-eslint-cli intelephense diagnostic-languageserver
+npm install --prefix /usr/lib/node_modules/diagnostic-languageserver \
+  vscode-languageserver-protocol@3.15.3
 
 # pip apt
 # ansible, ansible-lint
@@ -45,4 +47,4 @@ npm install -g typescript typescript-language-server bash-language-server vscode
 #    && /usr/local/src/ansible/bin/pip install ansible ansible-dev-tools
 
 # pyright
-pip3 install --break-system-packages pyright
+python -m pip install pyright
