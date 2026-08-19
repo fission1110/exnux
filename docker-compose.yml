@@ -6,6 +6,8 @@ services:
       - SYS_PTRACE # Required for strace
       - NET_ADMIN # for WireShark
     privileged: true # required for network access
+    security_opt:
+      - apparmor:unconfined # Required for codex bubblewrap
     stdin_open: true # -i
     tty: true # -t
     network_mode: "host" # YOLO. Network is not isolated.

@@ -1,4 +1,4 @@
-vim.cmd("call pathogen#infect()")
+require('ex_package')
 
 
 vim.o.mouse = ''

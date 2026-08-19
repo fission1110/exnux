@@ -321,8 +321,9 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions /home/$USERNAME/.
 ENV USER=$USERNAME
 # nvim
 RUN  mkdir -p ~/.config/nvim/ctags/mytags \
-    && .config/nvim/bundle/nvim-typescript/install.sh \
-    && nvim --headless +Helptags +qa \
+    && nvim --headless +qa \
+    && .local/share/nvim/site/pack/core/opt/nvim-typescript/install.sh \
+    && nvim --headless +'helptags ALL' +qa \
     && nvim --headless +UpdateRemotePlugins +qa \
     && nvim --headless +TSUpdate +qa
 
