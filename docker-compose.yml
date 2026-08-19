@@ -21,6 +21,7 @@ services:
       XDG_RUNTIME_DIR: "/run/user/1000"
       SSH_TTY: "${SSH_TTY:-}"
       OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      SHELL: "/usr/bin/zsh"
     volumes:
       # Mount x11, docker, and dbus socket
       #- "${XAUTHORITY}:/home/${USERNAME}/.Xauthority"
